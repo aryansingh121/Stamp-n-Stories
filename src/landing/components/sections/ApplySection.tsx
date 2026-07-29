@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/landing/components/ui/form";
-import { Input } from "@/landing/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/landing/components/ui/textarea";
 import { Checkbox } from "@/landing/components/ui/checkbox";
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button } from '@/landing/components/ui/button';
-import { Input } from '@/landing/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/landing/components/ui/textarea';
 import { cn } from '@/landing/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';

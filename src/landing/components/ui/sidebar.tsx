@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { Button } from '@/landing/components/ui/button';
-import { Input } from '@/landing/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { Separator } from '@/landing/components/ui/separator';
 import {
   Sheet,
