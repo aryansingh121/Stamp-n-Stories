@@ -1,0 +1,176 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Stamp & Stories — "Sunset Wanderer" design system
+ * Coral + sun + cream paper, ink text. Premium, fun, Gen-Z passport vibe.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --font-display: "Unbounded", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-script: "Caveat", cursive;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-sun: var(--sun);
+  --color-coral: var(--coral);
+  --color-stamp: var(--stamp);
+
+  --shadow-stamp: 0 8px 0 -4px var(--ink), 0 12px 24px -8px rgba(26, 26, 26, 0.25);
+  --shadow-card: 0 24px 48px -16px rgba(255, 107, 91, 0.35);
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Paper / ink */
+  --background: oklch(0.97 0.025 80);          /* warm cream */
+  --foreground: oklch(0.17 0.02 50);            /* ink */
+  --paper: oklch(0.97 0.025 80);
+  --ink: oklch(0.17 0.02 50);
+
+  --card: oklch(0.99 0.015 85);
+  --card-foreground: oklch(0.17 0.02 50);
+  --popover: oklch(0.99 0.015 85);
+  --popover-foreground: oklch(0.17 0.02 50);
+
+  --primary: oklch(0.68 0.21 28);               /* coral */
+  --primary-foreground: oklch(0.99 0.01 80);
+  --coral: oklch(0.68 0.21 28);
+
+  --secondary: oklch(0.86 0.13 80);             /* sun */
+  --secondary-foreground: oklch(0.17 0.02 50);
+  --sun: oklch(0.86 0.13 80);
+
+  --muted: oklch(0.94 0.025 70);
+  --muted-foreground: oklch(0.42 0.03 50);
+
+  --accent: oklch(0.78 0.16 50);                /* peach */
+  --accent-foreground: oklch(0.17 0.02 50);
+
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.99 0.01 80);
+
+  --border: oklch(0.85 0.03 70);
+  --input: oklch(0.9 0.025 75);
+  --ring: oklch(0.68 0.21 28);
+
+  --stamp: oklch(0.52 0.19 22);                 /* deep stamp red */
+
+  --sidebar: oklch(0.97 0.025 80);
+  --sidebar-foreground: oklch(0.17 0.02 50);
+  --sidebar-primary: oklch(0.68 0.21 28);
+  --sidebar-primary-foreground: oklch(0.99 0.01 80);
+  --sidebar-accent: oklch(0.94 0.025 70);
+  --sidebar-accent-foreground: oklch(0.17 0.02 50);
+  --sidebar-border: oklch(0.85 0.03 70);
+  --sidebar-ring: oklch(0.68 0.21 28);
+
+  --chart-1: oklch(0.68 0.21 28);
+  --chart-2: oklch(0.86 0.13 80);
+  --chart-3: oklch(0.55 0.15 200);
+  --chart-4: oklch(0.62 0.17 145);
+  --chart-5: oklch(0.5 0.18 320);
+}
+
+.dark {
+  --background: oklch(0.18 0.03 40);
+  --foreground: oklch(0.97 0.025 80);
+  --paper: oklch(0.22 0.03 40);
+  --ink: oklch(0.97 0.025 80);
+  --card: oklch(0.22 0.03 40);
+  --card-foreground: oklch(0.97 0.025 80);
+  --popover: oklch(0.22 0.03 40);
+  --popover-foreground: oklch(0.97 0.025 80);
+  --primary: oklch(0.72 0.2 30);
+  --primary-foreground: oklch(0.15 0.02 40);
+  --secondary: oklch(0.5 0.1 70);
+  --secondary-foreground: oklch(0.97 0.02 80);
+  --muted: oklch(0.28 0.03 40);
+  --muted-foreground: oklch(0.75 0.02 70);
+  --accent: oklch(0.55 0.15 50);
+  --accent-foreground: oklch(0.97 0.02 80);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.97 0.02 80);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.72 0.2 30);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html, body { background-color: var(--color-background); color: var(--color-foreground); }
+  body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4, .font-display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
+  .font-script { font-family: var(--font-script); }
+}
+
+/* Passport paper texture: subtle grain + cross-hatch */
+.paper-texture {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 25% 15%, oklch(0.78 0.16 50 / 0.15), transparent 45%),
+    radial-gradient(circle at 80% 85%, oklch(0.68 0.21 28 / 0.12), transparent 50%),
+    repeating-linear-gradient(45deg, oklch(0.17 0.02 50 / 0.025) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(-45deg, oklch(0.17 0.02 50 / 0.02) 0 1px, transparent 1px 9px);
+}
+
+.paper-edge {
+  border: 1.5px solid oklch(0.17 0.02 50 / 0.18);
+  box-shadow:
+    inset 0 0 0 6px var(--paper),
+    inset 0 0 0 7px oklch(0.17 0.02 50 / 0.12),
+    0 20px 50px -20px rgba(0,0,0,0.35);
+}
+
+.guilloche {
+  background-image:
+    repeating-radial-gradient(circle at 0 0, transparent 0, oklch(0.68 0.21 28 / 0.08) 1px, transparent 2px, transparent 8px),
+    repeating-radial-gradient(circle at 100% 100%, transparent 0, oklch(0.86 0.13 80 / 0.1) 1px, transparent 2px, transparent 10px);
+}
+
+.stamp-ring {
+  border: 2.5px solid var(--stamp);
+  color: var(--stamp);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.stamp-ring--tilt { transform: rotate(-14deg); }
+.stamp-ring--tilt-r { transform: rotate(10deg); }
+.stamp-fade {
+  opacity: 0.88;
+  mix-blend-mode: multiply;
+  filter: contrast(1.05) saturate(1.05);
+}
