@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "@tanstack/react-router";
 
 export function Footer() {
   const navLinks = [
@@ -15,7 +15,7 @@ export function Footer() {
     <footer className="bg-[#202124] text-[#F6F0E6] py-20 px-6 md:px-12 border-t border-[#F6F0E6]/10">
       <div className="container mx-auto max-w-6xl flex flex-col md:flex-row justify-between items-start gap-12">
         <div className="max-w-md">
-          <Link href="/">
+          <Link to="/">
             <span className="font-serif font-bold text-2xl tracking-widest uppercase block mb-4 cursor-pointer hover:text-[#F26A2E] transition-colors">
               Stamp<span className="text-[#F26A2E]">N</span>Stories
             </span>
@@ -36,7 +36,7 @@ export function Footer() {
             <ul className="flex flex-col gap-4">
               {navLinks.slice(0, 4).map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-[#F6F0E6]/80 hover:text-[#F26A2E] transition-colors font-medium">
+                  <Link to={link.href} className="text-[#F6F0E6]/80 hover:text-[#F26A2E] transition-colors font-medium">
                     {link.label}
                   </Link>
                 </li>
@@ -50,7 +50,7 @@ export function Footer() {
             <ul className="flex flex-col gap-4">
               {navLinks.slice(4).map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-[#F6F0E6]/80 hover:text-[#F26A2E] transition-colors font-medium">
+                  <Link to={link.href} className="text-[#F6F0E6]/80 hover:text-[#F26A2E] transition-colors font-medium">
                     {link.label}
                   </Link>
                 </li>

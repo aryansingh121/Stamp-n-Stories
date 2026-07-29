@@ -1,7 +1,7 @@
 import { Navbar } from "@/landing/components/layout/Navbar";
 import { Footer } from "@/landing/components/layout/Footer";
 import { motion } from "framer-motion";
-import { Link } from "wouter";
+import { Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 /* ─────────────── DATA FROM PDF ─────────────── */
@@ -424,7 +424,7 @@ export function GoaSusegadPage() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/40 mb-6">
-              <Link href="/#events" className="hover:text-[#F26A2E] transition-colors">Events</Link>
+              <a href="/#events" className="hover:text-[#F26A2E] transition-colors">Events</a>
               <span>/</span>
               <span className="text-[#FFFDF9]/70">Goa Susegad Weekend</span>
             </div>
@@ -477,7 +477,7 @@ export function GoaSusegadPage() {
               <p className="text-xs text-[#F26A2E] font-bold uppercase tracking-widest">4 spots left</p>
               <p className="text-xs text-[#202124]/40 font-sans">of 14 total</p>
             </div>
-            <Link href="/apply">
+            <Link to="/passport">
               <button className="bg-[#F26A2E] text-white text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-[#e0571c] transition-colors whitespace-nowrap">
                 Request Invite
               </button>
@@ -521,7 +521,7 @@ export function GoaSusegadPage() {
                     </div>
                     <p className="text-xs text-[#FFFDF9]/40 mt-2 font-sans">10 of 14 spots filled (incl. 2 S&S staff)</p>
                   </div>
-                  <Link href="/apply">
+                  <Link to="/passport">
                     <button className="w-full bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm py-4 rounded-2xl hover:bg-[#e0571c] transition-colors">
                       Request Invite
                     </button>
@@ -809,16 +809,16 @@ export function GoaSusegadPage() {
                 This is not a trip you book. It is a chapter you earn. You need a verified passport to register — apply first if you don't have one yet.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/apply">
+                <Link to="/passport">
                   <button className="bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full hover:bg-[#e0571c] transition-colors">
                     Apply for Passport
                   </button>
                 </Link>
-                <Link href="/#events">
+                <a href="/#events">
                   <button className="border border-[#FFFDF9]/20 text-[#FFFDF9]/70 font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full hover:border-[#FFFDF9]/40 hover:text-[#FFFDF9] transition-colors">
                     See All Events
                   </button>
-                </Link>
+                </a>
               </div>
             </motion.div>
           </div>

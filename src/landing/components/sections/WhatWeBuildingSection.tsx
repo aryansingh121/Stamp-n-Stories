@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "wouter";
+import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
 export function WhatWeBuildingSection() {
@@ -88,7 +88,7 @@ export function WhatWeBuildingSection() {
             Not a trip company. Not a dating app. A verified offline community
             where every experience becomes a stamp in your story.
           </p>
-          <Link href="/experiences" className="inline-flex items-center gap-2 text-[#F26A2E] font-bold tracking-wide hover:gap-3 transition-all">
+          <Link to="/experiences" className="inline-flex items-center gap-2 text-[#F26A2E] font-bold tracking-wide hover:gap-3 transition-all">
             Explore Experiences <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>

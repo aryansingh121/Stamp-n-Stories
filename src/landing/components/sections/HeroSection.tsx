@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "wouter";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/landing/components/ui/button";
 
 export function HeroSection() {
@@ -32,12 +32,12 @@ export function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/passport">
+            <Link to="/passport">
               <Button size="lg" className="w-full sm:w-auto bg-[#F26A2E] hover:bg-[#F26A2E]/90 text-white rounded-full px-8 h-14 text-base font-medium transition-all shadow-[0_0_20px_rgba(242,106,46,0.3)]">
                 Apply for your passport
               </Button>
             </Link>
-            <Link href="/how-it-works">
+            <Link to="/about">
               <Button
                 variant="outline"
                 size="lg"

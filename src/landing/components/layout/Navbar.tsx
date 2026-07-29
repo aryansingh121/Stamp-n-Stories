@@ -1,4 +1,4 @@
-import { Link, useLocation } from "wouter";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ChevronDown, MapPin, Calendar, Users } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/landing/components/ui/button";
@@ -44,7 +44,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [eventsOpen, setEventsOpen] = useState(false);
   const [mobileEventsOpen, setMobileEventsOpen] = useState(false);
-  const [location] = useLocation();
+  const location = useRouterState({ select: (s) => s.location.pathname });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,9 +66,9 @@ export function Navbar() {
 
   const navLinks = [
     { label: "Passport", href: "/passport" },
-    { label: "How It Works", href: "/how-it-works" },
+    { label: "How It Works", href: "/about" },
     { label: "Experiences", href: "/experiences" },
-    { label: "For Brands", href: "/for-brands" },
+    { label: "For Brands", href: "/brands" },
     { label: "Rules", href: "/rules" },
   ];
 
@@ -87,7 +87,7 @@ export function Navbar() {
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="z-50">
+        <Link to="/" className="z-50">
           <span
             className={`font-serif font-bold text-xl tracking-widest uppercase transition-colors ${
               isScrolled || !isDarkBg ? "text-[#202124]" : "text-[#FFFDF9]"
@@ -101,9 +101,8 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <div className="flex items-center gap-4">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
+              <Link key={link.href}
+                to={link.href}
                 className={`text-xs font-medium tracking-wide transition-colors hover:text-[#F26A2E] ${textColor} ${
                   location === link.href ? activeColor : ""
                 }`}
@@ -135,13 +134,13 @@ export function Navbar() {
                       <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E]">Upcoming Events</p>
                       <p className="text-xs text-[#202124]/40 font-sans mt-0.5">Passport required to attend</p>
                     </div>
-                    <Link
+                    <a
                       href="/#events"
                       onClick={() => setEventsOpen(false)}
                       className="text-xs font-bold tracking-widest uppercase text-[#202124]/40 hover:text-[#F26A2E] transition-colors"
                     >
                       View all →
-                    </Link>
+                    </a>
                   </div>
 
                   {/* Event rows */}
@@ -151,9 +150,8 @@ export function Navbar() {
                       const pct = Math.round((filled / ev.totalSpots) * 100);
                       const urgent = ev.spotsLeft <= 4;
                       return (
-                        <Link
-                          key={ev.title}
-                          href={ev.href}
+                        <Link key={ev.title}
+                          to={ev.href}
                           onClick={() => setEventsOpen(false)}
                           className="flex gap-4 items-start p-4 hover:bg-[#F6F0E6] transition-colors group"
                         >
@@ -215,7 +213,7 @@ export function Navbar() {
                   {/* Footer CTA */}
                   <div className="px-5 py-3 bg-[#202124] flex items-center justify-between">
                     <p className="text-xs text-[#FFFDF9]/40 font-sans">More events announced every month</p>
-                    <Link href="/passport" onClick={() => setEventsOpen(false)}>
+                    <Link to="/passport" onClick={() => setEventsOpen(false)}>
                       <button className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] hover:text-[#FFFDF9] transition-colors">
                         Get Passport →
                       </button>
@@ -226,7 +224,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <Link href="/passport">
+          <Link to="/passport">
             <Button
               className="rounded-full px-6 tracking-wide bg-[#F26A2E] hover:bg-[#F26A2E]/90 text-white border-transparent"
             >
@@ -258,9 +256,8 @@ export function Navbar() {
       >
         <div className="flex flex-col gap-0 text-xl font-serif">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
+            <Link key={link.href}
+              to={link.href}
               onClick={() => setMobileMenuOpen(false)}
               className={`py-4 border-b border-[#202124]/10 ${
                 location === link.href ? "text-[#F26A2E]" : "text-[#202124]"
@@ -288,9 +285,8 @@ export function Navbar() {
                   Upcoming
                 </p>
                 {upcomingEvents.map((ev) => (
-                  <Link
-                    key={ev.title}
-                    href={ev.href}
+                  <Link key={ev.title}
+                    to={ev.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex gap-3 items-start p-3 rounded-xl bg-[#F6F0E6] active:bg-[#F26A2E]/10"
                   >
@@ -308,18 +304,18 @@ export function Navbar() {
                     </div>
                   </Link>
                 ))}
-                <Link
+                <a
                   href="/#events"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block text-center text-sm font-bold tracking-widest uppercase text-[#F26A2E] py-2"
                 >
                   See all events →
-                </Link>
+                </a>
               </div>
             )}
           </div>
 
-          <Link href="/passport" onClick={() => setMobileMenuOpen(false)}>
+          <Link to="/passport" onClick={() => setMobileMenuOpen(false)}>
             <div className="mt-4 py-4 text-[#F26A2E] border-b border-[#202124]/10">
               Apply
             </div>

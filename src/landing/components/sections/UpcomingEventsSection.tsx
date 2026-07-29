@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "wouter";
+import { Link } from "@tanstack/react-router";
 
 const events = [
   {
@@ -136,7 +136,7 @@ export function UpcomingEventsSection() {
         </motion.div>
 
         {/* Featured (first) event */}
-        <Link href="/events/goa-susegad">
+        <Link to="/events/goa-susegad">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

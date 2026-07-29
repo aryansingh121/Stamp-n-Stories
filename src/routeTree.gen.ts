@@ -33,6 +33,7 @@ import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authentic
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
 import { Route as AuthenticatedDiscoverRouteImport } from './routes/_authenticated/discover'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as SiteEventsGoaSusegadRouteImport } from './routes/_site.events.goa-susegad'
 
 const LandingRoute = LandingRouteImport.update({
   id: '/landing',
@@ -153,6 +154,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const SiteEventsGoaSusegadRoute = SiteEventsGoaSusegadRouteImport.update({
+  id: '/goa-susegad',
+  path: '/goa-susegad',
+  getParentRoute: () => SiteEventsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
@@ -165,7 +171,7 @@ export interface FileRoutesByFullPath {
   '/passport': typeof AuthenticatedPassportRoute
   '/about': typeof SiteAboutRoute
   '/brands': typeof SiteBrandsRoute
-  '/events': typeof SiteEventsRoute
+  '/events': typeof SiteEventsRouteWithChildren
   '/experiences': typeof SiteExperiencesRoute
   '/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -177,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/p/$code': typeof PCodeRoute
   '/landing/': typeof LandingIndexRoute
   '/passport/': typeof PassportIndexRoute
+  '/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof SiteIndexRoute
@@ -188,7 +195,7 @@ export interface FileRoutesByTo {
   '/passport': typeof PassportIndexRoute
   '/about': typeof SiteAboutRoute
   '/brands': typeof SiteBrandsRoute
-  '/events': typeof SiteEventsRoute
+  '/events': typeof SiteEventsRouteWithChildren
   '/experiences': typeof SiteExperiencesRoute
   '/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -199,6 +206,7 @@ export interface FileRoutesByTo {
   '/landing/rules': typeof LandingRulesRoute
   '/p/$code': typeof PCodeRoute
   '/landing': typeof LandingIndexRoute
+  '/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -213,7 +221,7 @@ export interface FileRoutesById {
   '/_authenticated/passport': typeof AuthenticatedPassportRoute
   '/_site/about': typeof SiteAboutRoute
   '/_site/brands': typeof SiteBrandsRoute
-  '/_site/events': typeof SiteEventsRoute
+  '/_site/events': typeof SiteEventsRouteWithChildren
   '/_site/experiences': typeof SiteExperiencesRoute
   '/_site/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   '/_site/': typeof SiteIndexRoute
   '/landing/': typeof LandingIndexRoute
   '/passport/': typeof PassportIndexRoute
+  '/_site/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -252,6 +261,7 @@ export interface FileRouteTypes {
     | '/p/$code'
     | '/landing/'
     | '/passport/'
+    | '/events/goa-susegad'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/landing/rules'
     | '/p/$code'
     | '/landing'
+    | '/events/goa-susegad'
   id:
     | '__root__'
     | '/_authenticated'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/_site/'
     | '/landing/'
     | '/passport/'
+    | '/_site/events/goa-susegad'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -481,6 +493,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_site/events/goa-susegad': {
+      id: '/_site/events/goa-susegad'
+      path: '/goa-susegad'
+      fullPath: '/events/goa-susegad'
+      preLoaderRoute: typeof SiteEventsGoaSusegadRouteImport
+      parentRoute: typeof SiteEventsRoute
+    }
   }
 }
 
@@ -503,10 +522,22 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface SiteEventsRouteChildren {
+  SiteEventsGoaSusegadRoute: typeof SiteEventsGoaSusegadRoute
+}
+
+const SiteEventsRouteChildren: SiteEventsRouteChildren = {
+  SiteEventsGoaSusegadRoute: SiteEventsGoaSusegadRoute,
+}
+
+const SiteEventsRouteWithChildren = SiteEventsRoute._addFileChildren(
+  SiteEventsRouteChildren,
+)
+
 interface SiteRouteChildren {
   SiteAboutRoute: typeof SiteAboutRoute
   SiteBrandsRoute: typeof SiteBrandsRoute
-  SiteEventsRoute: typeof SiteEventsRoute
+  SiteEventsRoute: typeof SiteEventsRouteWithChildren
   SiteExperiencesRoute: typeof SiteExperiencesRoute
   SiteRulesRoute: typeof SiteRulesRoute
   SiteIndexRoute: typeof SiteIndexRoute
@@ -515,7 +546,7 @@ interface SiteRouteChildren {
 const SiteRouteChildren: SiteRouteChildren = {
   SiteAboutRoute: SiteAboutRoute,
   SiteBrandsRoute: SiteBrandsRoute,
-  SiteEventsRoute: SiteEventsRoute,
+  SiteEventsRoute: SiteEventsRouteWithChildren,
   SiteExperiencesRoute: SiteExperiencesRoute,
   SiteRulesRoute: SiteRulesRoute,
   SiteIndexRoute: SiteIndexRoute,
