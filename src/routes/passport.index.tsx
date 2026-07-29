@@ -3,7 +3,7 @@ import { AppHeader } from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Plane, BadgeCheck, Stamp, Users, Sparkles, QrCode } from "lucide-react";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/passport/")({
   head: () => ({
     meta: [
       { title: "Stamp & Stories — your digital community passport" },

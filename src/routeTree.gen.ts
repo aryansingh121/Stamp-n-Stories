@@ -11,9 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LandingRouteImport } from './routes/landing'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as LandingRouteImport } from './routes/_landing'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as PassportIndexRouteImport } from './routes/passport.index'
 import { Route as LandingIndexRouteImport } from './routes/landing.index'
+import { Route as LandingIndexRouteImport } from './routes/_landing.index'
 import { Route as PCodeRouteImport } from './routes/p.$code'
 import { Route as LandingRulesRouteImport } from './routes/landing.rules'
 import { Route as LandingExperiencesRouteImport } from './routes/landing.experiences'
@@ -21,6 +23,11 @@ import { Route as LandingEventsRouteImport } from './routes/landing.events'
 import { Route as LandingBrandsRouteImport } from './routes/landing.brands'
 import { Route as LandingAboutRouteImport } from './routes/landing.about'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as LandingRulesRouteImport } from './routes/_landing.rules'
+import { Route as LandingExperiencesRouteImport } from './routes/_landing.experiences'
+import { Route as LandingEventsRouteImport } from './routes/_landing.events'
+import { Route as LandingBrandsRouteImport } from './routes/_landing.brands'
+import { Route as LandingAboutRouteImport } from './routes/_landing.about'
 import { Route as AuthenticatedPassportRouteImport } from './routes/_authenticated/passport'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
@@ -37,14 +44,23 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LandingRoute = LandingRouteImport.update({
+  id: '/_landing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const PassportIndexRoute = PassportIndexRouteImport.update({
+  id: '/passport/',
+  path: '/passport/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LandingIndexRoute = LandingIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LandingRoute,
 } as any)
 const LandingIndexRoute = LandingIndexRouteImport.update({
   id: '/',
@@ -86,6 +102,31 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/callback',
   getParentRoute: () => AuthRoute,
 } as any)
+const LandingRulesRoute = LandingRulesRouteImport.update({
+  id: '/rules',
+  path: '/rules',
+  getParentRoute: () => LandingRoute,
+} as any)
+const LandingExperiencesRoute = LandingExperiencesRouteImport.update({
+  id: '/experiences',
+  path: '/experiences',
+  getParentRoute: () => LandingRoute,
+} as any)
+const LandingEventsRoute = LandingEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => LandingRoute,
+} as any)
+const LandingBrandsRoute = LandingBrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => LandingRoute,
+} as any)
+const LandingAboutRoute = LandingAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => LandingRoute,
+} as any)
 const AuthenticatedPassportRoute = AuthenticatedPassportRouteImport.update({
   id: '/passport',
   path: '/passport',
@@ -114,7 +155,7 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof LandingIndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/landing': typeof LandingRouteWithChildren
   '/admin': typeof AuthenticatedAdminRoute
@@ -122,6 +163,11 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/passport': typeof AuthenticatedPassportRoute
+  '/about': typeof LandingAboutRoute
+  '/brands': typeof LandingBrandsRoute
+  '/events': typeof LandingEventsRoute
+  '/experiences': typeof LandingExperiencesRoute
+  '/rules': typeof LandingRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/landing/about': typeof LandingAboutRoute
   '/landing/brands': typeof LandingBrandsRoute
@@ -130,15 +176,21 @@ export interface FileRoutesByFullPath {
   '/landing/rules': typeof LandingRulesRoute
   '/p/$code': typeof PCodeRoute
   '/landing/': typeof LandingIndexRoute
+  '/passport/': typeof PassportIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof LandingIndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/admin': typeof AuthenticatedAdminRoute
   '/discover': typeof AuthenticatedDiscoverRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
-  '/passport': typeof AuthenticatedPassportRoute
+  '/passport': typeof PassportIndexRoute
+  '/about': typeof LandingAboutRoute
+  '/brands': typeof LandingBrandsRoute
+  '/events': typeof LandingEventsRoute
+  '/experiences': typeof LandingExperiencesRoute
+  '/rules': typeof LandingRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/landing/about': typeof LandingAboutRoute
   '/landing/brands': typeof LandingBrandsRoute
@@ -150,8 +202,8 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_landing': typeof LandingRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
   '/landing': typeof LandingRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -159,6 +211,11 @@ export interface FileRoutesById {
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/passport': typeof AuthenticatedPassportRoute
+  '/_landing/about': typeof LandingAboutRoute
+  '/_landing/brands': typeof LandingBrandsRoute
+  '/_landing/events': typeof LandingEventsRoute
+  '/_landing/experiences': typeof LandingExperiencesRoute
+  '/_landing/rules': typeof LandingRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/landing/about': typeof LandingAboutRoute
   '/landing/brands': typeof LandingBrandsRoute
@@ -166,7 +223,9 @@ export interface FileRoutesById {
   '/landing/experiences': typeof LandingExperiencesRoute
   '/landing/rules': typeof LandingRulesRoute
   '/p/$code': typeof PCodeRoute
+  '/_landing/': typeof LandingIndexRoute
   '/landing/': typeof LandingIndexRoute
+  '/passport/': typeof PassportIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -179,6 +238,11 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/onboarding'
     | '/passport'
+    | '/about'
+    | '/brands'
+    | '/events'
+    | '/experiences'
+    | '/rules'
     | '/auth/callback'
     | '/landing/about'
     | '/landing/brands'
@@ -187,6 +251,7 @@ export interface FileRouteTypes {
     | '/landing/rules'
     | '/p/$code'
     | '/landing/'
+    | '/passport/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -196,6 +261,11 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/onboarding'
     | '/passport'
+    | '/about'
+    | '/brands'
+    | '/events'
+    | '/experiences'
+    | '/rules'
     | '/auth/callback'
     | '/landing/about'
     | '/landing/brands'
@@ -206,8 +276,8 @@ export interface FileRouteTypes {
     | '/landing'
   id:
     | '__root__'
-    | '/'
     | '/_authenticated'
+    | '/_landing'
     | '/auth'
     | '/landing'
     | '/_authenticated/admin'
@@ -215,6 +285,11 @@ export interface FileRouteTypes {
     | '/_authenticated/leaderboard'
     | '/_authenticated/onboarding'
     | '/_authenticated/passport'
+    | '/_landing/about'
+    | '/_landing/brands'
+    | '/_landing/events'
+    | '/_landing/experiences'
+    | '/_landing/rules'
     | '/auth/callback'
     | '/landing/about'
     | '/landing/brands'
@@ -222,15 +297,18 @@ export interface FileRouteTypes {
     | '/landing/experiences'
     | '/landing/rules'
     | '/p/$code'
+    | '/_landing/'
     | '/landing/'
+    | '/passport/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  LandingRoute: typeof LandingRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
   LandingRoute: typeof LandingRouteWithChildren
   PCodeRoute: typeof PCodeRoute
+  PassportIndexRoute: typeof PassportIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -249,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_landing': {
+      id: '/_landing'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof LandingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -256,17 +341,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/passport/': {
+      id: '/passport/'
+      path: '/passport'
+      fullPath: '/passport/'
+      preLoaderRoute: typeof PassportIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/landing/': {
       id: '/landing/'
       path: '/'
       fullPath: '/landing/'
+      preLoaderRoute: typeof LandingIndexRouteImport
+      parentRoute: typeof LandingRoute
+    }
+    '/_landing/': {
+      id: '/_landing/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof LandingIndexRouteImport
       parentRoute: typeof LandingRoute
     }
@@ -318,6 +410,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/callback'
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/_landing/rules': {
+      id: '/_landing/rules'
+      path: '/rules'
+      fullPath: '/rules'
+      preLoaderRoute: typeof LandingRulesRouteImport
+      parentRoute: typeof LandingRoute
+    }
+    '/_landing/experiences': {
+      id: '/_landing/experiences'
+      path: '/experiences'
+      fullPath: '/experiences'
+      preLoaderRoute: typeof LandingExperiencesRouteImport
+      parentRoute: typeof LandingRoute
+    }
+    '/_landing/events': {
+      id: '/_landing/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof LandingEventsRouteImport
+      parentRoute: typeof LandingRoute
+    }
+    '/_landing/brands': {
+      id: '/_landing/brands'
+      path: '/brands'
+      fullPath: '/brands'
+      preLoaderRoute: typeof LandingBrandsRouteImport
+      parentRoute: typeof LandingRoute
+    }
+    '/_landing/about': {
+      id: '/_landing/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof LandingAboutRouteImport
+      parentRoute: typeof LandingRoute
     }
     '/_authenticated/passport': {
       id: '/_authenticated/passport'
@@ -376,6 +503,27 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface LandingRouteChildren {
+  LandingAboutRoute: typeof LandingAboutRoute
+  LandingBrandsRoute: typeof LandingBrandsRoute
+  LandingEventsRoute: typeof LandingEventsRoute
+  LandingExperiencesRoute: typeof LandingExperiencesRoute
+  LandingRulesRoute: typeof LandingRulesRoute
+  LandingIndexRoute: typeof LandingIndexRoute
+}
+
+const LandingRouteChildren: LandingRouteChildren = {
+  LandingAboutRoute: LandingAboutRoute,
+  LandingBrandsRoute: LandingBrandsRoute,
+  LandingEventsRoute: LandingEventsRoute,
+  LandingExperiencesRoute: LandingExperiencesRoute,
+  LandingRulesRoute: LandingRulesRoute,
+  LandingIndexRoute: LandingIndexRoute,
+}
+
+const LandingRouteWithChildren =
+  LandingRoute._addFileChildren(LandingRouteChildren)
+
 interface AuthRouteChildren {
   AuthCallbackRoute: typeof AuthCallbackRoute
 }
@@ -408,11 +556,12 @@ const LandingRouteWithChildren =
   LandingRoute._addFileChildren(LandingRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  LandingRoute: LandingRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
   LandingRoute: LandingRouteWithChildren,
   PCodeRoute: PCodeRoute,
+  PassportIndexRoute: PassportIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

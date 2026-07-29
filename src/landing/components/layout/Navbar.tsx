@@ -215,7 +215,7 @@ export function Navbar() {
                   {/* Footer CTA */}
                   <div className="px-5 py-3 bg-[#202124] flex items-center justify-between">
                     <p className="text-xs text-[#FFFDF9]/40 font-sans">More events announced every month</p>
-                    <Link href="/apply" onClick={() => setEventsOpen(false)}>
+                    <Link href="/passport" onClick={() => setEventsOpen(false)}>
                       <button className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] hover:text-[#FFFDF9] transition-colors">
                         Get Passport →
                       </button>
@@ -226,7 +226,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <Link href="/apply">
+          <Link href="/passport">
             <Button
               className="rounded-full px-6 tracking-wide bg-[#F26A2E] hover:bg-[#F26A2E]/90 text-white border-transparent"
             >
@@ -319,7 +319,7 @@ export function Navbar() {
             )}
           </div>
 
-          <Link href="/apply" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="/passport" onClick={() => setMobileMenuOpen(false)}>
             <div className="mt-4 py-4 text-[#F26A2E] border-b border-[#202124]/10">
               Apply
             </div>
