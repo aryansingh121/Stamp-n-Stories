@@ -11,11 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LandingRouteImport } from './routes/landing'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as LandingRouteImport } from './routes/_landing'
+import { Route as SiteRouteImport } from './routes/_site'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PassportIndexRouteImport } from './routes/passport.index'
 import { Route as LandingIndexRouteImport } from './routes/landing.index'
-import { Route as LandingIndexRouteImport } from './routes/_landing.index'
+import { Route as SiteIndexRouteImport } from './routes/_site.index'
 import { Route as PCodeRouteImport } from './routes/p.$code'
 import { Route as LandingRulesRouteImport } from './routes/landing.rules'
 import { Route as LandingExperiencesRouteImport } from './routes/landing.experiences'
@@ -23,11 +23,11 @@ import { Route as LandingEventsRouteImport } from './routes/landing.events'
 import { Route as LandingBrandsRouteImport } from './routes/landing.brands'
 import { Route as LandingAboutRouteImport } from './routes/landing.about'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
-import { Route as LandingRulesRouteImport } from './routes/_landing.rules'
-import { Route as LandingExperiencesRouteImport } from './routes/_landing.experiences'
-import { Route as LandingEventsRouteImport } from './routes/_landing.events'
-import { Route as LandingBrandsRouteImport } from './routes/_landing.brands'
-import { Route as LandingAboutRouteImport } from './routes/_landing.about'
+import { Route as SiteRulesRouteImport } from './routes/_site.rules'
+import { Route as SiteExperiencesRouteImport } from './routes/_site.experiences'
+import { Route as SiteEventsRouteImport } from './routes/_site.events'
+import { Route as SiteBrandsRouteImport } from './routes/_site.brands'
+import { Route as SiteAboutRouteImport } from './routes/_site.about'
 import { Route as AuthenticatedPassportRouteImport } from './routes/_authenticated/passport'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
@@ -44,8 +44,8 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LandingRoute = LandingRouteImport.update({
-  id: '/_landing',
+const SiteRoute = SiteRouteImport.update({
+  id: '/_site',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -62,10 +62,10 @@ const LandingIndexRoute = LandingIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LandingRoute,
 } as any)
-const LandingIndexRoute = LandingIndexRouteImport.update({
+const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => LandingRoute,
+  getParentRoute: () => SiteRoute,
 } as any)
 const PCodeRoute = PCodeRouteImport.update({
   id: '/p/$code',
@@ -102,30 +102,30 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/callback',
   getParentRoute: () => AuthRoute,
 } as any)
-const LandingRulesRoute = LandingRulesRouteImport.update({
+const SiteRulesRoute = SiteRulesRouteImport.update({
   id: '/rules',
   path: '/rules',
-  getParentRoute: () => LandingRoute,
+  getParentRoute: () => SiteRoute,
 } as any)
-const LandingExperiencesRoute = LandingExperiencesRouteImport.update({
+const SiteExperiencesRoute = SiteExperiencesRouteImport.update({
   id: '/experiences',
   path: '/experiences',
-  getParentRoute: () => LandingRoute,
+  getParentRoute: () => SiteRoute,
 } as any)
-const LandingEventsRoute = LandingEventsRouteImport.update({
+const SiteEventsRoute = SiteEventsRouteImport.update({
   id: '/events',
   path: '/events',
-  getParentRoute: () => LandingRoute,
+  getParentRoute: () => SiteRoute,
 } as any)
-const LandingBrandsRoute = LandingBrandsRouteImport.update({
+const SiteBrandsRoute = SiteBrandsRouteImport.update({
   id: '/brands',
   path: '/brands',
-  getParentRoute: () => LandingRoute,
+  getParentRoute: () => SiteRoute,
 } as any)
-const LandingAboutRoute = LandingAboutRouteImport.update({
+const SiteAboutRoute = SiteAboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => LandingRoute,
+  getParentRoute: () => SiteRoute,
 } as any)
 const AuthenticatedPassportRoute = AuthenticatedPassportRouteImport.update({
   id: '/passport',
@@ -155,7 +155,7 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof LandingIndexRoute
+  '/': typeof SiteIndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/landing': typeof LandingRouteWithChildren
   '/admin': typeof AuthenticatedAdminRoute
@@ -163,11 +163,11 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/passport': typeof AuthenticatedPassportRoute
-  '/about': typeof LandingAboutRoute
-  '/brands': typeof LandingBrandsRoute
-  '/events': typeof LandingEventsRoute
-  '/experiences': typeof LandingExperiencesRoute
-  '/rules': typeof LandingRulesRoute
+  '/about': typeof SiteAboutRoute
+  '/brands': typeof SiteBrandsRoute
+  '/events': typeof SiteEventsRoute
+  '/experiences': typeof SiteExperiencesRoute
+  '/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/landing/about': typeof LandingAboutRoute
   '/landing/brands': typeof LandingBrandsRoute
@@ -179,18 +179,18 @@ export interface FileRoutesByFullPath {
   '/passport/': typeof PassportIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof LandingIndexRoute
+  '/': typeof SiteIndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/admin': typeof AuthenticatedAdminRoute
   '/discover': typeof AuthenticatedDiscoverRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/passport': typeof PassportIndexRoute
-  '/about': typeof LandingAboutRoute
-  '/brands': typeof LandingBrandsRoute
-  '/events': typeof LandingEventsRoute
-  '/experiences': typeof LandingExperiencesRoute
-  '/rules': typeof LandingRulesRoute
+  '/about': typeof SiteAboutRoute
+  '/brands': typeof SiteBrandsRoute
+  '/events': typeof SiteEventsRoute
+  '/experiences': typeof SiteExperiencesRoute
+  '/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/landing/about': typeof LandingAboutRoute
   '/landing/brands': typeof LandingBrandsRoute
@@ -203,7 +203,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/_landing': typeof LandingRouteWithChildren
+  '/_site': typeof SiteRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
   '/landing': typeof LandingRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -211,11 +211,11 @@ export interface FileRoutesById {
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/passport': typeof AuthenticatedPassportRoute
-  '/_landing/about': typeof LandingAboutRoute
-  '/_landing/brands': typeof LandingBrandsRoute
-  '/_landing/events': typeof LandingEventsRoute
-  '/_landing/experiences': typeof LandingExperiencesRoute
-  '/_landing/rules': typeof LandingRulesRoute
+  '/_site/about': typeof SiteAboutRoute
+  '/_site/brands': typeof SiteBrandsRoute
+  '/_site/events': typeof SiteEventsRoute
+  '/_site/experiences': typeof SiteExperiencesRoute
+  '/_site/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/landing/about': typeof LandingAboutRoute
   '/landing/brands': typeof LandingBrandsRoute
@@ -223,7 +223,7 @@ export interface FileRoutesById {
   '/landing/experiences': typeof LandingExperiencesRoute
   '/landing/rules': typeof LandingRulesRoute
   '/p/$code': typeof PCodeRoute
-  '/_landing/': typeof LandingIndexRoute
+  '/_site/': typeof SiteIndexRoute
   '/landing/': typeof LandingIndexRoute
   '/passport/': typeof PassportIndexRoute
 }
@@ -277,7 +277,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authenticated'
-    | '/_landing'
+    | '/_site'
     | '/auth'
     | '/landing'
     | '/_authenticated/admin'
@@ -285,11 +285,11 @@ export interface FileRouteTypes {
     | '/_authenticated/leaderboard'
     | '/_authenticated/onboarding'
     | '/_authenticated/passport'
-    | '/_landing/about'
-    | '/_landing/brands'
-    | '/_landing/events'
-    | '/_landing/experiences'
-    | '/_landing/rules'
+    | '/_site/about'
+    | '/_site/brands'
+    | '/_site/events'
+    | '/_site/experiences'
+    | '/_site/rules'
     | '/auth/callback'
     | '/landing/about'
     | '/landing/brands'
@@ -297,14 +297,14 @@ export interface FileRouteTypes {
     | '/landing/experiences'
     | '/landing/rules'
     | '/p/$code'
-    | '/_landing/'
+    | '/_site/'
     | '/landing/'
     | '/passport/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  LandingRoute: typeof LandingRouteWithChildren
+  SiteRoute: typeof SiteRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
   LandingRoute: typeof LandingRouteWithChildren
   PCodeRoute: typeof PCodeRoute
@@ -327,11 +327,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_landing': {
-      id: '/_landing'
+    '/_site': {
+      id: '/_site'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof LandingRouteImport
+      preLoaderRoute: typeof SiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -355,12 +355,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LandingIndexRouteImport
       parentRoute: typeof LandingRoute
     }
-    '/_landing/': {
-      id: '/_landing/'
+    '/_site/': {
+      id: '/_site/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof LandingIndexRouteImport
-      parentRoute: typeof LandingRoute
+      preLoaderRoute: typeof SiteIndexRouteImport
+      parentRoute: typeof SiteRoute
     }
     '/p/$code': {
       id: '/p/$code'
@@ -411,40 +411,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof AuthRoute
     }
-    '/_landing/rules': {
-      id: '/_landing/rules'
+    '/_site/rules': {
+      id: '/_site/rules'
       path: '/rules'
       fullPath: '/rules'
-      preLoaderRoute: typeof LandingRulesRouteImport
-      parentRoute: typeof LandingRoute
+      preLoaderRoute: typeof SiteRulesRouteImport
+      parentRoute: typeof SiteRoute
     }
-    '/_landing/experiences': {
-      id: '/_landing/experiences'
+    '/_site/experiences': {
+      id: '/_site/experiences'
       path: '/experiences'
       fullPath: '/experiences'
-      preLoaderRoute: typeof LandingExperiencesRouteImport
-      parentRoute: typeof LandingRoute
+      preLoaderRoute: typeof SiteExperiencesRouteImport
+      parentRoute: typeof SiteRoute
     }
-    '/_landing/events': {
-      id: '/_landing/events'
+    '/_site/events': {
+      id: '/_site/events'
       path: '/events'
       fullPath: '/events'
-      preLoaderRoute: typeof LandingEventsRouteImport
-      parentRoute: typeof LandingRoute
+      preLoaderRoute: typeof SiteEventsRouteImport
+      parentRoute: typeof SiteRoute
     }
-    '/_landing/brands': {
-      id: '/_landing/brands'
+    '/_site/brands': {
+      id: '/_site/brands'
       path: '/brands'
       fullPath: '/brands'
-      preLoaderRoute: typeof LandingBrandsRouteImport
-      parentRoute: typeof LandingRoute
+      preLoaderRoute: typeof SiteBrandsRouteImport
+      parentRoute: typeof SiteRoute
     }
-    '/_landing/about': {
-      id: '/_landing/about'
+    '/_site/about': {
+      id: '/_site/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof LandingAboutRouteImport
-      parentRoute: typeof LandingRoute
+      preLoaderRoute: typeof SiteAboutRouteImport
+      parentRoute: typeof SiteRoute
     }
     '/_authenticated/passport': {
       id: '/_authenticated/passport'
@@ -503,26 +503,25 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface LandingRouteChildren {
-  LandingAboutRoute: typeof LandingAboutRoute
-  LandingBrandsRoute: typeof LandingBrandsRoute
-  LandingEventsRoute: typeof LandingEventsRoute
-  LandingExperiencesRoute: typeof LandingExperiencesRoute
-  LandingRulesRoute: typeof LandingRulesRoute
-  LandingIndexRoute: typeof LandingIndexRoute
+interface SiteRouteChildren {
+  SiteAboutRoute: typeof SiteAboutRoute
+  SiteBrandsRoute: typeof SiteBrandsRoute
+  SiteEventsRoute: typeof SiteEventsRoute
+  SiteExperiencesRoute: typeof SiteExperiencesRoute
+  SiteRulesRoute: typeof SiteRulesRoute
+  SiteIndexRoute: typeof SiteIndexRoute
 }
 
-const LandingRouteChildren: LandingRouteChildren = {
-  LandingAboutRoute: LandingAboutRoute,
-  LandingBrandsRoute: LandingBrandsRoute,
-  LandingEventsRoute: LandingEventsRoute,
-  LandingExperiencesRoute: LandingExperiencesRoute,
-  LandingRulesRoute: LandingRulesRoute,
-  LandingIndexRoute: LandingIndexRoute,
+const SiteRouteChildren: SiteRouteChildren = {
+  SiteAboutRoute: SiteAboutRoute,
+  SiteBrandsRoute: SiteBrandsRoute,
+  SiteEventsRoute: SiteEventsRoute,
+  SiteExperiencesRoute: SiteExperiencesRoute,
+  SiteRulesRoute: SiteRulesRoute,
+  SiteIndexRoute: SiteIndexRoute,
 }
 
-const LandingRouteWithChildren =
-  LandingRoute._addFileChildren(LandingRouteChildren)
+const SiteRouteWithChildren = SiteRoute._addFileChildren(SiteRouteChildren)
 
 interface AuthRouteChildren {
   AuthCallbackRoute: typeof AuthCallbackRoute
@@ -557,7 +556,7 @@ const LandingRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  LandingRoute: LandingRouteWithChildren,
+  SiteRoute: SiteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
   LandingRoute: LandingRouteWithChildren,
   PCodeRoute: PCodeRoute,

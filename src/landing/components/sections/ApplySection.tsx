@@ -291,7 +291,7 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
 
                         {submitApp.isError && (
                           <div className="p-4 rounded-lg bg-[#F26A2E]/10 border border-[#F26A2E]/30 text-[#F26A2E] text-sm">
-                            {submitApp.error?.error || "Failed to submit application. Please try again."}
+                            {(submitApp.error as any)?.error || (submitApp.error as any)?.message || "Failed to submit application. Please try again."}
                           </div>
                         )}
 
