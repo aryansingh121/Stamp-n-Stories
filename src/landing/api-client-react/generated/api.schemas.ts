@@ -49,4 +49,3 @@ export interface Application {
 export interface ErrorResponse {
   error: string;
 }
-

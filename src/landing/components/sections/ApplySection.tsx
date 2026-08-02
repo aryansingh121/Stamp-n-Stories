@@ -31,9 +31,20 @@ const formSchema = z.object({
   }),
 });
 
+function getErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (err && typeof err === "object") {
+    const obj = err as Record<string, unknown>;
+    if (typeof obj.error === "string") return obj.error;
+    if (typeof obj.message === "string") return obj.message;
+  }
+  if (typeof err === "string") return err;
+  return "Failed to submit application. Please try again.";
+}
+
 export function ApplySection({ standalone = false }: { standalone?: boolean }) {
   const [isSuccess, setIsSuccess] = useState(false);
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,7 +68,7 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
         onSuccess: () => {
           setIsSuccess(true);
         },
-      }
+      },
     );
   };
 
@@ -71,17 +82,16 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
               Apply for your Community Passport
             </h2>
             <p className="text-lg text-[#202124]/70 mb-8 leading-relaxed font-sans">
-              This is not open booking. Apply and tell us why you want to join a
-              safer, more meaningful offline community.
+              This is not open booking. Apply and tell us why you want to join a safer, more
+              meaningful offline community.
             </p>
 
             <div className="bg-[#FFFDF9] border border-[#202124]/10 p-6 rounded-2xl mb-12 shadow-sm relative overflow-hidden">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#F26A2E]"></div>
               <p className="text-[#202124] font-medium leading-relaxed font-serif italic text-lg">
-                "You can create your passport profile online, but you cannot buy
-                the physical passport directly. The physical passport is earned
-                by showing up at your first verified StampNStories offline
-                experience."
+                "You can create your passport profile online, but you cannot buy the physical
+                passport directly. The physical passport is earned by showing up at your first
+                verified StampNStories offline experience."
               </p>
             </div>
 
@@ -125,9 +135,8 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                       Application Received
                     </h3>
                     <p className="text-[#202124]/70 max-w-md mx-auto leading-relaxed">
-                      Thank you for taking the time to apply. We will review
-                      your profile carefully and send an invite via email or
-                      WhatsApp if it's a good fit for the community.
+                      Thank you for taking the time to apply. We will review your profile carefully
+                      and send an invite via email or WhatsApp if it's a good fit for the community.
                     </p>
                   </motion.div>
                 ) : (
@@ -138,19 +147,22 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                     exit={{ opacity: 0 }}
                   >
                     <Form {...form}>
-                      <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-6"
-                      >
+                      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         <div className="grid grid-cols-2 gap-6">
                           <FormField
                             control={form.control}
                             name="fullName"
                             render={({ field }) => (
                               <FormItem className="col-span-2 sm:col-span-1">
-                                <FormLabel className="text-[#202124] font-semibold">Full Name *</FormLabel>
+                                <FormLabel className="text-[#202124] font-semibold">
+                                  Full Name *
+                                </FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Jane Doe" className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]" {...field} />
+                                  <Input
+                                    placeholder="Jane Doe"
+                                    className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage className="text-[#F26A2E]" />
                               </FormItem>
@@ -161,9 +173,16 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                             name="age"
                             render={({ field }) => (
                               <FormItem className="col-span-2 sm:col-span-1">
-                                <FormLabel className="text-[#202124] font-semibold">Age *</FormLabel>
+                                <FormLabel className="text-[#202124] font-semibold">
+                                  Age *
+                                </FormLabel>
                                 <FormControl>
-                                  <Input type="number" placeholder="25" className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]" {...field} />
+                                  <Input
+                                    type="number"
+                                    placeholder="25"
+                                    className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage className="text-[#F26A2E]" />
                               </FormItem>
@@ -177,9 +196,15 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                             name="city"
                             render={({ field }) => (
                               <FormItem className="col-span-2 sm:col-span-1">
-                                <FormLabel className="text-[#202124] font-semibold">City *</FormLabel>
+                                <FormLabel className="text-[#202124] font-semibold">
+                                  City *
+                                </FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Mumbai" className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]" {...field} />
+                                  <Input
+                                    placeholder="Mumbai"
+                                    className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage className="text-[#F26A2E]" />
                               </FormItem>
@@ -190,9 +215,15 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                             name="instagramOrLinkedin"
                             render={({ field }) => (
                               <FormItem className="col-span-2 sm:col-span-1">
-                                <FormLabel className="text-[#202124] font-semibold">Insta/LinkedIn Link</FormLabel>
+                                <FormLabel className="text-[#202124] font-semibold">
+                                  Insta/LinkedIn Link
+                                </FormLabel>
                                 <FormControl>
-                                  <Input placeholder="instagram.com/..." className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]" {...field} />
+                                  <Input
+                                    placeholder="instagram.com/..."
+                                    className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage className="text-[#F26A2E]" />
                               </FormItem>
@@ -205,7 +236,9 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                           name="whyJoin"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-[#202124] font-semibold">Why do you want to join? *</FormLabel>
+                              <FormLabel className="text-[#202124] font-semibold">
+                                Why do you want to join? *
+                              </FormLabel>
                               <FormControl>
                                 <Textarea
                                   placeholder="I'm looking for a space where..."
@@ -223,7 +256,9 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                           name="whatMakesSafe"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-[#202124] font-semibold">What makes you feel safe in a group? *</FormLabel>
+                              <FormLabel className="text-[#202124] font-semibold">
+                                What makes you feel safe in a group? *
+                              </FormLabel>
                               <FormControl>
                                 <Textarea
                                   placeholder="Clear boundaries, smaller group sizes..."
@@ -242,9 +277,15 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                             name="comfortPreferences"
                             render={({ field }) => (
                               <FormItem className="col-span-2 sm:col-span-1">
-                                <FormLabel className="text-[#202124] font-semibold">Comfort preferences</FormLabel>
+                                <FormLabel className="text-[#202124] font-semibold">
+                                  Comfort preferences
+                                </FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Dietary, room-sharing, etc." className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]" {...field} />
+                                  <Input
+                                    placeholder="Dietary, room-sharing, etc."
+                                    className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage className="text-[#F26A2E]" />
                               </FormItem>
@@ -255,9 +296,15 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                             name="emergencyContact"
                             render={({ field }) => (
                               <FormItem className="col-span-2 sm:col-span-1">
-                                <FormLabel className="text-[#202124] font-semibold">Emergency contact</FormLabel>
+                                <FormLabel className="text-[#202124] font-semibold">
+                                  Emergency contact
+                                </FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Name & Number" className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]" {...field} />
+                                  <Input
+                                    placeholder="Name & Number"
+                                    className="bg-[#F6F0E6]/50 border-[#202124]/10 focus-visible:ring-[#F26A2E]"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage className="text-[#F26A2E]" />
                               </FormItem>
@@ -282,7 +329,8 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
                                   I accept the community rules
                                 </FormLabel>
                                 <p className="text-sm text-[#202124]/60">
-                                  I understand this is a verified community and poor behaviour has real consequences.
+                                  I understand this is a verified community and poor behaviour has
+                                  real consequences.
                                 </p>
                               </div>
                             </FormItem>
@@ -291,7 +339,7 @@ export function ApplySection({ standalone = false }: { standalone?: boolean }) {
 
                         {submitApp.isError && (
                           <div className="p-4 rounded-lg bg-[#F26A2E]/10 border border-[#F26A2E]/30 text-[#F26A2E] text-sm">
-                            {(submitApp.error as any)?.error || (submitApp.error as any)?.message || "Failed to submit application. Please try again."}
+                            {getErrorMessage(submitApp.error)}
                           </div>
                         )}
 

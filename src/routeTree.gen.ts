@@ -9,35 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LandingRouteImport } from './routes/landing'
+import { Route as PassportRouteImport } from './routes/passport'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as SiteRouteImport } from './routes/_site'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PassportIndexRouteImport } from './routes/passport.index'
-import { Route as LandingIndexRouteImport } from './routes/landing.index'
 import { Route as SiteIndexRouteImport } from './routes/_site.index'
+import { Route as PassportAuthenticatedRouteImport } from './routes/passport._authenticated'
 import { Route as PCodeRouteImport } from './routes/p.$code'
-import { Route as LandingRulesRouteImport } from './routes/landing.rules'
-import { Route as LandingExperiencesRouteImport } from './routes/landing.experiences'
-import { Route as LandingEventsRouteImport } from './routes/landing.events'
-import { Route as LandingBrandsRouteImport } from './routes/landing.brands'
-import { Route as LandingAboutRouteImport } from './routes/landing.about'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as SiteRulesRouteImport } from './routes/_site.rules'
 import { Route as SiteExperiencesRouteImport } from './routes/_site.experiences'
 import { Route as SiteEventsRouteImport } from './routes/_site.events'
 import { Route as SiteBrandsRouteImport } from './routes/_site.brands'
 import { Route as SiteAboutRouteImport } from './routes/_site.about'
-import { Route as AuthenticatedPassportRouteImport } from './routes/_authenticated/passport'
-import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
-import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
-import { Route as AuthenticatedDiscoverRouteImport } from './routes/_authenticated/discover'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as PassportAuthenticatedPassportRouteImport } from './routes/passport._authenticated.passport'
+import { Route as PassportAuthenticatedOnboardingRouteImport } from './routes/passport._authenticated.onboarding'
+import { Route as PassportAuthenticatedLeaderboardRouteImport } from './routes/passport._authenticated.leaderboard'
+import { Route as PassportAuthenticatedDiscoverRouteImport } from './routes/passport._authenticated.discover'
+import { Route as PassportAuthenticatedAdminRouteImport } from './routes/passport._authenticated.admin'
 import { Route as SiteEventsGoaSusegadRouteImport } from './routes/_site.events.goa-susegad'
+import { Route as PassportAuthenticatedAdminAuditRouteImport } from './routes/passport._authenticated.admin_.audit'
+import { Route as PassportAuthenticatedAdminActivityRouteImport } from './routes/passport._authenticated.admin_.activity'
 
-const LandingRoute = LandingRouteImport.update({
-  id: '/landing',
-  path: '/landing',
+const PassportRoute = PassportRouteImport.update({
+  id: '/passport',
+  path: '/passport',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -49,54 +45,24 @@ const SiteRoute = SiteRouteImport.update({
   id: '/_site',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PassportIndexRoute = PassportIndexRouteImport.update({
-  id: '/passport/',
-  path: '/passport/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LandingIndexRoute = LandingIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => LandingRoute,
+  getParentRoute: () => PassportRoute,
 } as any)
 const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SiteRoute,
 } as any)
+const PassportAuthenticatedRoute = PassportAuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => PassportRoute,
+} as any)
 const PCodeRoute = PCodeRouteImport.update({
   id: '/p/$code',
   path: '/p/$code',
   getParentRoute: () => rootRouteImport,
-} as any)
-const LandingRulesRoute = LandingRulesRouteImport.update({
-  id: '/rules',
-  path: '/rules',
-  getParentRoute: () => LandingRoute,
-} as any)
-const LandingExperiencesRoute = LandingExperiencesRouteImport.update({
-  id: '/experiences',
-  path: '/experiences',
-  getParentRoute: () => LandingRoute,
-} as any)
-const LandingEventsRoute = LandingEventsRouteImport.update({
-  id: '/events',
-  path: '/events',
-  getParentRoute: () => LandingRoute,
-} as any)
-const LandingBrandsRoute = LandingBrandsRouteImport.update({
-  id: '/brands',
-  path: '/brands',
-  getParentRoute: () => LandingRoute,
-} as any)
-const LandingAboutRoute = LandingAboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => LandingRoute,
 } as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
   id: '/callback',
@@ -128,124 +94,124 @@ const SiteAboutRoute = SiteAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => SiteRoute,
 } as any)
-const AuthenticatedPassportRoute = AuthenticatedPassportRouteImport.update({
-  id: '/passport',
-  path: '/passport',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedLeaderboardRoute =
-  AuthenticatedLeaderboardRouteImport.update({
+const PassportAuthenticatedPassportRoute =
+  PassportAuthenticatedPassportRouteImport.update({
+    id: '/passport',
+    path: '/passport',
+    getParentRoute: () => PassportAuthenticatedRoute,
+  } as any)
+const PassportAuthenticatedOnboardingRoute =
+  PassportAuthenticatedOnboardingRouteImport.update({
+    id: '/onboarding',
+    path: '/onboarding',
+    getParentRoute: () => PassportAuthenticatedRoute,
+  } as any)
+const PassportAuthenticatedLeaderboardRoute =
+  PassportAuthenticatedLeaderboardRouteImport.update({
     id: '/leaderboard',
     path: '/leaderboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    getParentRoute: () => PassportAuthenticatedRoute,
   } as any)
-const AuthenticatedDiscoverRoute = AuthenticatedDiscoverRouteImport.update({
-  id: '/discover',
-  path: '/discover',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
+const PassportAuthenticatedDiscoverRoute =
+  PassportAuthenticatedDiscoverRouteImport.update({
+    id: '/discover',
+    path: '/discover',
+    getParentRoute: () => PassportAuthenticatedRoute,
+  } as any)
+const PassportAuthenticatedAdminRoute =
+  PassportAuthenticatedAdminRouteImport.update({
+    id: '/admin',
+    path: '/admin',
+    getParentRoute: () => PassportAuthenticatedRoute,
+  } as any)
 const SiteEventsGoaSusegadRoute = SiteEventsGoaSusegadRouteImport.update({
   id: '/goa-susegad',
   path: '/goa-susegad',
   getParentRoute: () => SiteEventsRoute,
 } as any)
+const PassportAuthenticatedAdminAuditRoute =
+  PassportAuthenticatedAdminAuditRouteImport.update({
+    id: '/admin_/audit',
+    path: '/admin/audit',
+    getParentRoute: () => PassportAuthenticatedRoute,
+  } as any)
+const PassportAuthenticatedAdminActivityRoute =
+  PassportAuthenticatedAdminActivityRouteImport.update({
+    id: '/admin_/activity',
+    path: '/admin/activity',
+    getParentRoute: () => PassportAuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/landing': typeof LandingRouteWithChildren
-  '/admin': typeof AuthenticatedAdminRoute
-  '/discover': typeof AuthenticatedDiscoverRoute
-  '/leaderboard': typeof AuthenticatedLeaderboardRoute
-  '/onboarding': typeof AuthenticatedOnboardingRoute
-  '/passport': typeof AuthenticatedPassportRoute
+  '/passport': typeof PassportRouteWithChildren
   '/about': typeof SiteAboutRoute
   '/brands': typeof SiteBrandsRoute
   '/events': typeof SiteEventsRouteWithChildren
   '/experiences': typeof SiteExperiencesRoute
   '/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
-  '/landing/about': typeof LandingAboutRoute
-  '/landing/brands': typeof LandingBrandsRoute
-  '/landing/events': typeof LandingEventsRoute
-  '/landing/experiences': typeof LandingExperiencesRoute
-  '/landing/rules': typeof LandingRulesRoute
   '/p/$code': typeof PCodeRoute
-  '/landing/': typeof LandingIndexRoute
   '/passport/': typeof PassportIndexRoute
   '/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
+  '/passport/admin': typeof PassportAuthenticatedAdminRoute
+  '/passport/discover': typeof PassportAuthenticatedDiscoverRoute
+  '/passport/leaderboard': typeof PassportAuthenticatedLeaderboardRoute
+  '/passport/onboarding': typeof PassportAuthenticatedOnboardingRoute
+  '/passport/passport': typeof PassportAuthenticatedPassportRoute
+  '/passport/admin/activity': typeof PassportAuthenticatedAdminActivityRoute
+  '/passport/admin/audit': typeof PassportAuthenticatedAdminAuditRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof SiteIndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/admin': typeof AuthenticatedAdminRoute
-  '/discover': typeof AuthenticatedDiscoverRoute
-  '/leaderboard': typeof AuthenticatedLeaderboardRoute
-  '/onboarding': typeof AuthenticatedOnboardingRoute
-  '/passport': typeof PassportIndexRoute
   '/about': typeof SiteAboutRoute
   '/brands': typeof SiteBrandsRoute
   '/events': typeof SiteEventsRouteWithChildren
   '/experiences': typeof SiteExperiencesRoute
   '/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
-  '/landing/about': typeof LandingAboutRoute
-  '/landing/brands': typeof LandingBrandsRoute
-  '/landing/events': typeof LandingEventsRoute
-  '/landing/experiences': typeof LandingExperiencesRoute
-  '/landing/rules': typeof LandingRulesRoute
   '/p/$code': typeof PCodeRoute
-  '/landing': typeof LandingIndexRoute
+  '/passport': typeof PassportIndexRoute
+  '/': typeof SiteIndexRoute
   '/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
+  '/passport/admin': typeof PassportAuthenticatedAdminRoute
+  '/passport/discover': typeof PassportAuthenticatedDiscoverRoute
+  '/passport/leaderboard': typeof PassportAuthenticatedLeaderboardRoute
+  '/passport/onboarding': typeof PassportAuthenticatedOnboardingRoute
+  '/passport/passport': typeof PassportAuthenticatedPassportRoute
+  '/passport/admin/activity': typeof PassportAuthenticatedAdminActivityRoute
+  '/passport/admin/audit': typeof PassportAuthenticatedAdminAuditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_site': typeof SiteRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
-  '/landing': typeof LandingRouteWithChildren
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
-  '/_authenticated/discover': typeof AuthenticatedDiscoverRoute
-  '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
-  '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
-  '/_authenticated/passport': typeof AuthenticatedPassportRoute
+  '/passport': typeof PassportRouteWithChildren
   '/_site/about': typeof SiteAboutRoute
   '/_site/brands': typeof SiteBrandsRoute
   '/_site/events': typeof SiteEventsRouteWithChildren
   '/_site/experiences': typeof SiteExperiencesRoute
   '/_site/rules': typeof SiteRulesRoute
   '/auth/callback': typeof AuthCallbackRoute
-  '/landing/about': typeof LandingAboutRoute
-  '/landing/brands': typeof LandingBrandsRoute
-  '/landing/events': typeof LandingEventsRoute
-  '/landing/experiences': typeof LandingExperiencesRoute
-  '/landing/rules': typeof LandingRulesRoute
   '/p/$code': typeof PCodeRoute
+  '/passport/_authenticated': typeof PassportAuthenticatedRouteWithChildren
   '/_site/': typeof SiteIndexRoute
-  '/landing/': typeof LandingIndexRoute
   '/passport/': typeof PassportIndexRoute
   '/_site/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
+  '/passport/_authenticated/admin': typeof PassportAuthenticatedAdminRoute
+  '/passport/_authenticated/discover': typeof PassportAuthenticatedDiscoverRoute
+  '/passport/_authenticated/leaderboard': typeof PassportAuthenticatedLeaderboardRoute
+  '/passport/_authenticated/onboarding': typeof PassportAuthenticatedOnboardingRoute
+  '/passport/_authenticated/passport': typeof PassportAuthenticatedPassportRoute
+  '/passport/_authenticated/admin_/activity': typeof PassportAuthenticatedAdminActivityRoute
+  '/passport/_authenticated/admin_/audit': typeof PassportAuthenticatedAdminAuditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
-    | '/landing'
-    | '/admin'
-    | '/discover'
-    | '/leaderboard'
-    | '/onboarding'
     | '/passport'
     | '/about'
     | '/brands'
@@ -253,83 +219,75 @@ export interface FileRouteTypes {
     | '/experiences'
     | '/rules'
     | '/auth/callback'
-    | '/landing/about'
-    | '/landing/brands'
-    | '/landing/events'
-    | '/landing/experiences'
-    | '/landing/rules'
     | '/p/$code'
-    | '/landing/'
     | '/passport/'
     | '/events/goa-susegad'
+    | '/passport/admin'
+    | '/passport/discover'
+    | '/passport/leaderboard'
+    | '/passport/onboarding'
+    | '/passport/passport'
+    | '/passport/admin/activity'
+    | '/passport/admin/audit'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/auth'
-    | '/admin'
-    | '/discover'
-    | '/leaderboard'
-    | '/onboarding'
-    | '/passport'
     | '/about'
     | '/brands'
     | '/events'
     | '/experiences'
     | '/rules'
     | '/auth/callback'
-    | '/landing/about'
-    | '/landing/brands'
-    | '/landing/events'
-    | '/landing/experiences'
-    | '/landing/rules'
     | '/p/$code'
-    | '/landing'
+    | '/passport'
+    | '/'
     | '/events/goa-susegad'
+    | '/passport/admin'
+    | '/passport/discover'
+    | '/passport/leaderboard'
+    | '/passport/onboarding'
+    | '/passport/passport'
+    | '/passport/admin/activity'
+    | '/passport/admin/audit'
   id:
     | '__root__'
-    | '/_authenticated'
     | '/_site'
     | '/auth'
-    | '/landing'
-    | '/_authenticated/admin'
-    | '/_authenticated/discover'
-    | '/_authenticated/leaderboard'
-    | '/_authenticated/onboarding'
-    | '/_authenticated/passport'
+    | '/passport'
     | '/_site/about'
     | '/_site/brands'
     | '/_site/events'
     | '/_site/experiences'
     | '/_site/rules'
     | '/auth/callback'
-    | '/landing/about'
-    | '/landing/brands'
-    | '/landing/events'
-    | '/landing/experiences'
-    | '/landing/rules'
     | '/p/$code'
+    | '/passport/_authenticated'
     | '/_site/'
-    | '/landing/'
     | '/passport/'
     | '/_site/events/goa-susegad'
+    | '/passport/_authenticated/admin'
+    | '/passport/_authenticated/discover'
+    | '/passport/_authenticated/leaderboard'
+    | '/passport/_authenticated/onboarding'
+    | '/passport/_authenticated/passport'
+    | '/passport/_authenticated/admin_/activity'
+    | '/passport/_authenticated/admin_/audit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   SiteRoute: typeof SiteRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
-  LandingRoute: typeof LandingRouteWithChildren
+  PassportRoute: typeof PassportRouteWithChildren
   PCodeRoute: typeof PCodeRoute
-  PassportIndexRoute: typeof PassportIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/landing': {
-      id: '/landing'
-      path: '/landing'
-      fullPath: '/landing'
-      preLoaderRoute: typeof LandingRouteImport
+    '/passport': {
+      id: '/passport'
+      path: '/passport'
+      fullPath: '/passport'
+      preLoaderRoute: typeof PassportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -346,26 +304,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/passport/': {
       id: '/passport/'
-      path: '/passport'
+      path: '/'
       fullPath: '/passport/'
       preLoaderRoute: typeof PassportIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/landing/': {
-      id: '/landing/'
-      path: '/'
-      fullPath: '/landing/'
-      preLoaderRoute: typeof LandingIndexRouteImport
-      parentRoute: typeof LandingRoute
+      parentRoute: typeof PassportRoute
     }
     '/_site/': {
       id: '/_site/'
@@ -374,47 +318,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteIndexRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/passport/_authenticated': {
+      id: '/passport/_authenticated'
+      path: ''
+      fullPath: '/passport'
+      preLoaderRoute: typeof PassportAuthenticatedRouteImport
+      parentRoute: typeof PassportRoute
+    }
     '/p/$code': {
       id: '/p/$code'
       path: '/p/$code'
       fullPath: '/p/$code'
       preLoaderRoute: typeof PCodeRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/landing/rules': {
-      id: '/landing/rules'
-      path: '/rules'
-      fullPath: '/landing/rules'
-      preLoaderRoute: typeof LandingRulesRouteImport
-      parentRoute: typeof LandingRoute
-    }
-    '/landing/experiences': {
-      id: '/landing/experiences'
-      path: '/experiences'
-      fullPath: '/landing/experiences'
-      preLoaderRoute: typeof LandingExperiencesRouteImport
-      parentRoute: typeof LandingRoute
-    }
-    '/landing/events': {
-      id: '/landing/events'
-      path: '/events'
-      fullPath: '/landing/events'
-      preLoaderRoute: typeof LandingEventsRouteImport
-      parentRoute: typeof LandingRoute
-    }
-    '/landing/brands': {
-      id: '/landing/brands'
-      path: '/brands'
-      fullPath: '/landing/brands'
-      preLoaderRoute: typeof LandingBrandsRouteImport
-      parentRoute: typeof LandingRoute
-    }
-    '/landing/about': {
-      id: '/landing/about'
-      path: '/about'
-      fullPath: '/landing/about'
-      preLoaderRoute: typeof LandingAboutRouteImport
-      parentRoute: typeof LandingRoute
     }
     '/auth/callback': {
       id: '/auth/callback'
@@ -458,40 +374,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteAboutRouteImport
       parentRoute: typeof SiteRoute
     }
-    '/_authenticated/passport': {
-      id: '/_authenticated/passport'
+    '/passport/_authenticated/passport': {
+      id: '/passport/_authenticated/passport'
       path: '/passport'
-      fullPath: '/passport'
-      preLoaderRoute: typeof AuthenticatedPassportRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      fullPath: '/passport/passport'
+      preLoaderRoute: typeof PassportAuthenticatedPassportRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
     }
-    '/_authenticated/onboarding': {
-      id: '/_authenticated/onboarding'
+    '/passport/_authenticated/onboarding': {
+      id: '/passport/_authenticated/onboarding'
       path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      fullPath: '/passport/onboarding'
+      preLoaderRoute: typeof PassportAuthenticatedOnboardingRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
     }
-    '/_authenticated/leaderboard': {
-      id: '/_authenticated/leaderboard'
+    '/passport/_authenticated/leaderboard': {
+      id: '/passport/_authenticated/leaderboard'
       path: '/leaderboard'
-      fullPath: '/leaderboard'
-      preLoaderRoute: typeof AuthenticatedLeaderboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      fullPath: '/passport/leaderboard'
+      preLoaderRoute: typeof PassportAuthenticatedLeaderboardRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
     }
-    '/_authenticated/discover': {
-      id: '/_authenticated/discover'
+    '/passport/_authenticated/discover': {
+      id: '/passport/_authenticated/discover'
       path: '/discover'
-      fullPath: '/discover'
-      preLoaderRoute: typeof AuthenticatedDiscoverRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      fullPath: '/passport/discover'
+      preLoaderRoute: typeof PassportAuthenticatedDiscoverRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
+    '/passport/_authenticated/admin': {
+      id: '/passport/_authenticated/admin'
       path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      fullPath: '/passport/admin'
+      preLoaderRoute: typeof PassportAuthenticatedAdminRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
     }
     '/_site/events/goa-susegad': {
       id: '/_site/events/goa-susegad'
@@ -500,27 +416,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteEventsGoaSusegadRouteImport
       parentRoute: typeof SiteEventsRoute
     }
+    '/passport/_authenticated/admin_/audit': {
+      id: '/passport/_authenticated/admin_/audit'
+      path: '/admin/audit'
+      fullPath: '/passport/admin/audit'
+      preLoaderRoute: typeof PassportAuthenticatedAdminAuditRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
+    }
+    '/passport/_authenticated/admin_/activity': {
+      id: '/passport/_authenticated/admin_/activity'
+      path: '/admin/activity'
+      fullPath: '/passport/admin/activity'
+      preLoaderRoute: typeof PassportAuthenticatedAdminActivityRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
+    }
   }
 }
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
-  AuthenticatedDiscoverRoute: typeof AuthenticatedDiscoverRoute
-  AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
-  AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
-  AuthenticatedPassportRoute: typeof AuthenticatedPassportRoute
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
-  AuthenticatedDiscoverRoute: AuthenticatedDiscoverRoute,
-  AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
-  AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
-  AuthenticatedPassportRoute: AuthenticatedPassportRoute,
-}
-
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface SiteEventsRouteChildren {
   SiteEventsGoaSusegadRoute: typeof SiteEventsGoaSusegadRoute
@@ -564,34 +475,51 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
-interface LandingRouteChildren {
-  LandingAboutRoute: typeof LandingAboutRoute
-  LandingBrandsRoute: typeof LandingBrandsRoute
-  LandingEventsRoute: typeof LandingEventsRoute
-  LandingExperiencesRoute: typeof LandingExperiencesRoute
-  LandingRulesRoute: typeof LandingRulesRoute
-  LandingIndexRoute: typeof LandingIndexRoute
+interface PassportAuthenticatedRouteChildren {
+  PassportAuthenticatedAdminRoute: typeof PassportAuthenticatedAdminRoute
+  PassportAuthenticatedDiscoverRoute: typeof PassportAuthenticatedDiscoverRoute
+  PassportAuthenticatedLeaderboardRoute: typeof PassportAuthenticatedLeaderboardRoute
+  PassportAuthenticatedOnboardingRoute: typeof PassportAuthenticatedOnboardingRoute
+  PassportAuthenticatedPassportRoute: typeof PassportAuthenticatedPassportRoute
+  PassportAuthenticatedAdminActivityRoute: typeof PassportAuthenticatedAdminActivityRoute
+  PassportAuthenticatedAdminAuditRoute: typeof PassportAuthenticatedAdminAuditRoute
 }
 
-const LandingRouteChildren: LandingRouteChildren = {
-  LandingAboutRoute: LandingAboutRoute,
-  LandingBrandsRoute: LandingBrandsRoute,
-  LandingEventsRoute: LandingEventsRoute,
-  LandingExperiencesRoute: LandingExperiencesRoute,
-  LandingRulesRoute: LandingRulesRoute,
-  LandingIndexRoute: LandingIndexRoute,
+const PassportAuthenticatedRouteChildren: PassportAuthenticatedRouteChildren = {
+  PassportAuthenticatedAdminRoute: PassportAuthenticatedAdminRoute,
+  PassportAuthenticatedDiscoverRoute: PassportAuthenticatedDiscoverRoute,
+  PassportAuthenticatedLeaderboardRoute: PassportAuthenticatedLeaderboardRoute,
+  PassportAuthenticatedOnboardingRoute: PassportAuthenticatedOnboardingRoute,
+  PassportAuthenticatedPassportRoute: PassportAuthenticatedPassportRoute,
+  PassportAuthenticatedAdminActivityRoute:
+    PassportAuthenticatedAdminActivityRoute,
+  PassportAuthenticatedAdminAuditRoute: PassportAuthenticatedAdminAuditRoute,
 }
 
-const LandingRouteWithChildren =
-  LandingRoute._addFileChildren(LandingRouteChildren)
+const PassportAuthenticatedRouteWithChildren =
+  PassportAuthenticatedRoute._addFileChildren(
+    PassportAuthenticatedRouteChildren,
+  )
+
+interface PassportRouteChildren {
+  PassportAuthenticatedRoute: typeof PassportAuthenticatedRouteWithChildren
+  PassportIndexRoute: typeof PassportIndexRoute
+}
+
+const PassportRouteChildren: PassportRouteChildren = {
+  PassportAuthenticatedRoute: PassportAuthenticatedRouteWithChildren,
+  PassportIndexRoute: PassportIndexRoute,
+}
+
+const PassportRouteWithChildren = PassportRoute._addFileChildren(
+  PassportRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   SiteRoute: SiteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
-  LandingRoute: LandingRouteWithChildren,
+  PassportRoute: PassportRouteWithChildren,
   PCodeRoute: PCodeRoute,
-  PassportIndexRoute: PassportIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

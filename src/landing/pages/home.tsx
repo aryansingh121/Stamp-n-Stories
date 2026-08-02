@@ -10,7 +10,6 @@ import { ExperiencesSection } from "@/landing/components/sections/ExperiencesSec
 import { UpcomingEventsSection } from "@/landing/components/sections/UpcomingEventsSection";
 import { RulesSection } from "@/landing/components/sections/RulesSection";
 import { BrandsSection } from "@/landing/components/sections/BrandsSection";
-import { ApplySection } from "@/landing/components/sections/ApplySection";
 import { FAQSection } from "@/landing/components/sections/FAQSection";
 import { useEffect } from "react";
 
@@ -33,7 +32,6 @@ export function HomePage() {
         <UpcomingEventsSection />
         <RulesSection />
         <BrandsSection />
-        <ApplySection />
         <FAQSection />
       </main>
       <Footer />

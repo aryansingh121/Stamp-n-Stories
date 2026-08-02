@@ -14,7 +14,9 @@ export function HowItWorksPage() {
       <main className="flex-1 pt-24 bg-[#F6F0E6]">
         <div className="container mx-auto px-6 max-w-3xl text-center mb-[-4rem] pt-12">
           <h1 className="text-4xl md:text-6xl font-serif text-[#202124] mb-4">How it works</h1>
-          <p className="text-[#202124]/60 font-sans text-lg">The infrastructure of a verified community.</p>
+          <p className="text-[#202124]/60 font-sans text-lg">
+            The infrastructure of a verified community.
+          </p>
         </div>
         <TrustSystemSection />
       </main>

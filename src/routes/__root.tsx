@@ -38,7 +38,9 @@ function NotFoundComponent() {
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+  if (import.meta.env.DEV) {
+    console.error(error);
+  }
   const router = useRouter();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
@@ -51,12 +53,17 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <p className="mt-2 text-sm text-muted-foreground">Try again or head home.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
-            onClick={() => { router.invalidate(); reset(); }}
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
             className="rounded-full bg-coral px-5 py-2 text-sm font-medium text-primary-foreground"
           >
             Try again
           </button>
-          <a href="/" className="rounded-full border border-ink px-5 py-2 text-sm font-medium">Home</a>
+          <a href="/" className="rounded-full border border-ink px-5 py-2 text-sm font-medium">
+            Home
+          </a>
         </div>
       </div>
     </div>
@@ -69,13 +76,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Stamp & Stories — Community Passport" },
-      { name: "description", content: "The digital passport for our travel community. Collect stamps, find your squad, share your story." },
+      {
+        name: "description",
+        content:
+          "The digital passport for our travel community. Collect stamps, find your squad, share your story.",
+      },
+      { name: "google-site-verification", content: "" },
+      { property: "og:url", content: "https://stampnstories.com" },
       { property: "og:title", content: "Stamp & Stories — Community Passport" },
-      { property: "og:description", content: "Build your traveller passport. Collect stamps. Find your squad." },
+      {
+        property: "og:description",
+        content: "Build your traveller passport. Collect stamps. Find your squad.",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://stampnstories.com/logo.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://stampnstories.com/logo.png" },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "canonical", href: "https://stampnstories.com" },
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+      { rel: "manifest", href: "/site.webmanifest" },
+      { rel: "stylesheet", href: appCss },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -86,27 +112,54 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <head><HeadContent /></head>
-      <body>{children}<Scripts /></body>
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
     </html>
   );
 }
+
+import { AuthBootstrap } from "@/components/AuthBootstrap";
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+    if (typeof window !== "undefined") {
+      console.log("==============================");
+      console.log("[1. App Startup]");
+      console.log("URL:", window.location.href);
+      console.log("Hash:", window.location.hash);
+      console.log("Pathname:", window.location.pathname);
+      console.log("==============================");
+    }
+
+    const { data: sub } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("==============================");
+      console.log("[3. onAuthStateChange - __root.tsx]");
+      console.log("Event:", event);
+      console.log("Pathname:", window.location.pathname);
+      console.log("Hash:", window.location.hash);
+      console.log("User ID:", session?.user?.id || "null");
+      console.log("==============================");
+
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
-      router.invalidate();
-      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+      setTimeout(() => {
+        router.invalidate();
+        if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+      }, 50);
     });
     return () => sub.subscription.unsubscribe();
   }, [router, queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthBootstrap />
       <Outlet />
       <Toaster richColors position="top-center" />
     </QueryClientProvider>

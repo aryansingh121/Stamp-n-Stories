@@ -63,14 +63,14 @@ export function TrustSystemSection() {
                 }`}
               >
                 {/* Content */}
-                <div className={`md:w-1/2 flex flex-col ${i % 2 === 0 ? "md:items-start md:text-left" : "md:items-end md:text-right"} text-center`}>
+                <div
+                  className={`md:w-1/2 flex flex-col ${i % 2 === 0 ? "md:items-start md:text-left" : "md:items-end md:text-right"} text-center`}
+                >
                   <div className="bg-[#FFFDF9] p-8 rounded-2xl shadow-sm border border-[#202124]/5 w-full relative group hover:border-[#F26A2E]/20 transition-colors">
                     <h3 className="font-serif font-bold text-xl text-[#202124] mb-3">
                       {step.title}
                     </h3>
-                    <p className="text-[#202124]/70 text-sm leading-relaxed">
-                      {step.desc}
-                    </p>
+                    <p className="text-[#202124]/70 text-sm leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
 
@@ -78,7 +78,7 @@ export function TrustSystemSection() {
                 <div className="absolute md:static left-1/2 transform -translate-x-1/2 md:translate-x-0 bg-[#202124] w-12 h-12 rounded-full border-4 border-[#F6F0E6] flex items-center justify-center text-[#FFFDF9] font-serif font-bold text-lg z-10 hidden md:flex shadow-md">
                   0{i + 1}
                 </div>
-                
+
                 {/* Mobile number badge (inline) */}
                 <div className="bg-[#202124] w-10 h-10 rounded-full border-2 border-[#F6F0E6] flex items-center justify-center text-[#FFFDF9] font-serif font-bold text-sm z-10 md:hidden mt-[-2rem]">
                   0{i + 1}

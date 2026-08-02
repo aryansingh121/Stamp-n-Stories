@@ -7,7 +7,11 @@ export function InstagramQR({ handle }: { handle: string | null | undefined }) {
   const [qr, setQr] = useState<string>("");
   const [copied, setCopied] = useState(false);
 
-  const clean = (handle || "").trim().replace(/^@/, "").replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/\/+$/, "");
+  const clean = (handle || "")
+    .trim()
+    .replace(/^@/, "")
+    .replace(/^https?:\/\/(www\.)?instagram\.com\//i, "")
+    .replace(/\/+$/, "");
   const url = clean ? `https://instagram.com/${clean}` : "";
 
   useEffect(() => {
@@ -16,7 +20,9 @@ export function InstagramQR({ handle }: { handle: string | null | undefined }) {
       margin: 1,
       width: 260,
       color: { dark: "#1A1A1A", light: "#FFF4E6" },
-    }).then(setQr).catch(() => {});
+    })
+      .then(setQr)
+      .catch(() => {});
   }, [url]);
 
   if (!clean) return null;

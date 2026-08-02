@@ -24,11 +24,10 @@ export function ProblemSection() {
             <span className="text-[#F26A2E] italic">Most plans don't feel safe enough.</span>
           </h2>
           <p className="text-lg md:text-xl text-[#202124]/80 leading-relaxed max-w-3xl mx-auto font-sans">
-            Women want to go out, travel, meet new people and experience more of
-            life. But most offline plans come with one big question: Will the
-            crowd feel safe enough? Random groups, poor moderation, pressure
-            culture, forced content, unknown men and unclear rules make many
-            women think twice before saying yes.
+            Women want to go out, travel, meet new people and experience more of life. But most
+            offline plans come with one big question: Will the crowd feel safe enough? Random
+            groups, poor moderation, pressure culture, forced content, unknown men and unclear rules
+            make many women think twice before saying yes.
           </p>
         </motion.div>
 

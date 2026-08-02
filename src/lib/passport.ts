@@ -57,7 +57,12 @@ export function vibeTags(interests: string[] = []): string[] {
 }
 
 export function travelPersonality(p: ProfileLike): string {
-  const all = (p.interests || []).join(" ").toLowerCase() + " " + (p.travel_vibe || "").toLowerCase() + " " + (p.cant_stop_doing || "").toLowerCase();
+  const all =
+    (p.interests || []).join(" ").toLowerCase() +
+    " " +
+    (p.travel_vibe || "").toLowerCase() +
+    " " +
+    (p.cant_stop_doing || "").toLowerCase();
   if (/food|eat|cook|coffee|snack|brunch/.test(all)) return "The Food Hunter";
   if (/party|dance|club|music|gig|house party/.test(all)) return "The Party Starter";
   if (/photo|camera|film|content|reel|write|story/.test(all)) return "The Storyteller";
@@ -107,7 +112,24 @@ export const TRAVEL_VIBES = [
 ] as const;
 
 export const SUGGESTED_INTERESTS = [
-  "Music", "Food", "Coffee", "Photography", "Hiking", "Beach", "Party",
-  "Yoga", "Art", "Film", "Books", "Surfing", "Biking", "Gaming",
-  "Fashion", "Cooking", "Travel", "Writing", "Startup", "Crypto",
+  "Music",
+  "Food",
+  "Coffee",
+  "Photography",
+  "Hiking",
+  "Beach",
+  "Party",
+  "Yoga",
+  "Art",
+  "Film",
+  "Books",
+  "Surfing",
+  "Biking",
+  "Gaming",
+  "Fashion",
+  "Cooking",
+  "Travel",
+  "Writing",
+  "Startup",
+  "Crypto",
 ];

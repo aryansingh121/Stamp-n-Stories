@@ -10,11 +10,17 @@ export function PassportSection() {
 
   return (
     <section className="py-24 md:py-32 bg-[#234A3C] text-[#F6F0E6] relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "200px 200px" }} />
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          backgroundSize: "200px 200px",
+        }}
+      />
 
       <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -28,11 +34,10 @@ export function PassportSection() {
               Not a ticket. Not a souvenir. A member identity that grows.
             </h3>
             <p className="text-[#F6F0E6]/80 text-lg leading-relaxed mb-10 max-w-lg">
-              Members create their passport profile online, but cannot buy the
-              physical passport directly. The physical passport is issued only
-              when they show up at a verified offline StampNStories experience.
-              Every stamp records a mission completed, a story earned and a
-              respectful moment witnessed by the community.
+              Members create their passport profile online, but cannot buy the physical passport
+              directly. The physical passport is issued only when they show up at a verified offline
+              StampNStories experience. Every stamp records a mission completed, a story earned and
+              a respectful moment witnessed by the community.
             </p>
 
             <div className="grid grid-cols-2 gap-4">
@@ -79,8 +84,12 @@ export function PassportSection() {
                 <div className="relative z-10 h-full flex flex-col justify-between p-8 pl-10">
                   {/* Header */}
                   <div>
-                    <p className="font-bold tracking-[0.25em] text-xs text-[#F26A2E] uppercase mb-0.5">STAMPNSTORIES</p>
-                    <p className="text-[#F6F0E6]/40 text-xs font-mono tracking-widest uppercase">Community Passport</p>
+                    <p className="font-bold tracking-[0.25em] text-xs text-[#F26A2E] uppercase mb-0.5">
+                      STAMPNSTORIES
+                    </p>
+                    <p className="text-[#F6F0E6]/40 text-xs font-mono tracking-widest uppercase">
+                      Community Passport
+                    </p>
                   </div>
 
                   {/* Center */}
@@ -92,14 +101,19 @@ export function PassportSection() {
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <span className="font-serif text-3xl font-bold text-[#F6F0E6]">S&S</span>
                         <div className="w-8 h-px bg-[#F26A2E] my-1" />
-                        <span className="text-[#F26A2E] text-[8px] font-bold tracking-[0.2em] uppercase">Earned</span>
+                        <span className="text-[#F26A2E] text-[8px] font-bold tracking-[0.2em] uppercase">
+                          Earned
+                        </span>
                       </div>
                     </div>
 
                     {/* Pillars inline */}
                     <div className="grid grid-cols-2 gap-2 w-full mb-4">
                       {["Identity", "Memory", "Access", "Trust"].map((p) => (
-                        <div key={p} className="bg-[#FFFDF9]/5 border border-[#FFFDF9]/10 rounded px-3 py-2 text-center">
+                        <div
+                          key={p}
+                          className="bg-[#FFFDF9]/5 border border-[#FFFDF9]/10 rounded px-3 py-2 text-center"
+                        >
                           <span className="text-[#F6F0E6]/70 text-xs font-medium">{p}</span>
                         </div>
                       ))}
@@ -111,14 +125,20 @@ export function PassportSection() {
                     <div className="w-full h-px bg-[#FFFDF9]/10 mb-4" />
                     <div className="flex justify-between items-end">
                       <div>
-                        <p className="text-[#F6F0E6]/40 font-mono text-[8px] tracking-widest uppercase mb-0.5">Passport ID</p>
+                        <p className="text-[#F6F0E6]/40 font-mono text-[8px] tracking-widest uppercase mb-0.5">
+                          Passport ID
+                        </p>
                         <p className="text-[#F6F0E6] font-mono text-xs tracking-widest">S&S-0001</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-[#F6F0E6]/40 font-mono text-[8px] tracking-widest uppercase mb-0.5">Status</p>
+                        <p className="text-[#F6F0E6]/40 font-mono text-[8px] tracking-widest uppercase mb-0.5">
+                          Status
+                        </p>
                         <div className="flex items-center gap-1">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#F26A2E]" />
-                          <span className="text-[#F26A2E] font-bold text-[10px] tracking-widest uppercase">Verified</span>
+                          <span className="text-[#F26A2E] font-bold text-[10px] tracking-widest uppercase">
+                            Verified
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -141,7 +161,6 @@ export function PassportSection() {
               </motion.div>
             </div>
           </motion.div>
-
         </div>
       </div>
     </section>

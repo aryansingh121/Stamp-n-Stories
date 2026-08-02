@@ -46,8 +46,8 @@ export function BrandsSection() {
             Partner with the community helping women feel comfortable saying yes.
           </h2>
           <p className="text-lg text-[#FFFDF9]/70 font-sans leading-relaxed">
-            Your brand is not interrupting the experience. Your brand is helping
-            women feel prepared enough to enter it.
+            Your brand is not interrupting the experience. Your brand is helping women feel prepared
+            enough to enter it.
           </p>
         </motion.div>
 
@@ -73,7 +73,11 @@ export function BrandsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <Button variant="outline" size="lg" className="border-[#F26A2E] text-[#F26A2E] hover:bg-[#F26A2E] hover:text-[#FFFDF9] rounded-full px-8 h-14 font-bold tracking-wide uppercase transition-all">
+          <Button
+            variant="outline"
+            size="lg"
+            className="border-[#F26A2E] text-[#F26A2E] hover:bg-[#F26A2E] hover:text-[#FFFDF9] rounded-full px-8 h-14 font-bold tracking-wide uppercase transition-all"
+          >
             Partner with us
           </Button>
         </motion.div>

@@ -6,8 +6,13 @@ export function HeroSection() {
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center bg-[#202124] overflow-hidden pt-20">
       {/* Grain texture overlay */}
-      <div className="absolute inset-0 z-0 opacity-[0.04] pointer-events-none"
-        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")", backgroundSize: "200px 200px" }}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
+          backgroundSize: "200px 200px",
+        }}
       />
       {/* Radial glow */}
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-[#F26A2E]/10 rounded-full blur-3xl pointer-events-none" />
@@ -27,13 +32,16 @@ export function HeroSection() {
             Building safer social hangout spaces for women.
           </h1>
           <p className="text-lg md:text-xl text-[#FFFDF9]/80 font-sans leading-relaxed mb-10 max-w-xl">
-            A verified social community where members earn stamps through trips,
-            meetups, house parties, movie nights and real-world stories.
+            A verified social community where members earn stamps through trips, meetups, house
+            parties, movie nights and real-world stories.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/passport">
-              <Button size="lg" className="w-full sm:w-auto bg-[#F26A2E] hover:bg-[#F26A2E]/90 text-white rounded-full px-8 h-14 text-base font-medium transition-all shadow-[0_0_20px_rgba(242,106,46,0.3)]">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto bg-[#F26A2E] hover:bg-[#F26A2E]/90 text-white rounded-full px-8 h-14 text-base font-medium transition-all shadow-[0_0_20px_rgba(242,106,46,0.3)]"
+              >
                 Apply for your passport
               </Button>
             </Link>
@@ -68,29 +76,47 @@ export function HeroSection() {
               {/* Passport background */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#1a1c1f] via-[#202124] to-[#141618]" />
               {/* Paper grain */}
-              <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "200px 200px" }} />
+              <div
+                className="absolute inset-0 opacity-5"
+                style={{
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+                  backgroundSize: "200px 200px",
+                }}
+              />
               {/* Top header band */}
               <div className="absolute top-0 left-0 right-0 h-2 bg-[#F26A2E]" />
               {/* Inner content */}
               <div className="relative z-10 h-full flex flex-col justify-between p-8">
                 {/* Header */}
                 <div>
-                  <p className="text-[#F26A2E] font-bold tracking-[0.3em] text-xs uppercase mb-1">STAMPNSTORIES</p>
-                  <p className="text-[#FFFDF9]/40 text-xs tracking-widest font-mono uppercase">Community Passport</p>
+                  <p className="text-[#F26A2E] font-bold tracking-[0.3em] text-xs uppercase mb-1">
+                    STAMPNSTORIES
+                  </p>
+                  <p className="text-[#FFFDF9]/40 text-xs tracking-widest font-mono uppercase">
+                    Community Passport
+                  </p>
                 </div>
                 {/* Center monogram */}
                 <div className="flex flex-col items-center justify-center flex-1 py-8">
                   <div className="relative w-36 h-36 mb-6">
-                    <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#F26A2E]/40 animate-spin" style={{ animationDuration: "20s" }} />
+                    <div
+                      className="absolute inset-0 rounded-full border-2 border-dashed border-[#F26A2E]/40 animate-spin"
+                      style={{ animationDuration: "20s" }}
+                    />
                     <div className="absolute inset-3 rounded-full border border-[#F6F0E6]/10" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                       <span className="font-serif text-4xl font-bold text-[#FFFDF9]">S&S</span>
                       <div className="w-8 h-px bg-[#F26A2E] my-1" />
-                      <span className="text-[#F26A2E] text-[9px] font-bold tracking-[0.2em] uppercase">Lifetime</span>
+                      <span className="text-[#F26A2E] text-[9px] font-bold tracking-[0.2em] uppercase">
+                        Lifetime
+                      </span>
                     </div>
                   </div>
                   <p className="font-serif text-2xl text-[#FFFDF9] text-center leading-snug">
-                    One passport.<br />Many stories.
+                    One passport.
+                    <br />
+                    Many stories.
                   </p>
                 </div>
                 {/* Footer */}
@@ -98,12 +124,18 @@ export function HeroSection() {
                   <div className="w-full h-px bg-[#FFFDF9]/10 mb-4" />
                   <div className="flex justify-between items-end">
                     <div>
-                      <p className="text-[#FFFDF9]/40 font-mono text-[9px] tracking-widest uppercase mb-0.5">Passport ID</p>
+                      <p className="text-[#FFFDF9]/40 font-mono text-[9px] tracking-widest uppercase mb-0.5">
+                        Passport ID
+                      </p>
                       <p className="text-[#F6F0E6] font-mono text-sm tracking-widest">S&S-0001</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-[#FFFDF9]/40 font-mono text-[9px] tracking-widest uppercase mb-0.5">Status</p>
-                      <p className="text-[#F26A2E] font-bold text-xs tracking-widest uppercase">Verified</p>
+                      <p className="text-[#FFFDF9]/40 font-mono text-[9px] tracking-widest uppercase mb-0.5">
+                        Status
+                      </p>
+                      <p className="text-[#F26A2E] font-bold text-xs tracking-widest uppercase">
+                        Verified
+                      </p>
                     </div>
                   </div>
                 </div>

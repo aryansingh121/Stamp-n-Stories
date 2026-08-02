@@ -6,37 +6,43 @@ export function ExperiencesSection() {
       title: "GOA EXPERIENCE",
       stamp: "The Susegad Stamp",
       desc: "Earn your chill. No tourists allowed. Three days. Four stamps. One uncommon Goa.",
-      image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=800&auto=format&fit=crop"
+      image:
+        "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=800&auto=format&fit=crop",
     },
     {
       title: "MUMBAI / DELHI / BENGALURU",
       stamp: "City Stamp",
       desc: "Short, curated meetups for verified members who want low-pressure offline plans.",
-      image: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=800&auto=format&fit=crop"
+      image:
+        "https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=800&auto=format&fit=crop",
     },
     {
       title: "HOUSE PARTIES",
       stamp: "Circle Stamp",
       desc: "Invite-only gatherings with host-led moderation and clear community rules.",
-      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=800&auto=format&fit=crop"
+      image:
+        "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=800&auto=format&fit=crop",
     },
     {
       title: "MOVIE NIGHTS",
       stamp: "Screen Stamp",
       desc: "Easy hangout format for women who want to meet people without awkward networking.",
-      image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=800&auto=format&fit=crop"
+      image:
+        "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=800&auto=format&fit=crop",
     },
     {
       title: "NATURE MISSIONS",
       stamp: "Wild Stamp",
       desc: "Phones down, guided routes, courage without unsafe pressure.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800&auto=format&fit=crop"
+      image:
+        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800&auto=format&fit=crop",
     },
     {
       title: "BRAND EXPERIENCES",
       stamp: "Partner Stamp",
       desc: "Women-focused brands add comfort, safety and utility to real-life moments.",
-      image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop"
+      image:
+        "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop",
     },
   ];
 
@@ -68,13 +74,13 @@ export function ExperiencesSection() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group relative overflow-hidden rounded-2xl aspect-[4/5] bg-[#202124] flex items-end p-6 cursor-pointer"
             >
-              <img 
-                src={exp.image} 
-                alt={exp.title} 
+              <img
+                src={exp.image}
+                alt={exp.title}
                 className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/50 to-transparent"></div>
-              
+
               <div className="relative z-10 w-full transform transition-transform duration-500 group-hover:translate-y-[-10px]">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="w-8 h-8 rounded-full border border-[#F26A2E] flex items-center justify-center bg-[#F26A2E]/20 backdrop-blur-sm text-[#FFFDF9] text-xs">
@@ -84,9 +90,7 @@ export function ExperiencesSection() {
                     {exp.stamp}
                   </span>
                 </div>
-                <h3 className="font-serif text-2xl text-[#FFFDF9] mb-3">
-                  {exp.title}
-                </h3>
+                <h3 className="font-serif text-2xl text-[#FFFDF9] mb-3">{exp.title}</h3>
                 <p className="text-sm text-[#FFFDF9]/80 leading-relaxed font-sans opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition-all duration-500 overflow-hidden">
                   {exp.desc}
                 </p>

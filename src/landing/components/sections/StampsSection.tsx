@@ -7,28 +7,28 @@ export function StampsSection() {
       subtitle: "Curiosity and connection.",
       desc: "Learn one local story, speak meaningfully with one new person and write one reflection.",
       color: "border-[#F26A2E]",
-      bg: "bg-[#F26A2E]/10"
+      bg: "bg-[#F26A2E]/10",
     },
     {
       title: "WILD STAMP",
       subtitle: "Attention and courage.",
       desc: "Complete a silent mission, observe details and choose one safe act of courage.",
       color: "border-[#234A3C]",
-      bg: "bg-[#234A3C]/10"
+      bg: "bg-[#234A3C]/10",
     },
     {
       title: "FIRE STAMP",
       subtitle: "Honesty and listening.",
       desc: "Join a phones-down story circle by sharing honestly or listening fully and appreciating someone.",
       color: "border-[#D9381E]", // a redder orange
-      bg: "bg-[#D9381E]/10"
+      bg: "bg-[#D9381E]/10",
     },
     {
       title: "SUSEGAD STAMP",
       subtitle: "Presence and community.",
       desc: "Respect pace, complete a kindness mission, write passport notes and leave the place better.",
       color: "border-[#E1B12C]", // mustard yellow
-      bg: "bg-[#E1B12C]/10"
+      bg: "bg-[#E1B12C]/10",
     },
   ];
 
@@ -61,10 +61,10 @@ export function StampsSection() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className={`relative aspect-square rounded-full border-2 border-dashed ${stamp.color} ${stamp.bg} flex flex-col items-center justify-center p-8 text-center cursor-pointer`}
             >
-              <div className={`absolute inset-2 border ${stamp.color} rounded-full opacity-50`}></div>
-              <h3 className="font-serif font-bold text-lg tracking-wider mb-2">
-                {stamp.title}
-              </h3>
+              <div
+                className={`absolute inset-2 border ${stamp.color} rounded-full opacity-50`}
+              ></div>
+              <h3 className="font-serif font-bold text-lg tracking-wider mb-2">{stamp.title}</h3>
               <p className="text-xs font-bold uppercase tracking-widest text-[#F6F0E6]/60 mb-3">
                 {stamp.subtitle}
               </p>
@@ -83,8 +83,8 @@ export function StampsSection() {
           className="text-center max-w-3xl mx-auto border-t border-[#FFFDF9]/10 pt-12"
         >
           <p className="text-lg font-sans text-[#FFFDF9]/80 leading-relaxed">
-            You cannot buy a stamp. You can only earn it by showing up with
-            presence, respect, courage and connection.
+            You cannot buy a stamp. You can only earn it by showing up with presence, respect,
+            courage and connection.
           </p>
         </motion.div>
       </div>

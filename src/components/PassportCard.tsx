@@ -45,7 +45,11 @@ export function PassportCard({
   const icebreaker = icebreakerFor(data.id);
 
   useEffect(() => {
-    QRCode.toDataURL(shareUrl, { margin: 1, width: 220, color: { dark: "#1A1A1A", light: "#FFF4E6" } })
+    QRCode.toDataURL(shareUrl, {
+      margin: 1,
+      width: 220,
+      color: { dark: "#1A1A1A", light: "#FFF4E6" },
+    })
       .then(setQr)
       .catch(() => {});
   }, [shareUrl]);
@@ -60,11 +64,15 @@ export function PassportCard({
         signedPhotoUrl(data.photo_url).then((u) => alive && u && setPhoto(u));
       }
     }
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, [data.photo_url]);
 
   const issued = new Date(data.issued_at).toLocaleDateString(undefined, {
-    day: "2-digit", month: "short", year: "numeric",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
   });
 
   const slots = [...data.stamps.slice(0, 6)];
@@ -80,9 +88,13 @@ export function PassportCard({
       <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-4 sm:px-6 sm:pt-6">
         <div className="flex items-center gap-2">
           <Plane className="h-4 w-4 text-coral" />
-          <span className="font-display text-[10px] uppercase tracking-[0.22em] sm:text-[11px]">Stamp &amp; Stories</span>
+          <span className="font-display text-[10px] uppercase tracking-[0.22em] sm:text-[11px]">
+            Stamp &amp; Stories
+          </span>
         </div>
-        <span className="font-display text-[10px] uppercase tracking-[0.22em] text-ink/60 sm:text-[11px]">Community Passport</span>
+        <span className="font-display text-[10px] uppercase tracking-[0.22em] text-ink/60 sm:text-[11px]">
+          Community Passport
+        </span>
       </div>
 
       {/* Diagonal "ISSUED" stamp */}
@@ -102,19 +114,29 @@ export function PassportCard({
             </div>
           </div>
           <div className="min-w-0 flex-1">
-            <div className="text-[9px] uppercase tracking-[0.2em] text-ink/60 sm:text-[10px]">Name</div>
-            <div className="font-display text-lg leading-tight sm:text-xl lg:text-[1.35rem]">{data.full_name || "Unnamed Member"}</div>
+            <div className="text-[9px] uppercase tracking-[0.2em] text-ink/60 sm:text-[10px]">
+              Name
+            </div>
+            <div className="font-display text-lg leading-tight sm:text-xl lg:text-[1.35rem]">
+              {data.full_name || "Unnamed Member"}
+            </div>
             <div className="mt-2 grid grid-cols-2 gap-1 text-[10px] sm:text-[11px]">
               <div>
-                <div className="text-[8px] uppercase tracking-widest text-ink/50 sm:text-[9px]">City</div>
+                <div className="text-[8px] uppercase tracking-widest text-ink/50 sm:text-[9px]">
+                  City
+                </div>
                 <div className="truncate font-medium">{data.city || "—"}</div>
               </div>
               <div>
-                <div className="text-[8px] uppercase tracking-widest text-ink/50 sm:text-[9px]">Age</div>
+                <div className="text-[8px] uppercase tracking-widest text-ink/50 sm:text-[9px]">
+                  Age
+                </div>
                 <div className="font-medium">{data.age ?? "—"}</div>
               </div>
               <div className="col-span-2">
-                <div className="text-[8px] uppercase tracking-widest text-ink/50 sm:text-[9px]">Code</div>
+                <div className="text-[8px] uppercase tracking-widest text-ink/50 sm:text-[9px]">
+                  Code
+                </div>
                 <div className="font-display text-sm sm:text-[15px]">{data.traveller_code}</div>
               </div>
             </div>
@@ -139,21 +161,32 @@ export function PassportCard({
         {/* Cant stop doing */}
         {data.cant_stop_doing && (
           <div className="mt-3 rounded-xl border-2 border-dashed border-ink/30 bg-paper/60 p-3 sm:mt-4">
-            <div className="text-[8px] uppercase tracking-widest text-ink/60 sm:text-[9px]">One thing I can't stop doing</div>
-            <div className="font-script text-xl leading-tight text-coral sm:text-2xl">"{data.cant_stop_doing}"</div>
+            <div className="text-[8px] uppercase tracking-widest text-ink/60 sm:text-[9px]">
+              One thing I can't stop doing
+            </div>
+            <div className="font-script text-xl leading-tight text-coral sm:text-2xl">
+              "{data.cant_stop_doing}"
+            </div>
           </div>
         )}
 
         {/* Vibe tags */}
         <div className="mt-3 flex flex-wrap gap-1.5">
           {tags.map((t) => (
-            <span key={t} className="rounded-full bg-sun/70 px-2 py-0.5 text-[9px] font-medium text-ink/80 sm:text-[10px]">{t}</span>
+            <span
+              key={t}
+              className="rounded-full bg-sun/70 px-2 py-0.5 text-[9px] font-medium text-ink/80 sm:text-[10px]"
+            >
+              {t}
+            </span>
           ))}
         </div>
 
         {/* Stamps grid */}
         <div className="mt-3 sm:mt-4">
-          <div className="mb-1.5 text-[8px] uppercase tracking-widest text-ink/60 sm:text-[9px]">Community Stamps</div>
+          <div className="mb-1.5 text-[8px] uppercase tracking-widest text-ink/60 sm:text-[9px]">
+            Community Stamps
+          </div>
           <div className="grid grid-cols-6 gap-1.5 sm:gap-2">
             {slots.map((s, i) => (
               <div
@@ -164,7 +197,9 @@ export function PassportCard({
                 {s.event ? (
                   <div className="text-center leading-none">
                     <div className="text-base sm:text-lg">{s.emoji || "✦"}</div>
-                    <div className="text-[6px] font-display uppercase tracking-tight text-stamp sm:text-[7px]">{s.event.slice(0, 6)}</div>
+                    <div className="text-[6px] font-display uppercase tracking-tight text-stamp sm:text-[7px]">
+                      {s.event.slice(0, 6)}
+                    </div>
                   </div>
                 ) : (
                   <Stamp className="h-3 w-3 text-ink/25" />
@@ -184,14 +219,22 @@ export function PassportCard({
               <div className="flex items-center gap-1 text-[8px] uppercase tracking-widest text-ink/60 sm:text-[9px]">
                 <Sparkles className="h-2.5 w-2.5" /> Icebreaker
               </div>
-              <div className="font-script text-sm leading-tight text-ink sm:text-base">{icebreaker}</div>
+              <div className="font-script text-sm leading-tight text-ink sm:text-base">
+                {icebreaker}
+              </div>
             </div>
             {data.instagram && (
-              <div className="text-[9px] text-ink/70 sm:text-[10px]">@{data.instagram.replace(/^@/, "")}</div>
+              <div className="text-[9px] text-ink/70 sm:text-[10px]">
+                @{data.instagram.replace(/^@/, "")}
+              </div>
             )}
           </div>
           <div className="flex shrink-0 justify-center rounded-md border border-ink/20 bg-paper p-1 sm:justify-start">
-            {qr ? <img src={qr} alt="QR" className="h-16 w-16 sm:h-20 sm:w-20" /> : <div className="h-16 w-16 sm:h-20 sm:w-20" />}
+            {qr ? (
+              <img src={qr} alt="QR" className="h-16 w-16 sm:h-20 sm:w-20" />
+            ) : (
+              <div className="h-16 w-16 sm:h-20 sm:w-20" />
+            )}
           </div>
         </div>
       </div>

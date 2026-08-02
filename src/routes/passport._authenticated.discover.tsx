@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { AppHeader } from "@/components/AppHeader";
-import { squadScore, travelPersonality } from "@/lib/passport";
+import { type ProfileLike, squadScore, travelPersonality } from "@/lib/passport";
 import { useEffect, useState } from "react";
 import { signedPhotoUrl } from "@/lib/photo";
 import { Link } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 
-export const Route = createFileRoute("/_authenticated/discover")({
+export const Route = createFileRoute("/passport/_authenticated/discover")({
   component: Discover,
 });
 
@@ -20,7 +20,11 @@ function Discover() {
     queryFn: async () => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) return null;
-      const { data } = await supabase.from("profiles").select("*").eq("id", u.user.id).maybeSingle();
+      const { data } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", u.user.id)
+        .maybeSingle();
       return data;
     },
   });
@@ -30,7 +34,9 @@ function Discover() {
     queryFn: async () => {
       const { data } = await supabase
         .from("profiles")
-        .select("id,traveller_code,full_name,city,age,interests,travel_vibe,photo_url,cant_stop_doing")
+        .select(
+          "id,traveller_code,full_name,city,age,interests,travel_vibe,photo_url,cant_stop_doing",
+        )
         .eq("status", "approved")
         .limit(60);
       return data || [];
@@ -39,13 +45,14 @@ function Discover() {
 
   const list = (others || [])
     .filter((o) => o.id !== me?.id)
-    .filter((o) =>
-      !q ||
-      o.full_name?.toLowerCase().includes(q.toLowerCase()) ||
-      o.city?.toLowerCase().includes(q.toLowerCase()) ||
-      (o.interests || []).some((i: string) => i.toLowerCase().includes(q.toLowerCase()))
+    .filter(
+      (o) =>
+        !q ||
+        o.full_name?.toLowerCase().includes(q.toLowerCase()) ||
+        o.city?.toLowerCase().includes(q.toLowerCase()) ||
+        (o.interests || []).some((i: string) => i.toLowerCase().includes(q.toLowerCase())),
     )
-    .map((o) => ({ ...o, score: me ? squadScore(me as any, o as any) : 0 }))
+    .map((o) => ({ ...o, score: me ? squadScore(me as unknown as ProfileLike, o as unknown as ProfileLike) : 0 }))
     .sort((a, b) => b.score - a.score);
 
   return (
@@ -54,17 +61,38 @@ function Discover() {
       <main className="mx-auto max-w-5xl px-4 py-8">
         <h1 className="font-display text-3xl sm:text-4xl">Find your squad</h1>
         <p className="mt-1 text-sm text-ink/60">Approved travellers ranked by vibe match.</p>
-        <Input className="mt-4 max-w-sm" placeholder="Search by name, city, interest" value={q} onChange={(e) => setQ(e.target.value)} />
+        <Input
+          className="mt-4 max-w-sm"
+          placeholder="Search by name, city, interest"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {list.length === 0 && <p className="text-ink/50 text-sm">No matches yet.</p>}
-          {list.map((p) => <SquadCard key={p.id} p={p} />)}
+          {list.map((p) => (
+            <SquadCard key={p.id} p={p} />
+          ))}
         </div>
       </main>
     </div>
   );
 }
 
-function SquadCard({ p }: { p: any }) {
+function SquadCard({
+  p,
+}: {
+  p: Partial<import("@/integrations/supabase/types").Database["public"]["Tables"]["profiles"]["Row"]> & { 
+    id: string; 
+    traveller_code: string;
+    score: number;
+    interests?: string[] | null;
+    travel_vibe?: string | null;
+    cant_stop_doing?: string | null;
+    photo_url?: string | null;
+    full_name?: string | null;
+    city?: string | null;
+  };
+}) {
   const [img, setImg] = useState<string | null>(null);
   useEffect(() => {
     if (p.photo_url) signedPhotoUrl(p.photo_url).then((u) => u && setImg(u));
@@ -87,10 +115,14 @@ function SquadCard({ p }: { p: any }) {
               {p.score}% match
             </span>
           </div>
-          <div className="text-xs text-ink/60 truncate">{p.city} · {travelPersonality(p)}</div>
+          <div className="text-xs text-ink/60 truncate">
+            {p.city} · {travelPersonality(p as unknown as ProfileLike)}
+          </div>
           <div className="mt-1 flex flex-wrap gap-1">
             {(p.interests || []).slice(0, 3).map((i: string) => (
-              <span key={i} className="rounded-full bg-sun/60 px-1.5 py-0.5 text-[10px]">{i}</span>
+              <span key={i} className="rounded-full bg-sun/60 px-1.5 py-0.5 text-[10px]">
+                {i}
+              </span>
             ))}
           </div>
         </div>

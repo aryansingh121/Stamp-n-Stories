@@ -67,12 +67,8 @@ export function WhatWeBuildingSection() {
               <div className="w-12 h-12 rounded-full border border-[#202124]/20 flex items-center justify-center font-serif text-lg text-[#202124] mb-6 group-hover:bg-[#F26A2E] group-hover:text-white group-hover:border-[#F26A2E] transition-colors">
                 {card.number}
               </div>
-              <h3 className="font-serif text-xl font-bold text-[#202124] mb-4">
-                {card.title}
-              </h3>
-              <p className="text-[#202124]/70 leading-relaxed font-sans text-sm">
-                {card.desc}
-              </p>
+              <h3 className="font-serif text-xl font-bold text-[#202124] mb-4">{card.title}</h3>
+              <p className="text-[#202124]/70 leading-relaxed font-sans text-sm">{card.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -85,10 +81,13 @@ export function WhatWeBuildingSection() {
           className="text-center"
         >
           <p className="text-xl md:text-2xl font-serif italic text-[#202124]/80 mb-8 max-w-3xl mx-auto">
-            Not a trip company. Not a dating app. A verified offline community
-            where every experience becomes a stamp in your story.
+            Not a trip company. Not a dating app. A verified offline community where every
+            experience becomes a stamp in your story.
           </p>
-          <Link to="/experiences" className="inline-flex items-center gap-2 text-[#F26A2E] font-bold tracking-wide hover:gap-3 transition-all">
+          <Link
+            to="/experiences"
+            className="inline-flex items-center gap-2 text-[#F26A2E] font-bold tracking-wide hover:gap-3 transition-all"
+          >
             Explore Experiences <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>

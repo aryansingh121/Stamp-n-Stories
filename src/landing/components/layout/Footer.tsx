@@ -16,9 +16,9 @@ export function Footer() {
       <div className="container mx-auto max-w-6xl flex flex-col md:flex-row justify-between items-start gap-12">
         <div className="max-w-md">
           <Link to="/">
-            <span className="font-serif font-bold text-2xl tracking-widest uppercase block mb-4 cursor-pointer hover:text-[#F26A2E] transition-colors">
-              Stamp<span className="text-[#F26A2E]">N</span>Stories
-            </span>
+            <div className="bg-white rounded-xl p-2 inline-block mb-4 hover:opacity-90 transition-opacity">
+              <img src="/logo.png" alt="Stamp & Stories" className="h-12 w-auto object-contain" />
+            </div>
           </Link>
           <p className="font-serif text-xl text-[#F6F0E6]/80 italic mb-6">
             Every stamp has a story.
@@ -36,7 +36,10 @@ export function Footer() {
             <ul className="flex flex-col gap-4">
               {navLinks.slice(0, 4).map((link) => (
                 <li key={link.href}>
-                  <Link to={link.href} className="text-[#F6F0E6]/80 hover:text-[#F26A2E] transition-colors font-medium">
+                  <Link
+                    to={link.href}
+                    className="text-[#F6F0E6]/80 hover:text-[#F26A2E] transition-colors font-medium"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -50,7 +53,10 @@ export function Footer() {
             <ul className="flex flex-col gap-4">
               {navLinks.slice(4).map((link) => (
                 <li key={link.href}>
-                  <Link to={link.href} className="text-[#F6F0E6]/80 hover:text-[#F26A2E] transition-colors font-medium">
+                  <Link
+                    to={link.href}
+                    className="text-[#F6F0E6]/80 hover:text-[#F26A2E] transition-colors font-medium"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -61,10 +67,17 @@ export function Footer() {
       </div>
 
       <div className="container mx-auto max-w-6xl mt-20 pt-8 border-t border-[#F6F0E6]/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[#F6F0E6]/40">
-        <p>© {new Date().getFullYear()} StampNStories. Building safer social hangout spaces for women.</p>
+        <p>
+          © {new Date().getFullYear()} StampNStories. Building safer social hangout spaces for
+          women.
+        </p>
         <div className="flex gap-6">
-          <span className="hover:text-[#F6F0E6] transition-colors cursor-pointer">Privacy Policy</span>
-          <span className="hover:text-[#F6F0E6] transition-colors cursor-pointer">Terms of Service</span>
+          <span className="hover:text-[#F6F0E6] transition-colors cursor-pointer">
+            Privacy Policy
+          </span>
+          <span className="hover:text-[#F6F0E6] transition-colors cursor-pointer">
+            Terms of Service
+          </span>
         </div>
       </div>
     </footer>

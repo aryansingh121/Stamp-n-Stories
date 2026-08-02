@@ -37,8 +37,7 @@ const stamps = [
     meaning: "Presence & Community",
     earnedBy:
       "Respecting the group's pace, participating in pottery, completing the passport ritual and leaving the group space better than you found it.",
-    proof:
-      '"You made my Goa ______." — one line signed by a co-traveller.',
+    proof: '"You made my Goa ______." — one line signed by a co-traveller.',
   },
 ];
 
@@ -291,17 +290,61 @@ const itinerary = [
 ];
 
 const included = [
-  { icon: "🚌", label: "Road transport", detail: "Mumbai / Bangalore → Goa → return by road (AC vehicle)" },
-  { icon: "🏡", label: "South Goa villa stay", detail: "Shared villa with cookout permission and quiet-hour policy" },
-  { icon: "🍽️", label: "All meals", detail: "Local gaon lunch, gang cookout, beach breakfast, fish thali, Goa dinners" },
-  { icon: "🚲", label: "Cycling in Portuguese lanes", detail: "Guided route through Fontainhas-style lanes with local map prompts" },
-  { icon: "🌊", label: "Backwater kayaking", detail: "45 min kayak with life jackets and safety briefing" },
-  { icon: "🥾", label: "Netravali Valley trek", detail: "45-minute guided waterfall trek (weather & safety confirmed)" },
-  { icon: "🏖️", label: "Beach experiences", detail: "Kokolem Beach silent walk + Cola Beach sunset" },
-  { icon: "🏺", label: "Group pottery session", detail: "Day 3 skill session — the physical ritual before the final stamp" },
-  { icon: "📖", label: "Physical passport", detail: "Your STAMP & STORIES passport, name card and mission sheet" },
-  { icon: "🎟️", label: "Four stamps", detail: "Roots, Wild, Fire and Susegad — all earned through challenges, not attendance" },
-  { icon: "📸", label: "Community photographer", detail: "Present on key experiences. No faces posted without explicit consent." },
+  {
+    icon: "🚌",
+    label: "Road transport",
+    detail: "Mumbai / Bangalore → Goa → return by road (AC vehicle)",
+  },
+  {
+    icon: "🏡",
+    label: "South Goa villa stay",
+    detail: "Shared villa with cookout permission and quiet-hour policy",
+  },
+  {
+    icon: "🍽️",
+    label: "All meals",
+    detail: "Local gaon lunch, gang cookout, beach breakfast, fish thali, Goa dinners",
+  },
+  {
+    icon: "🚲",
+    label: "Cycling in Portuguese lanes",
+    detail: "Guided route through Fontainhas-style lanes with local map prompts",
+  },
+  {
+    icon: "🌊",
+    label: "Backwater kayaking",
+    detail: "45 min kayak with life jackets and safety briefing",
+  },
+  {
+    icon: "🥾",
+    label: "Netravali Valley trek",
+    detail: "45-minute guided waterfall trek (weather & safety confirmed)",
+  },
+  {
+    icon: "🏖️",
+    label: "Beach experiences",
+    detail: "Kokolem Beach silent walk + Cola Beach sunset",
+  },
+  {
+    icon: "🏺",
+    label: "Group pottery session",
+    detail: "Day 3 skill session — the physical ritual before the final stamp",
+  },
+  {
+    icon: "📖",
+    label: "Physical passport",
+    detail: "Your STAMP & STORIES passport, name card and mission sheet",
+  },
+  {
+    icon: "🎟️",
+    label: "Four stamps",
+    detail: "Roots, Wild, Fire and Susegad — all earned through challenges, not attendance",
+  },
+  {
+    icon: "📸",
+    label: "Community photographer",
+    detail: "Present on key experiences. No faces posted without explicit consent.",
+  },
   { icon: "🛡️", label: "Trip captain + hosts", detail: "Two trained S&S hosts present throughout" },
 ];
 
@@ -376,7 +419,10 @@ function StampBadge({ id, color }: { id: string; color: string }) {
       className="relative w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 border-dashed shrink-0"
       style={{ borderColor: color + "60", background: color + "15" }}
     >
-      <p className="text-[9px] font-bold tracking-widest text-center leading-none" style={{ color }}>
+      <p
+        className="text-[9px] font-bold tracking-widest text-center leading-none"
+        style={{ color }}
+      >
         {id}
       </p>
     </div>
@@ -388,7 +434,9 @@ function FAQ({ q, a }: { q: string; a: string }) {
     <details className="group border-b border-[#202124]/10 py-5 cursor-pointer">
       <summary className="flex items-center justify-between gap-4 list-none font-serif text-lg text-[#202124]">
         {q}
-        <span className="text-[#F26A2E] text-xl shrink-0 transition-transform group-open:rotate-45">+</span>
+        <span className="text-[#F26A2E] text-xl shrink-0 transition-transform group-open:rotate-45">
+          +
+        </span>
       </summary>
       <p className="mt-3 text-[#202124]/60 font-sans text-sm leading-relaxed pr-8">{a}</p>
     </details>
@@ -405,7 +453,9 @@ const stampColors: Record<string, string> = {
 /* ─────────────── PAGE ─────────────── */
 
 export function GoaSusegadPage() {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FFFDF9]">
@@ -421,37 +471,79 @@ export function GoaSusegadPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/60 to-transparent" />
 
         <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-6xl pb-16 md:pb-24 pt-32">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/40 mb-6">
-              <a href="/#events" className="hover:text-[#F26A2E] transition-colors">Events</a>
+              <a href="/#events" className="hover:text-[#F26A2E] transition-colors">
+                Events
+              </a>
               <span>/</span>
               <span className="text-[#FFFDF9]/70">Goa Susegad Weekend</span>
             </div>
 
             <div className="flex flex-wrap gap-3 mb-6">
-              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] border border-[#F26A2E]/40 rounded-full px-3 py-1">ROAD TRIP</span>
-              <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/50 border border-[#FFFDF9]/20 rounded-full px-3 py-1">4 Stamps to Earn</span>
-              <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/50 border border-[#FFFDF9]/20 rounded-full px-3 py-1">Passport Required</span>
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] border border-[#F26A2E]/40 rounded-full px-3 py-1">
+                ROAD TRIP
+              </span>
+              <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/50 border border-[#FFFDF9]/20 rounded-full px-3 py-1">
+                4 Stamps to Earn
+              </span>
+              <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/50 border border-[#FFFDF9]/20 rounded-full px-3 py-1">
+                Passport Required
+              </span>
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#FFFDF9] leading-tight mb-6">
-              The Susegad<br />
+              The Susegad
+              <br />
               <span className="italic text-[#F6F0E6]/60">Stamp — Goa</span>
             </h1>
 
             <div className="flex flex-wrap gap-8 text-sm font-sans text-[#FFFDF9]/60 mb-8">
-              <div><span className="text-[#FFFDF9]/30 block text-xs uppercase tracking-widest mb-1">Departure</span>Mumbai / Bangalore</div>
-              <div><span className="text-[#FFFDF9]/30 block text-xs uppercase tracking-widest mb-1">Destination</span>South Goa (villa stay)</div>
-              <div><span className="text-[#FFFDF9]/30 block text-xs uppercase tracking-widest mb-1">Duration</span>Day 0 road + 3 days</div>
-              <div><span className="text-[#FFFDF9]/30 block text-xs uppercase tracking-widest mb-1">Stamps</span>Roots · Wild · Fire · Susegad</div>
+              <div>
+                <span className="text-[#FFFDF9]/30 block text-xs uppercase tracking-widest mb-1">
+                  Departure
+                </span>
+                Mumbai / Bangalore
+              </div>
+              <div>
+                <span className="text-[#FFFDF9]/30 block text-xs uppercase tracking-widest mb-1">
+                  Destination
+                </span>
+                South Goa (villa stay)
+              </div>
+              <div>
+                <span className="text-[#FFFDF9]/30 block text-xs uppercase tracking-widest mb-1">
+                  Duration
+                </span>
+                Day 0 road + 3 days
+              </div>
+              <div>
+                <span className="text-[#FFFDF9]/30 block text-xs uppercase tracking-widest mb-1">
+                  Stamps
+                </span>
+                Roots · Wild · Fire · Susegad
+              </div>
             </div>
 
             {/* Four stamp pills */}
             <div className="flex gap-3 flex-wrap">
               {stamps.map((s) => (
-                <div key={s.id} className="flex items-center gap-2 rounded-full px-3 py-1.5 border" style={{ borderColor: s.color + "50", background: s.color + "20" }}>
-                  <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color: s.color }}>{s.id}</span>
+                <div
+                  key={s.id}
+                  className="flex items-center gap-2 rounded-full px-3 py-1.5 border"
+                  style={{ borderColor: s.color + "50", background: s.color + "20" }}
+                >
+                  <span
+                    className="text-[10px] font-bold tracking-widest uppercase"
+                    style={{ color: s.color }}
+                  >
+                    {s.id}
+                  </span>
                   <span className="text-[10px] text-[#FFFDF9]/40 font-sans">{s.meaning}</span>
                 </div>
               ))}
@@ -464,17 +556,42 @@ export function GoaSusegadPage() {
       <div className="sticky top-[56px] z-40 bg-[#FFFDF9]/95 backdrop-blur border-b border-[#202124]/10 py-3">
         <div className="container mx-auto px-6 md:px-12 max-w-6xl flex items-center justify-between gap-4">
           <div className="flex items-center gap-6 text-xs font-sans text-[#202124]/60 overflow-x-auto">
-            <a href="#overview" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">Overview</a>
-            <a href="#stamps" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">Stamps</a>
-            <a href="#itinerary" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">Itinerary</a>
-            <a href="#includes" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">Included</a>
-            <a href="#rules" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">Rules</a>
-            <a href="#packing" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">Packing</a>
-            <a href="#faq" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">FAQ</a>
+            <a
+              href="#overview"
+              className="hover:text-[#F26A2E] whitespace-nowrap transition-colors"
+            >
+              Overview
+            </a>
+            <a href="#stamps" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
+              Stamps
+            </a>
+            <a
+              href="#itinerary"
+              className="hover:text-[#F26A2E] whitespace-nowrap transition-colors"
+            >
+              Itinerary
+            </a>
+            <a
+              href="#includes"
+              className="hover:text-[#F26A2E] whitespace-nowrap transition-colors"
+            >
+              Included
+            </a>
+            <a href="#rules" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
+              Rules
+            </a>
+            <a href="#packing" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
+              Packing
+            </a>
+            <a href="#faq" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
+              FAQ
+            </a>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <div className="text-right hidden sm:block">
-              <p className="text-xs text-[#F26A2E] font-bold uppercase tracking-widest">4 spots left</p>
+              <p className="text-xs text-[#F26A2E] font-bold uppercase tracking-widest">
+                4 spots left
+              </p>
               <p className="text-xs text-[#202124]/40 font-sans">of 14 total</p>
             </div>
             <Link to="/passport">
@@ -487,22 +604,33 @@ export function GoaSusegadPage() {
       </div>
 
       <main className="flex-1">
-
         {/* ── Overview ── */}
         <section id="overview" className="py-20 md:py-28">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
             <div className="grid md:grid-cols-2 gap-16 items-start">
-              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-                <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">What this is</p>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
+                  What this is
+                </p>
                 <h2 className="text-3xl md:text-4xl font-serif text-[#202124] mb-6 leading-tight">
                   A mission-led Goa itinerary built around the Community Passport.
                 </h2>
                 <div className="space-y-4 text-[#202124]/70 font-sans leading-relaxed text-base">
                   <p>
-                    This is not a random package, not a dating trip, not only a party, not a forced-content creator trip. It is a curated women-first social hangout experience where members meet, explore and collect stories through guided challenges.
+                    This is not a random package, not a dating trip, not only a party, not a
+                    forced-content creator trip. It is a curated women-first social hangout
+                    experience where members meet, explore and collect stories through guided
+                    challenges.
                   </p>
                   <p>
-                    The road journey, local food, beaches, backwaters, conversations and pottery are all turned into earned memories inside the STAMP &amp; STORIES PASSPORT. Four stamps. Four meanings. All earned — not given.
+                    The road journey, local food, beaches, backwaters, conversations and pottery are
+                    all turned into earned memories inside the STAMP &amp; STORIES PASSPORT. Four
+                    stamps. Four meanings. All earned — not given.
                   </p>
                   <p className="font-bold text-[#202124]">
                     Challenge + Participation + Witness + Ceremony = Earned Stamp.
@@ -510,39 +638,63 @@ export function GoaSusegadPage() {
                 </div>
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="space-y-4"
+              >
                 {/* Availability */}
                 <div className="bg-[#202124] rounded-3xl p-8 text-[#FFFDF9]">
-                  <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-2">Availability</p>
-                  <p className="text-5xl font-serif text-[#F26A2E] mb-1">4 <span className="text-xl text-[#FFFDF9]/40 font-sans">spots left</span></p>
+                  <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-2">
+                    Availability
+                  </p>
+                  <p className="text-5xl font-serif text-[#F26A2E] mb-1">
+                    4 <span className="text-xl text-[#FFFDF9]/40 font-sans">spots left</span>
+                  </p>
                   <div className="mt-4 mb-6">
                     <div className="h-2 rounded-full bg-[#FFFDF9]/10">
                       <div className="h-full rounded-full bg-[#F26A2E]" style={{ width: "71%" }} />
                     </div>
-                    <p className="text-xs text-[#FFFDF9]/40 mt-2 font-sans">10 of 14 spots filled (incl. 2 S&S staff)</p>
+                    <p className="text-xs text-[#FFFDF9]/40 mt-2 font-sans">
+                      10 of 14 spots filled (incl. 2 S&S staff)
+                    </p>
                   </div>
                   <Link to="/passport">
                     <button className="w-full bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm py-4 rounded-2xl hover:bg-[#e0571c] transition-colors">
                       Request Invite
                     </button>
                   </Link>
-                  <p className="text-xs text-[#FFFDF9]/30 text-center mt-3 font-sans">Passport verification required</p>
+                  <p className="text-xs text-[#FFFDF9]/30 text-center mt-3 font-sans">
+                    Passport verification required
+                  </p>
                 </div>
 
                 {/* Quick facts */}
                 <div className="border border-[#202124]/10 rounded-3xl p-6 space-y-4">
                   {[
                     ["🚌", "Route", "Mumbai / Bangalore → South Goa → Return by road"],
-                    ["🏡", "Stay", "South Goa villa (shared, 2–3 per room) with cookout permission"],
+                    [
+                      "🏡",
+                      "Stay",
+                      "South Goa villa (shared, 2–3 per room) with cookout permission",
+                    ],
                     ["👥", "Group", "14 members — 12 travellers + 2 verified S&S staff"],
                     ["📅", "Dates", "Day 0 departure + 3 days in Goa"],
                     ["🎟️", "Stamps Earned", "Roots · Wild · Fire · Susegad"],
-                    ["💰", "Cost", "₹9,500 per person (transport + stay + all activities included)"],
+                    [
+                      "💰",
+                      "Cost",
+                      "₹9,500 per person (transport + stay + all activities included)",
+                    ],
                   ].map(([icon, label, value]) => (
                     <div key={String(label)} className="flex gap-4 items-start">
                       <span className="text-xl shrink-0 mt-0.5">{icon}</span>
                       <div>
-                        <p className="text-xs font-bold tracking-widest uppercase text-[#202124]/40 mb-0.5">{label}</p>
+                        <p className="text-xs font-bold tracking-widest uppercase text-[#202124]/40 mb-0.5">
+                          {label}
+                        </p>
                         <p className="text-sm font-sans text-[#202124]/80">{value}</p>
                       </div>
                     </div>
@@ -556,8 +708,16 @@ export function GoaSusegadPage() {
         {/* ── Four Stamps ── */}
         <section id="stamps" className="py-20 md:py-28 bg-[#202124]">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-14">
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">What you earn</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-14"
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
+                What you earn
+              </p>
               <h2 className="text-3xl md:text-5xl font-serif text-[#FFFDF9] mb-3">Four stamps.</h2>
               <p className="text-[#FFFDF9]/40 font-sans text-sm max-w-xl">
                 You cannot buy a stamp. You can only earn it by showing up differently.
@@ -581,19 +741,30 @@ export function GoaSusegadPage() {
                       className="w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 border-dashed shrink-0"
                       style={{ borderColor: s.color + "80" }}
                     >
-                      <p className="text-[10px] font-bold tracking-widest leading-none text-center" style={{ color: s.color }}>
+                      <p
+                        className="text-[10px] font-bold tracking-widest leading-none text-center"
+                        style={{ color: s.color }}
+                      >
                         {s.id}
                       </p>
                     </div>
                     <div>
                       <p className="font-serif text-xl text-[#FFFDF9] leading-snug">{s.id} Stamp</p>
-                      <p className="text-xs font-sans tracking-widest uppercase mt-1" style={{ color: s.color }}>{s.meaning}</p>
+                      <p
+                        className="text-xs font-sans tracking-widest uppercase mt-1"
+                        style={{ color: s.color }}
+                      >
+                        {s.meaning}
+                      </p>
                     </div>
                   </div>
-                  <p className="text-sm text-[#FFFDF9]/60 font-sans leading-relaxed mb-3">{s.earnedBy}</p>
+                  <p className="text-sm text-[#FFFDF9]/60 font-sans leading-relaxed mb-3">
+                    {s.earnedBy}
+                  </p>
                   <div className="border-t border-[#FFFDF9]/10 pt-3">
                     <p className="text-xs text-[#FFFDF9]/30 font-sans">
-                      <span className="font-bold text-[#FFFDF9]/50">Passport proof: </span>{s.proof}
+                      <span className="font-bold text-[#FFFDF9]/50">Passport proof: </span>
+                      {s.proof}
                     </p>
                   </div>
                 </motion.div>
@@ -618,10 +789,21 @@ export function GoaSusegadPage() {
         {/* ── Itinerary ── */}
         <section id="itinerary" className="py-20 md:py-28">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-14">
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">Day by day</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-14"
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
+                Day by day
+              </p>
               <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">Full itinerary.</h2>
-              <p className="text-[#202124]/40 font-sans mt-3 text-sm">All timings are approximate. Draft itinerary subject to vendor, route, weather and permission confirmation.</p>
+              <p className="text-[#202124]/40 font-sans mt-3 text-sm">
+                All timings are approximate. Draft itinerary subject to vendor, route, weather and
+                permission confirmation.
+              </p>
             </motion.div>
 
             <div className="space-y-10">
@@ -643,14 +825,18 @@ export function GoaSusegadPage() {
                     >
                       <div>
                         <div className="flex items-center gap-3 mb-1">
-                          <span className="text-xs font-bold tracking-widest uppercase text-white/50">{day.date}</span>
+                          <span className="text-xs font-bold tracking-widest uppercase text-white/50">
+                            {day.date}
+                          </span>
                           {day.stamp && (
                             <span className="text-[10px] font-bold tracking-widest uppercase border border-white/30 rounded-full px-2 py-0.5 text-white/70">
                               {day.stamp} STAMP
                             </span>
                           )}
                         </div>
-                        <h3 className="font-serif text-2xl text-white">{day.day} — {day.label}</h3>
+                        <h3 className="font-serif text-2xl text-white">
+                          {day.day} — {day.label}
+                        </h3>
                         <p className="text-sm text-white/50 font-sans italic mt-1">{day.theme}</p>
                       </div>
                     </div>
@@ -667,7 +853,9 @@ export function GoaSusegadPage() {
                           </span>
                           <div>
                             <p className="font-serif text-[#202124] text-base">{item.label}</p>
-                            <p className="text-xs text-[#202124]/50 font-sans mt-0.5 leading-relaxed">{item.note}</p>
+                            <p className="text-xs text-[#202124]/50 font-sans mt-0.5 leading-relaxed">
+                              {item.note}
+                            </p>
                           </div>
                         </div>
                       ))}
@@ -676,7 +864,8 @@ export function GoaSusegadPage() {
                     {/* Day note */}
                     <div className="px-6 md:px-8 py-4 bg-[#F6F0E6] border-t border-[#202124]/10">
                       <p className="text-xs font-sans text-[#202124]/60 leading-relaxed">
-                        <span className="font-bold text-[#202124]/70">Note: </span>{day.note}
+                        <span className="font-bold text-[#202124]/70">Note: </span>
+                        {day.note}
                       </p>
                     </div>
                   </motion.div>
@@ -689,9 +878,19 @@ export function GoaSusegadPage() {
         {/* ── What's Included ── */}
         <section id="includes" className="py-20 md:py-28 bg-[#F6F0E6]">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-14">
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">What you get</p>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">Everything included.</h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-14"
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
+                What you get
+              </p>
+              <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">
+                Everything included.
+              </h2>
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-10">
@@ -714,11 +913,18 @@ export function GoaSusegadPage() {
             </div>
 
             <div className="border border-[#202124]/10 rounded-2xl p-6 bg-white">
-              <p className="text-xs font-bold tracking-widest uppercase text-[#202124]/40 mb-4">Not included</p>
+              <p className="text-xs font-bold tracking-widest uppercase text-[#202124]/40 mb-4">
+                Not included
+              </p>
               <ul className="grid md:grid-cols-2 gap-2">
                 {notIncluded.map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-sm font-sans text-[#202124]/50">
-                    <span className="w-4 h-4 rounded-full border border-[#202124]/20 flex items-center justify-center shrink-0 text-[10px] text-[#202124]/30">✕</span>
+                  <li
+                    key={item}
+                    className="flex items-center gap-3 text-sm font-sans text-[#202124]/50"
+                  >
+                    <span className="w-4 h-4 rounded-full border border-[#202124]/20 flex items-center justify-center shrink-0 text-[10px] text-[#202124]/30">
+                      ✕
+                    </span>
                     {item}
                   </li>
                 ))}
@@ -730,10 +936,20 @@ export function GoaSusegadPage() {
         {/* ── Community Rules ── */}
         <section id="rules" className="py-20 md:py-28 bg-[#202124]">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-12">
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">Before you come</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-12"
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
+                Before you come
+              </p>
               <h2 className="text-3xl md:text-5xl font-serif text-[#FFFDF9]">Community code.</h2>
-              <p className="text-[#FFFDF9]/40 font-sans mt-3 text-sm">Agreeing to these is part of your registration.</p>
+              <p className="text-[#FFFDF9]/40 font-sans mt-3 text-sm">
+                Agreeing to these is part of your registration.
+              </p>
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -759,8 +975,16 @@ export function GoaSusegadPage() {
         {/* ── Packing Guide ── */}
         <section id="packing" className="py-20 md:py-28">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-12">
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">What to bring</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-12"
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
+                What to bring
+              </p>
               <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">Packing guide.</h2>
             </motion.div>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl">
@@ -784,8 +1008,16 @@ export function GoaSusegadPage() {
         {/* ── FAQ ── */}
         <section id="faq" className="py-20 md:py-28 bg-[#F6F0E6]">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-12">
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">Questions</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-12"
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
+                Questions
+              </p>
               <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">FAQ.</h2>
             </motion.div>
             <div className="max-w-3xl">
@@ -799,14 +1031,23 @@ export function GoaSusegadPage() {
         {/* ── Bottom CTA ── */}
         <section className="py-20 md:py-28 bg-[#202124] text-center">
           <div className="container mx-auto px-6 md:px-12 max-w-2xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">4 spots remaining</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
+                4 spots remaining
+              </p>
               <h2 className="text-3xl md:text-5xl font-serif text-[#FFFDF9] mb-6 leading-tight">
-                Road to Goa.<br />
+                Road to Goa.
+                <br />
                 <span className="italic text-[#FFFDF9]/40">Four stamps to earn.</span>
               </h2>
               <p className="text-[#FFFDF9]/50 font-sans mb-10 leading-relaxed">
-                This is not a trip you book. It is a chapter you earn. You need a verified passport to register — apply first if you don't have one yet.
+                This is not a trip you book. It is a chapter you earn. You need a verified passport
+                to register — apply first if you don't have one yet.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/passport">
@@ -823,7 +1064,6 @@ export function GoaSusegadPage() {
             </motion.div>
           </div>
         </section>
-
       </main>
       <Footer />
     </div>

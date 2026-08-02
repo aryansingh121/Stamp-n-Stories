@@ -44,10 +44,7 @@ export async function signedPhotoUrl(path: string | null | undefined): Promise<s
 
 export async function signedIdProofUrl(path: string | null | undefined): Promise<string | null> {
   if (!path) return null;
-  const { data, error } = await supabase.storage
-    .from(ID_BUCKET)
-    .createSignedUrl(path, 60 * 60);
+  const { data, error } = await supabase.storage.from(ID_BUCKET).createSignedUrl(path, 60 * 60);
   if (error || !data) return null;
   return data.signedUrl;
 }
-

@@ -10,28 +10,28 @@ export function FAQSection() {
   const faqs = [
     {
       q: "Is this a women-only community?",
-      a: "No. Women-first, community-open. The experience is designed around women's comfort and trust, while selected men can join only if they match the community standard."
+      a: "No. Women-first, community-open. The experience is designed around women's comfort and trust, while selected men can join only if they match the community standard.",
     },
     {
       q: "Is this a dating community?",
-      a: "No. Not a dating app or singles party. Real connections may happen naturally, but the promise is safer social hangout spaces for women."
+      a: "No. Not a dating app or singles party. Real connections may happen naturally, but the promise is safer social hangout spaces for women.",
     },
     {
       q: "Can I buy the passport online?",
-      a: "No. Create a passport profile online, but the physical passport is issued only at a verified offline experience."
+      a: "No. Create a passport profile online, but the physical passport is issued only at a verified offline experience.",
     },
     {
       q: "How are stamps earned?",
-      a: "Every stamp is earned through a mission, participation, witness proof and ceremony. Attendance alone does not earn a stamp."
+      a: "Every stamp is earned through a mission, participation, witness proof and ceremony. Attendance alone does not earn a stamp.",
     },
     {
       q: "What happens if someone misbehaves?",
-      a: "Serious misconduct can lead to an internal Red Stamp review, permanent removal and loss of future access."
+      a: "Serious misconduct can lead to an internal Red Stamp review, permanent removal and loss of future access.",
     },
     {
       q: "What kind of experiences do you host?",
-      a: "Curated trips, city meetups, house parties, movie nights, cultural experiences and brand-backed utility events."
-    }
+      a: "Curated trips, city meetups, house parties, movie nights, cultural experiences and brand-backed utility events.",
+    },
   ];
 
   return (
@@ -44,9 +44,7 @@ export function FAQSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-serif text-[#202124]">
-            Common questions
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-serif text-[#202124]">Common questions</h2>
         </motion.div>
 
         <motion.div

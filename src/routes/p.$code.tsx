@@ -51,7 +51,11 @@ function PublicPassport() {
   });
 
   if (isLoading) {
-    return <div className="min-h-screen bg-background grid place-items-center"><p className="text-ink/60">Loading…</p></div>;
+    return (
+      <div className="min-h-screen bg-background grid place-items-center">
+        <p className="text-ink/60">Loading…</p>
+      </div>
+    );
   }
   if (!data) return <NotFound />;
 
@@ -68,12 +72,11 @@ function PublicPassport() {
     photo_url: data.photo_url,
     status: data.status,
     issued_at: data.issued_at,
-    stamps: (data.stamps as any) || [],
+    stamps: (data.stamps as Array<{ event: string; emoji: string; date: string }>) || [],
   };
 
-  const shareUrl = typeof window !== "undefined"
-    ? `${window.location.origin}/p/${code}`
-    : `/p/${code}`;
+  const shareUrl =
+    typeof window !== "undefined" ? `${window.location.origin}/p/${code}` : `/p/${code}`;
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,7 +86,9 @@ function PublicPassport() {
             <span className="grid h-8 w-8 place-items-center rounded-full bg-coral text-primary-foreground">
               <Plane className="h-4 w-4" />
             </span>
-            <span className="font-display">stamp<span className="text-coral">&</span>stories</span>
+            <span className="font-display">
+              stamp<span className="text-coral">&</span>stories
+            </span>
           </Link>
           <Button asChild size="sm" className="rounded-full bg-ink text-paper hover:bg-coral">
             <Link to="/auth">Get yours</Link>

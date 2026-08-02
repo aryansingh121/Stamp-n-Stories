@@ -9,7 +9,10 @@ async function snap(el: HTMLElement) {
   });
   const img = new Image();
   img.src = dataUrl;
-  await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
+  await new Promise((res, rej) => {
+    img.onload = res;
+    img.onerror = rej;
+  });
   return { dataUrl, width: img.width, height: img.height };
 }
 

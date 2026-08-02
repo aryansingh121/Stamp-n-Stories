@@ -15,7 +15,8 @@ export function RulesPage() {
         <div className="text-center pt-16 pb-8 text-[#FFFDF9]">
           <h1 className="text-4xl md:text-6xl font-serif mb-4">Community Rules</h1>
           <p className="text-[#FFFDF9]/60 font-sans text-lg max-w-2xl mx-auto">
-            These rules are non-negotiable. Please read them carefully before applying for your passport.
+            These rules are non-negotiable. Please read them carefully before applying for your
+            passport.
           </p>
         </div>
         <RulesSection />
