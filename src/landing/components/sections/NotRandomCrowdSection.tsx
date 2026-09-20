@@ -40,7 +40,7 @@ export function NotRandomCrowdSection() {
             your passport.
           </p>
           <p className="mt-4 text-base font-sans leading-relaxed text-[#202124]/75 max-w-2xl mx-auto">
-            Men can be part of selected SNS experiences, but there is no open/random entry.
+            Men can be part of selected SnS experiences, but there is no open/random entry.
           </p>
           <p className="mt-4 text-base font-sans leading-relaxed text-[#202124]/75 max-w-2xl mx-auto">
             Our approach is intentional: who joins, how groups form, and the expectations everyone

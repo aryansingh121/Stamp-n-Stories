@@ -116,7 +116,7 @@ export function PassportSection() {
                       <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#F26A2E]/50" />
                       <div className="absolute inset-3 rounded-full border border-[#F6F0E6]/10" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="font-serif text-3xl font-bold text-[#F6F0E6]">S&S</span>
+                        <span className="font-serif text-3xl font-bold text-[#F6F0E6]">SnS</span>
                         <div className="w-8 h-px bg-[#F26A2E] my-1" />
                         <span className="text-[#F26A2E] text-[8px] font-bold tracking-[0.2em] uppercase">
                           Earned
@@ -145,7 +145,7 @@ export function PassportSection() {
                         <p className="text-[#F6F0E6]/40 font-mono text-[8px] tracking-widest uppercase mb-0.5">
                           Passport ID
                         </p>
-                        <p className="text-[#F6F0E6] font-mono text-xs tracking-widest">S&S-0001</p>
+                        <p className="text-[#F6F0E6] font-mono text-xs tracking-widest">SnS-0001</p>
                       </div>
                       <div className="text-right">
                         <p className="text-[#F6F0E6]/40 font-mono text-[8px] tracking-widest uppercase mb-0.5">
@@ -172,7 +172,7 @@ export function PassportSection() {
                 className="absolute -right-4 -top-4 w-24 h-24 bg-[#F6F0E6] rounded-full border-2 border-dashed border-[#F26A2E] flex items-center justify-center shadow-lg"
               >
                 <div className="flex flex-col items-center text-[#202124]">
-                  <span className="text-[7px] font-bold tracking-widest uppercase">S&S</span>
+                  <span className="text-[7px] font-bold tracking-widest uppercase">SnS</span>
                   <span className="font-serif font-bold text-base italic">Lifetime</span>
                 </div>
               </motion.div>

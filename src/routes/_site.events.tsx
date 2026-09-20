@@ -1,6 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { GoaSusegadPage } from "@/landing/pages/events/goa-susegad";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_site/events")({
-  component: GoaSusegadPage,
+  component: () => <Outlet />,
 });

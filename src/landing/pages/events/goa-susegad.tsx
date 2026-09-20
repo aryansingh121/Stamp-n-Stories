@@ -1,5 +1,6 @@
 import { Navbar } from "@/landing/components/layout/Navbar";
 import { Footer } from "@/landing/components/layout/Footer";
+import { FAQSection } from "@/landing/components/sections/FAQSection";
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -236,7 +237,7 @@ const itinerary = [
         note: 'Teams "bid" with stories, songs or inside jokes to win memory cards. No money, no pressure.',
       },
     ],
-    note: "Suggested extras: Memory Auction, Guess The Road Name, Goa Courtroom Round 2, Secret Role Reveal, S&S Midnight Radio.",
+    note: "Suggested extras: Memory Auction, Guess The Road Name, Goa Courtroom Round 2, Secret Role Reveal, SnS Midnight Radio.",
   },
   {
     day: "Day 3",
@@ -346,7 +347,7 @@ const included = [
     label: "Community photographer",
     detail: "Present on key experiences. No faces posted without explicit consent.",
   },
-  { icon: "🛡️", label: "Trip captain + hosts", detail: "Two trained S&S hosts present throughout" },
+  { icon: "🛡️", label: "Trip captain + hosts", detail: "Two trained SnS hosts present throughout" },
 ];
 
 const notIncluded = [
@@ -390,7 +391,7 @@ const safetySnapshot = [
   {
     icon: Users,
     title: "During",
-    desc: "Two S&S staff are included in the 14-person group, with trip briefings, guide-approved activities and clear participation boundaries.",
+    desc: "Two SnS staff are included in the 14-person group, with trip briefings, guide-approved activities and clear participation boundaries.",
   },
   {
     icon: MessageSquare,
@@ -453,19 +454,6 @@ function StampBadge({ id, color }: { id: string; color: string }) {
   );
 }
 
-function FAQ({ q, a }: { q: string; a: string }) {
-  return (
-    <details className="group border-b border-[#202124]/10 py-5 cursor-pointer">
-      <summary className="flex items-center justify-between gap-4 list-none font-serif text-lg text-[#202124]">
-        {q}
-        <span className="text-[#F26A2E] text-xl shrink-0 transition-transform group-open:rotate-45">
-          +
-        </span>
-      </summary>
-      <p className="mt-3 text-[#202124]/60 font-sans text-sm leading-relaxed pr-8">{a}</p>
-    </details>
-  );
-}
 
 const stampColors: Record<string, string> = {
   ROOTS: "#234A3C",
@@ -621,10 +609,11 @@ export function GoaSusegadPage() {
               </p>
               <p className="text-xs text-[#202124]/40 font-sans">of 14 total</p>
             </div>
-            <Link to="/passport">
-              <button className="bg-[#F26A2E] text-white text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-[#e0571c] transition-colors whitespace-nowrap">
-                Request Invite
-              </button>
+            <Link
+              to="/events/goa-susegad/request-invite"
+              className="bg-[#F26A2E] text-white text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-[#e0571c] transition-colors whitespace-nowrap inline-flex items-center justify-center"
+            >
+              Request Invite
             </Link>
           </div>
         </div>
@@ -685,16 +674,23 @@ export function GoaSusegadPage() {
                       <div className="h-full rounded-full bg-[#F26A2E]" style={{ width: "71%" }} />
                     </div>
                     <p className="text-xs text-[#FFFDF9]/70 mt-2 font-sans">
-                      10 of 14 spots filled (incl. 2 S&S staff)
+                      10 of 14 spots filled (incl. 2 SnS staff)
                     </p>
                   </div>
-                  <Link to="/passport">
-                    <button className="w-full bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm py-4 rounded-2xl hover:bg-[#e0571c] transition-colors">
-                      Request Invite
-                    </button>
+                  <Link
+                    to="/events/goa-susegad/request-invite"
+                    className="flex justify-center items-center w-full bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm py-4 rounded-2xl hover:bg-[#e0571c] transition-colors"
+                  >
+                    Request Invite
                   </Link>
                   <p className="text-xs text-[#FFFDF9]/65 text-center mt-3 font-sans">
-                    Passport verification required
+                    Passport verification required ·{" "}
+                    <Link
+                      to="/refund-policy"
+                      className="underline hover:text-[#F26A2E] transition-colors"
+                    >
+                      Refund Policy
+                    </Link>
                   </p>
                 </div>
 
@@ -707,7 +703,7 @@ export function GoaSusegadPage() {
                       "Stay",
                       "South Goa villa (shared, 2–3 per room) with cookout permission",
                     ],
-                    ["👥", "Group", "14 members — 12 travellers + 2 verified S&S staff"],
+                    ["👥", "Group", "14 members — 12 travellers + 2 verified SnS staff"],
                     ["📅", "Dates", "Day 0 departure + 3 days in Goa"],
                     ["🎟️", "Stamps Earned", "Roots · Wild · Fire · Susegad"],
                     [
@@ -726,6 +722,16 @@ export function GoaSusegadPage() {
                       </div>
                     </div>
                   ))}
+
+                  <div className="pt-3 border-t border-[#202124]/10 flex items-center justify-between text-xs text-[#202124]/65 font-sans">
+                    <span>Cancellation &amp; Booking Terms</span>
+                    <Link
+                      to="/refund-policy"
+                      className="text-[#F26A2E] hover:underline font-semibold"
+                    >
+                      Refund Policy →
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -1069,27 +1075,14 @@ export function GoaSusegadPage() {
         </section>
 
         {/* ── FAQ ── */}
-        <section id="faq" className="py-20 md:py-28 bg-[#F6F0E6]">
-          <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-12"
-            >
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                Questions
-              </p>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">FAQ.</h2>
-            </motion.div>
-            <div className="max-w-3xl">
-              {faqs.map((faq) => (
-                <FAQ key={faq.q} q={faq.q} a={faq.a} />
-              ))}
-            </div>
-          </div>
-        </section>
+        <FAQSection
+          id="faq"
+          badge="Questions"
+          title="FAQ."
+          items={faqs}
+          bgClassName="bg-[#F6F0E6]"
+          align="left"
+        />
 
         {/* ── Bottom CTA ── */}
         <section className="py-20 md:py-28 bg-[#202124] text-center">
@@ -1113,15 +1106,17 @@ export function GoaSusegadPage() {
                 to register — apply first if you don't have one yet.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/passport">
-                  <button className="bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full hover:bg-[#e0571c] transition-colors">
-                    Apply for Passport
-                  </button>
+                <Link
+                  to="/events/goa-susegad/request-invite"
+                  className="bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full hover:bg-[#e0571c] transition-colors inline-flex items-center justify-center text-center"
+                >
+                  Request Invite
                 </Link>
-                <a href="/#events">
-                  <button className="border border-[#FFFDF9]/20 text-[#FFFDF9]/70 font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full hover:border-[#FFFDF9]/40 hover:text-[#FFFDF9] transition-colors">
-                    See All Events
-                  </button>
+                <a
+                  href="/#events"
+                  className="border border-[#FFFDF9]/20 text-[#FFFDF9]/70 font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full hover:border-[#FFFDF9]/40 hover:text-[#FFFDF9] transition-colors inline-flex items-center justify-center text-center"
+                >
+                  See All Events
                 </a>
               </div>
             </motion.div>

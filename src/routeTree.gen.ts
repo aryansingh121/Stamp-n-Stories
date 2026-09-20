@@ -20,12 +20,14 @@ import { Route as PCodeRouteImport } from './routes/p.$code'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as SiteSafetyRouteImport } from './routes/_site.safety'
 import { Route as SiteRulesRouteImport } from './routes/_site.rules'
+import { Route as SiteRefundPolicyRouteImport } from './routes/_site.refund-policy'
 import { Route as SiteHowItWorksRouteImport } from './routes/_site.how-it-works'
 import { Route as SiteExperiencesRouteImport } from './routes/_site.experiences'
 import { Route as SiteEventsRouteImport } from './routes/_site.events'
 import { Route as SiteBrandsRouteImport } from './routes/_site.brands'
 import { Route as SiteApplyRouteImport } from './routes/_site.apply'
 import { Route as SiteAboutRouteImport } from './routes/_site.about'
+import { Route as SiteEventsIndexRouteImport } from './routes/_site.events.index'
 import { Route as PassportAuthenticatedPassportRouteImport } from './routes/passport._authenticated.passport'
 import { Route as PassportAuthenticatedOnboardingRouteImport } from './routes/passport._authenticated.onboarding'
 import { Route as PassportAuthenticatedLeaderboardRouteImport } from './routes/passport._authenticated.leaderboard'
@@ -34,6 +36,7 @@ import { Route as PassportAuthenticatedAdminRouteImport } from './routes/passpor
 import { Route as SiteEventsGoaSusegadRouteImport } from './routes/_site.events.goa-susegad'
 import { Route as PassportAuthenticatedAdminAuditRouteImport } from './routes/passport._authenticated.admin_.audit'
 import { Route as PassportAuthenticatedAdminActivityRouteImport } from './routes/passport._authenticated.admin_.activity'
+import { Route as SiteEventsGoaSusegadRequestInviteRouteImport } from './routes/_site.events.goa-susegad_.request-invite'
 
 const PassportRoute = PassportRouteImport.update({
   id: '/passport',
@@ -88,6 +91,11 @@ const SiteRulesRoute = SiteRulesRouteImport.update({
   path: '/rules',
   getParentRoute: () => SiteRoute,
 } as any)
+const SiteRefundPolicyRoute = SiteRefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
+  getParentRoute: () => SiteRoute,
+} as any)
 const SiteHowItWorksRoute = SiteHowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
@@ -117,6 +125,11 @@ const SiteAboutRoute = SiteAboutRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => SiteRoute,
+} as any)
+const SiteEventsIndexRoute = SiteEventsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SiteEventsRoute,
 } as any)
 const PassportAuthenticatedPassportRoute =
   PassportAuthenticatedPassportRouteImport.update({
@@ -165,6 +178,12 @@ const PassportAuthenticatedAdminActivityRoute =
     path: '/admin/activity',
     getParentRoute: () => PassportAuthenticatedRoute,
   } as any)
+const SiteEventsGoaSusegadRequestInviteRoute =
+  SiteEventsGoaSusegadRequestInviteRouteImport.update({
+    id: '/goa-susegad_/request-invite',
+    path: '/goa-susegad/request-invite',
+    getParentRoute: () => SiteEventsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
@@ -177,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/events': typeof SiteEventsRouteWithChildren
   '/experiences': typeof SiteExperiencesRoute
   '/how-it-works': typeof SiteHowItWorksRoute
+  '/refund-policy': typeof SiteRefundPolicyRoute
   '/rules': typeof SiteRulesRoute
   '/safety': typeof SiteSafetyRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -188,6 +208,8 @@ export interface FileRoutesByFullPath {
   '/passport/leaderboard': typeof PassportAuthenticatedLeaderboardRoute
   '/passport/onboarding': typeof PassportAuthenticatedOnboardingRoute
   '/passport/passport': typeof PassportAuthenticatedPassportRoute
+  '/events/': typeof SiteEventsIndexRoute
+  '/events/goa-susegad/request-invite': typeof SiteEventsGoaSusegadRequestInviteRoute
   '/passport/admin/activity': typeof PassportAuthenticatedAdminActivityRoute
   '/passport/admin/audit': typeof PassportAuthenticatedAdminAuditRoute
 }
@@ -197,9 +219,9 @@ export interface FileRoutesByTo {
   '/about': typeof SiteAboutRoute
   '/apply': typeof SiteApplyRoute
   '/brands': typeof SiteBrandsRoute
-  '/events': typeof SiteEventsRouteWithChildren
   '/experiences': typeof SiteExperiencesRoute
   '/how-it-works': typeof SiteHowItWorksRoute
+  '/refund-policy': typeof SiteRefundPolicyRoute
   '/rules': typeof SiteRulesRoute
   '/safety': typeof SiteSafetyRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -212,6 +234,8 @@ export interface FileRoutesByTo {
   '/passport/leaderboard': typeof PassportAuthenticatedLeaderboardRoute
   '/passport/onboarding': typeof PassportAuthenticatedOnboardingRoute
   '/passport/passport': typeof PassportAuthenticatedPassportRoute
+  '/events': typeof SiteEventsIndexRoute
+  '/events/goa-susegad/request-invite': typeof SiteEventsGoaSusegadRequestInviteRoute
   '/passport/admin/activity': typeof PassportAuthenticatedAdminActivityRoute
   '/passport/admin/audit': typeof PassportAuthenticatedAdminAuditRoute
 }
@@ -227,6 +251,7 @@ export interface FileRoutesById {
   '/_site/events': typeof SiteEventsRouteWithChildren
   '/_site/experiences': typeof SiteExperiencesRoute
   '/_site/how-it-works': typeof SiteHowItWorksRoute
+  '/_site/refund-policy': typeof SiteRefundPolicyRoute
   '/_site/rules': typeof SiteRulesRoute
   '/_site/safety': typeof SiteSafetyRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -240,6 +265,8 @@ export interface FileRoutesById {
   '/passport/_authenticated/leaderboard': typeof PassportAuthenticatedLeaderboardRoute
   '/passport/_authenticated/onboarding': typeof PassportAuthenticatedOnboardingRoute
   '/passport/_authenticated/passport': typeof PassportAuthenticatedPassportRoute
+  '/_site/events/': typeof SiteEventsIndexRoute
+  '/_site/events/goa-susegad_/request-invite': typeof SiteEventsGoaSusegadRequestInviteRoute
   '/passport/_authenticated/admin_/activity': typeof PassportAuthenticatedAdminActivityRoute
   '/passport/_authenticated/admin_/audit': typeof PassportAuthenticatedAdminAuditRoute
 }
@@ -256,6 +283,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/experiences'
     | '/how-it-works'
+    | '/refund-policy'
     | '/rules'
     | '/safety'
     | '/auth/callback'
@@ -267,6 +295,8 @@ export interface FileRouteTypes {
     | '/passport/leaderboard'
     | '/passport/onboarding'
     | '/passport/passport'
+    | '/events/'
+    | '/events/goa-susegad/request-invite'
     | '/passport/admin/activity'
     | '/passport/admin/audit'
   fileRoutesByTo: FileRoutesByTo
@@ -276,9 +306,9 @@ export interface FileRouteTypes {
     | '/about'
     | '/apply'
     | '/brands'
-    | '/events'
     | '/experiences'
     | '/how-it-works'
+    | '/refund-policy'
     | '/rules'
     | '/safety'
     | '/auth/callback'
@@ -291,6 +321,8 @@ export interface FileRouteTypes {
     | '/passport/leaderboard'
     | '/passport/onboarding'
     | '/passport/passport'
+    | '/events'
+    | '/events/goa-susegad/request-invite'
     | '/passport/admin/activity'
     | '/passport/admin/audit'
   id:
@@ -305,6 +337,7 @@ export interface FileRouteTypes {
     | '/_site/events'
     | '/_site/experiences'
     | '/_site/how-it-works'
+    | '/_site/refund-policy'
     | '/_site/rules'
     | '/_site/safety'
     | '/auth/callback'
@@ -318,6 +351,8 @@ export interface FileRouteTypes {
     | '/passport/_authenticated/leaderboard'
     | '/passport/_authenticated/onboarding'
     | '/passport/_authenticated/passport'
+    | '/_site/events/'
+    | '/_site/events/goa-susegad_/request-invite'
     | '/passport/_authenticated/admin_/activity'
     | '/passport/_authenticated/admin_/audit'
   fileRoutesById: FileRoutesById
@@ -409,6 +444,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteRulesRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/_site/refund-policy': {
+      id: '/_site/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof SiteRefundPolicyRouteImport
+      parentRoute: typeof SiteRoute
+    }
     '/_site/how-it-works': {
       id: '/_site/how-it-works'
       path: '/how-it-works'
@@ -450,6 +492,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/about'
       preLoaderRoute: typeof SiteAboutRouteImport
       parentRoute: typeof SiteRoute
+    }
+    '/_site/events/': {
+      id: '/_site/events/'
+      path: '/'
+      fullPath: '/events/'
+      preLoaderRoute: typeof SiteEventsIndexRouteImport
+      parentRoute: typeof SiteEventsRoute
     }
     '/passport/_authenticated/passport': {
       id: '/passport/_authenticated/passport'
@@ -507,15 +556,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PassportAuthenticatedAdminActivityRouteImport
       parentRoute: typeof PassportAuthenticatedRoute
     }
+    '/_site/events/goa-susegad_/request-invite': {
+      id: '/_site/events/goa-susegad_/request-invite'
+      path: '/goa-susegad/request-invite'
+      fullPath: '/events/goa-susegad/request-invite'
+      preLoaderRoute: typeof SiteEventsGoaSusegadRequestInviteRouteImport
+      parentRoute: typeof SiteEventsRoute
+    }
   }
 }
 
 interface SiteEventsRouteChildren {
   SiteEventsGoaSusegadRoute: typeof SiteEventsGoaSusegadRoute
+  SiteEventsIndexRoute: typeof SiteEventsIndexRoute
+  SiteEventsGoaSusegadRequestInviteRoute: typeof SiteEventsGoaSusegadRequestInviteRoute
 }
 
 const SiteEventsRouteChildren: SiteEventsRouteChildren = {
   SiteEventsGoaSusegadRoute: SiteEventsGoaSusegadRoute,
+  SiteEventsIndexRoute: SiteEventsIndexRoute,
+  SiteEventsGoaSusegadRequestInviteRoute:
+    SiteEventsGoaSusegadRequestInviteRoute,
 }
 
 const SiteEventsRouteWithChildren = SiteEventsRoute._addFileChildren(
@@ -529,6 +590,7 @@ interface SiteRouteChildren {
   SiteEventsRoute: typeof SiteEventsRouteWithChildren
   SiteExperiencesRoute: typeof SiteExperiencesRoute
   SiteHowItWorksRoute: typeof SiteHowItWorksRoute
+  SiteRefundPolicyRoute: typeof SiteRefundPolicyRoute
   SiteRulesRoute: typeof SiteRulesRoute
   SiteSafetyRoute: typeof SiteSafetyRoute
   SiteIndexRoute: typeof SiteIndexRoute
@@ -541,6 +603,7 @@ const SiteRouteChildren: SiteRouteChildren = {
   SiteEventsRoute: SiteEventsRouteWithChildren,
   SiteExperiencesRoute: SiteExperiencesRoute,
   SiteHowItWorksRoute: SiteHowItWorksRoute,
+  SiteRefundPolicyRoute: SiteRefundPolicyRoute,
   SiteRulesRoute: SiteRulesRoute,
   SiteSafetyRoute: SiteSafetyRoute,
   SiteIndexRoute: SiteIndexRoute,

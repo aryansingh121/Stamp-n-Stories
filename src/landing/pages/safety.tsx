@@ -258,7 +258,7 @@ export function SafetyPage() {
               <div className="max-w-3xl">
                 <Accordion type="single" collapsible defaultValue="q1">
                   <AccordionItem value="q1">
-                    <AccordionTrigger>Who can join an SNS experience?</AccordionTrigger>
+                    <AccordionTrigger>Who can join an SnS experience?</AccordionTrigger>
                     <AccordionContent>
                       Participation depends on the experience. Many offline formats require a
                       passport application and approval; event pages list participation criteria.
@@ -267,7 +267,7 @@ export function SafetyPage() {
                   <AccordionItem value="q2">
                     <AccordionTrigger>Are men allowed to participate?</AccordionTrigger>
                     <AccordionContent>
-                      Men can be part of selected SNS experiences, but there is no open/random entry.
+                      Men can be part of selected SnS experiences, but there is no open/random entry.
                       Participation rules are set per experience.
                     </AccordionContent>
                   </AccordionItem>

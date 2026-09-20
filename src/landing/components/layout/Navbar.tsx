@@ -78,7 +78,7 @@ export function Navbar() {
 
   const isHome = location === "/";
   const isDarkBg = isHome && !isScrolled;
-  const isDarkPage = ["/passport", "/brands", "/partner", "/rules"].includes(location) || location.startsWith("/events");
+  const isDarkPage = ["/passport", "/brands", "/partner", "/rules", "/refund-policy"].includes(location) || location.startsWith("/events");
   const useDarkHeaderText = isScrolled || (!isDarkBg && !isDarkPage);
   const textColor = useDarkHeaderText ? "text-[#202124]/80" : "text-[#FFFDF9]/80";
   const activeColor = "text-[#F26A2E]";
@@ -241,6 +241,16 @@ export function Navbar() {
                 </div>
               )}
             </div>
+
+            {/* Refund Policy */}
+            <Link
+              to="/refund-policy"
+              className={`text-xs font-medium tracking-wide transition-colors hover:text-[#F26A2E] whitespace-nowrap ${textColor} ${
+                location === "/refund-policy" ? activeColor : ""
+              }`}
+            >
+              Refund Policy
+            </Link>
           </div>
 
           <Link to="/passport">
@@ -332,6 +342,17 @@ export function Navbar() {
               </div>
             )}
           </div>
+
+          {/* Mobile Refund Policy link */}
+          <Link
+            to="/refund-policy"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`py-4 border-b border-[#202124]/10 ${
+              location === "/refund-policy" ? "text-[#F26A2E]" : "text-[#202124]"
+            }`}
+          >
+            Refund Policy
+          </Link>
 
           <Link to="/passport" onClick={() => setMobileMenuOpen(false)}>
             <div className="mt-4 py-4 text-[#F26A2E] border-b border-[#202124]/10">Apply</div>

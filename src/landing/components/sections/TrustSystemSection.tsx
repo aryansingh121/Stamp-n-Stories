@@ -56,11 +56,17 @@ export function TrustSystemSection() {
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link to="/safety">
             <button className="inline-flex items-center gap-3 bg-[#202124] hover:bg-[#202124]/90 text-[#FFFDF9] rounded-full px-6 py-3 text-base font-medium transition-all">
               How we keep it safe
             </button>
+          </Link>
+          <Link
+            to="/refund-policy"
+            className="text-xs text-[#202124]/70 hover:text-[#F26A2E] font-medium transition-colors underline"
+          >
+            Review Booking &amp; Refund Policy
           </Link>
         </div>
       </div>
