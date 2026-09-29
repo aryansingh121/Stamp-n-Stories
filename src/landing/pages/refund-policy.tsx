@@ -129,7 +129,7 @@ export function RefundPolicyPage() {
 
                   {/* Row 4 */}
                   <div className="px-6 sm:px-7 py-4 sm:py-5 flex justify-between items-center text-[14px] sm:text-[15px] gap-4">
-                    <span className="font-sans text-[#9A9388]">Unlistd Life cancels the trip</span>
+                    <span className="font-sans text-[#9A9388]">Stamp n Stories cancels the trip</span>
                     <span className="font-mono text-[14px] sm:text-[15px] text-[#2EE59D] font-normal whitespace-nowrap">
                       100% refund
                     </span>
@@ -154,7 +154,7 @@ export function RefundPolicyPage() {
                 1.1
               </span>
               <p className="text-sm sm:text-[15px] text-[#CFCBC2] font-sans leading-relaxed">
-                Refunds are only issued when <strong className="font-semibold text-[#F5F3ED]">Unlistd Life cancels the trip</strong> — whether due to insufficient registrations, force majeure, or any other reason initiated by <strong className="font-semibold text-[#F5F3ED]">Unlistd Life</strong>. In this case, 100% of the total amount paid will be refunded.
+                Refunds are only issued when <strong className="font-semibold text-[#F5F3ED]">Stamp n Stories cancels the trip</strong> — whether due to insufficient registrations, force majeure, or any other reason initiated by <strong className="font-semibold text-[#F5F3ED]">Stamp n Stories</strong>. In this case, 100% of the total amount paid will be refunded.
               </p>
             </div>
 
@@ -163,7 +163,7 @@ export function RefundPolicyPage() {
                 1.2
               </span>
               <p className="text-sm sm:text-[15px] text-[#CFCBC2] font-sans leading-relaxed">
-                If <strong className="font-semibold text-[#F5F3ED]">Unlistd Life</strong> cancels a trip due to <strong className="font-semibold text-[#F5F3ED]">force majeure</strong> (natural disasters, government orders, extreme weather, political unrest, or any event beyond reasonable control), travelers will receive a full refund or the option to transfer to a future batch. No additional compensation will be provided.
+                If <strong className="font-semibold text-[#F5F3ED]">Stamp n Stories</strong> cancels a trip due to <strong className="font-semibold text-[#F5F3ED]">force majeure</strong> (natural disasters, government orders, extreme weather, political unrest, or any event beyond reasonable control), travelers will receive a full refund or the option to transfer to a future batch. No additional compensation will be provided.
               </p>
             </div>
 
@@ -214,7 +214,7 @@ export function RefundPolicyPage() {
                   2.1
                 </span>
                 <p className="text-sm sm:text-[15px] text-[#CFCBC2] font-sans leading-relaxed">
-                  In the event of a company-initiated cancellation, <strong className="font-semibold text-[#F5F3ED]">Unlistd Life</strong> will <strong className="font-semibold text-[#F5F3ED]">notify all confirmed travelers via WhatsApp and email</strong> as soon as the decision is made.
+                  In the event of a company-initiated cancellation, <strong className="font-semibold text-[#F5F3ED]">Stamp n Stories</strong> will <strong className="font-semibold text-[#F5F3ED]">notify all confirmed travelers via WhatsApp and email</strong> as soon as the decision is made.
                 </p>
               </div>
 
