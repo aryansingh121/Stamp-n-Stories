@@ -70,7 +70,7 @@ export function Footer() {
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <a
-              href="https://www.instagram.com/stampnstories?stkn=MWxwMWhtczE0cHdjbQ=="
+              href="https://www.instagram.com/stampnstories?stkn=b2h6dmZrcW8zYzh1"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Stamp N Stories on Instagram"
