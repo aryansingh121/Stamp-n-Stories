@@ -48,7 +48,7 @@ const itinerary = [
     day: "Day 0",
     label: "ROAD TO GOA",
     theme: "The road journey is where the gang begins.",
-    date: "Mumbai / Bangalore — Overnight",
+    date: "MUMBAI / BANGALORE — OVERNIGHT",
     stamp: null,
     items: [
       {
@@ -79,7 +79,7 @@ const itinerary = [
       {
         time: "Dinner halt",
         label: "Road dinner & comfort break",
-        note: "Keep the group together. Check comfort and restart with a lighter energy.",
+        note: "Keep the group together. Check comfort and restart with lighter energy.",
       },
       {
         time: "Night",
@@ -93,7 +93,7 @@ const itinerary = [
     day: "Day 1",
     label: "ROOTS STAMP",
     theme: "Local Goa, villa arrival, sunset and shared meal.",
-    date: "Arrival in Goa",
+    date: "ARRIVAL IN GOA",
     stamp: "ROOTS",
     items: [
       {
@@ -143,7 +143,7 @@ const itinerary = [
     day: "Day 2 AM",
     label: "WILD STAMP",
     theme: "Kokolem Beach, Netravali Valley and the Wild Stamp.",
-    date: "Water, Silence & Wilderness",
+    date: "WATER, SILENCE & WILDERNESS",
     stamp: "WILD",
     items: [
       {
@@ -193,7 +193,7 @@ const itinerary = [
     day: "Day 2 PM",
     label: "FIRE STAMP",
     theme: "Cola Beach, kayaking, dinner discussion and group entertainment.",
-    date: "Backwater, Questions & Night Ritual",
+    date: "BACKWATER, QUESTIONS & NIGHT RITUAL",
     stamp: "FIRE",
     items: [
       {
@@ -229,7 +229,7 @@ const itinerary = [
       {
         time: "Ritual",
         label: "Passport stamping ritual",
-        note: "Wild and Fire proofs checked: silent walk notes, kayak participation, question challenge, listening moment.",
+        note: "Wild and Fire proofs checked: silent walk notes, kayak participation, question challenge and listening moment.",
       },
       {
         time: "Entertainment",
@@ -237,13 +237,13 @@ const itinerary = [
         note: 'Teams "bid" with stories, songs or inside jokes to win memory cards. No money, no pressure.',
       },
     ],
-    note: "Suggested extras: Memory Auction, Guess The Road Name, Goa Courtroom Round 2, Secret Role Reveal, SnS Midnight Radio.",
+    note: "FIRE STAMP earned by: participating in the question challenge, listening without interrupting, respecting phone/recording boundaries and adding warmth to the group.",
   },
   {
     day: "Day 3",
     label: "SUSEGAD STAMP",
     theme: "Slow morning, pottery and the final stamp.",
-    date: "The Closing Chapter",
+    date: "THE CLOSING CHAPTER",
     stamp: "SUSEGAD",
     items: [
       {
@@ -287,7 +287,7 @@ const itinerary = [
         note: "Trip ends. The WhatsApp group continues as the batch community.",
       },
     ],
-    note: "SUSEGAD STAMP earned by: respecting pace, participating in pottery, completing the passport ritual and leaving the group space better than they found it.",
+    note: "SUSEGAD STAMP earned by: respecting pace, participating in pottery, completing the passport ritual and leaving the group space better than you found it.",
   },
 ];
 
@@ -315,12 +315,12 @@ const included = [
   {
     icon: "🌊",
     label: "Backwater kayaking",
-    detail: "45 min kayak with life jackets and safety briefing",
+    detail: "45 minutes with life jackets and safety briefing",
   },
   {
     icon: "🥾",
     label: "Netravali Valley trek",
-    detail: "45-minute guided waterfall trek (weather & safety confirmed)",
+    detail: "45-minute guided waterfall trek (weather and safety dependent)",
   },
   {
     icon: "🏖️",
@@ -330,29 +330,29 @@ const included = [
   {
     icon: "🏺",
     label: "Group pottery session",
-    detail: "Day 3 skill session — the physical ritual before the final stamp",
+    detail: "Group pottery session — patience, presence and community",
   },
   {
     icon: "📖",
-    label: "Physical passport",
-    detail: "Your STAMP & STORIES passport, name card and mission sheet",
+    label: "Physical STAMP & STORIES passport",
+    detail: "Passport + name card + mission sheet",
   },
   {
     icon: "🎟️",
     label: "Four stamps",
-    detail: "Roots, Wild, Fire and Susegad — all earned through challenges, not attendance",
+    detail: "Roots, Wild, Fire and Susegad — earned through participation, not attendance",
   },
   {
     icon: "📸",
     label: "Community photographer",
-    detail: "Present on key experiences. No faces posted without explicit consent.",
+    detail: "No faces posted without explicit consent",
   },
   { icon: "🛡️", label: "Trip captain + hosts", detail: "Two trained SnS hosts present throughout" },
 ];
 
 const notIncluded = [
-  "Personal travel to/from the pickup point",
-  "Alcohol (not permitted on this experience)",
+  "Personal travel to/from pickup point",
+  "Alcohol",
   "Personal shopping or spa treatments",
   "Any activity outside the itinerary",
 ];
@@ -377,9 +377,9 @@ const communityRules = [
   "No pressure for photos, dancing, drinking, conversations or social media exchange.",
   "Consent is required before posting or recording anyone closely.",
   "Women-first comfort: crowd quality, boundaries and respect come before entertainment.",
-  "No one is forced to speak in emotional moments. Listening is valid participation.",
+  "No one is forced to speak in emotional moments or participate.",
   "Late-night music has a cut-off so rest remains respected.",
-  "Passport stamps are not given because someone paid. They are earned by showing up differently.",
+  "Passport stamps are not given because someone attended; they are earned by showing up differently.",
 ];
 
 const safetySnapshot = [
@@ -565,9 +565,9 @@ export function GoaSusegadPage() {
       </section>
 
       {/* ── Sticky nav bar ── */}
-      <div className="sticky top-[56px] z-40 bg-[#FFFDF9]/95 backdrop-blur border-b border-[#202124]/10 py-3">
+      <div className="sticky top-[72px] md:top-[80px] z-40 bg-[#FFFDF9] border-b border-[#202124]/10 py-3 shadow-xs">
         <div className="container mx-auto px-6 md:px-12 max-w-6xl flex items-center justify-between gap-4">
-          <div className="flex items-center gap-6 text-xs font-sans text-[#202124]/60 overflow-x-auto">
+          <div className="flex items-center gap-6 text-xs font-sans text-[#202124]/70 overflow-x-auto scrollbar-none py-1 min-w-0">
             <a
               href="#overview"
               className="hover:text-[#F26A2E] whitespace-nowrap transition-colors"
@@ -602,7 +602,7 @@ export function GoaSusegadPage() {
               FAQ
             </a>
           </div>
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
             <div className="text-right hidden sm:block">
               <p className="text-xs text-[#F26A2E] font-bold uppercase tracking-widest">
                 4 spots left
@@ -611,7 +611,7 @@ export function GoaSusegadPage() {
             </div>
             <Link
               to="/events/goa-susegad/request-invite"
-              className="bg-[#F26A2E] text-white text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-[#e0571c] transition-colors whitespace-nowrap inline-flex items-center justify-center"
+              className="bg-[#F26A2E] text-white text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-[#e0571c] transition-colors whitespace-nowrap inline-flex items-center justify-center shrink-0"
             >
               Request Invite
             </Link>
@@ -621,7 +621,7 @@ export function GoaSusegadPage() {
 
       <main className="flex-1">
         {/* ── Overview ── */}
-        <section id="overview" className="py-20 md:py-28">
+        <section id="overview" className="py-20 md:py-28 scroll-mt-36 md:scroll-mt-40">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
             <div className="grid md:grid-cols-2 gap-16 items-start">
               <motion.div
@@ -701,7 +701,7 @@ export function GoaSusegadPage() {
                     [
                       "🏡",
                       "Stay",
-                      "South Goa villa (shared, 2–3 per room) with cookout permission",
+                      "South Goa villa (shared, 2–3 per room) with cookout permission & quiet-hour policy",
                     ],
                     ["👥", "Group", "14 members — 12 travellers + 2 verified SnS staff"],
                     ["📅", "Dates", "Day 0 departure + 3 days in Goa"],
@@ -709,7 +709,7 @@ export function GoaSusegadPage() {
                     [
                       "💰",
                       "Cost",
-                      "₹9,500 per person (transport + stay + all activities included)",
+                      "₹22,999 per person (transport + stay + all activities included)",
                     ],
                   ].map(([icon, label, value]) => (
                     <div key={String(label)} className="flex gap-4 items-start">
@@ -742,7 +742,7 @@ export function GoaSusegadPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="mt-16 rounded-3xl bg-[#F6F0E6] p-6 md:p-8"
+              className="mt-16 rounded-3xl bg-[#F6F0E6] p-6 md:p-8 scroll-mt-36 md:scroll-mt-40"
             >
               <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
@@ -775,7 +775,7 @@ export function GoaSusegadPage() {
         </section>
 
         {/* ── Four Stamps ── */}
-        <section id="stamps" className="py-20 md:py-28 bg-[#202124]">
+        <section id="stamps" className="py-20 md:py-28 bg-[#202124] scroll-mt-36 md:scroll-mt-40">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -856,7 +856,7 @@ export function GoaSusegadPage() {
         </section>
 
         {/* ── Itinerary ── */}
-        <section id="itinerary" className="py-20 md:py-28">
+        <section id="itinerary" className="py-20 md:py-28 scroll-mt-36 md:scroll-mt-40">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -913,16 +913,16 @@ export function GoaSusegadPage() {
                     {/* Activities */}
                     <div className="divide-y divide-[#202124]/6 bg-white">
                       {day.items.map((item, ii) => (
-                        <div key={ii} className="flex gap-5 items-start px-6 md:px-8 py-4">
+                        <div key={ii} className="flex gap-4 sm:gap-6 items-start px-6 md:px-8 py-4">
                           <span
-                            className="text-xs font-mono shrink-0 mt-1 w-20 font-bold"
+                            className="text-xs font-mono shrink-0 w-28 sm:w-32 font-bold uppercase tracking-wider pt-0.5"
                             style={{ color: stampColor ?? "#F26A2E" }}
                           >
                             {item.time}
                           </span>
-                          <div>
-                            <p className="font-serif text-[#202124] text-base">{item.label}</p>
-                            <p className="text-xs text-[#202124]/50 font-sans mt-0.5 leading-relaxed">
+                          <div className="flex-1 min-w-0">
+                            <p className="font-serif text-[#202124] text-base font-medium">{item.label}</p>
+                            <p className="text-xs text-[#202124]/70 font-sans mt-1 leading-relaxed">
                               {item.note}
                             </p>
                           </div>
@@ -945,7 +945,7 @@ export function GoaSusegadPage() {
         </section>
 
         {/* ── What's Included ── */}
-        <section id="includes" className="py-20 md:py-28 bg-[#F6F0E6]">
+        <section id="includes" className="py-20 md:py-28 bg-[#F6F0E6] scroll-mt-36 md:scroll-mt-40">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1003,7 +1003,7 @@ export function GoaSusegadPage() {
         </section>
 
         {/* ── Community Rules ── */}
-        <section id="rules" className="py-20 md:py-28 bg-[#202124]">
+        <section id="rules" className="py-20 md:py-28 bg-[#202124] scroll-mt-36 md:scroll-mt-40">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1042,7 +1042,7 @@ export function GoaSusegadPage() {
         </section>
 
         {/* ── Packing Guide ── */}
-        <section id="packing" className="py-20 md:py-28">
+        <section id="packing" className="py-20 md:py-28 scroll-mt-36 md:scroll-mt-40">
           <div className="container mx-auto px-6 md:px-12 max-w-6xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1064,10 +1064,10 @@ export function GoaSusegadPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: i * 0.04 }}
-                  className="flex items-center gap-3 bg-[#F6F0E6] rounded-xl px-4 py-3"
+                  className="flex items-center gap-3 bg-[#F6F0E6] rounded-xl px-4 py-3 min-h-[52px]"
                 >
                   <span className="w-2 h-2 rounded-full bg-[#F26A2E] shrink-0" />
-                  <p className="text-sm font-sans text-[#202124]/80">{item}</p>
+                  <p className="text-sm font-sans text-[#202124]/80 leading-snug">{item}</p>
                 </motion.div>
               ))}
             </div>
@@ -1081,6 +1081,7 @@ export function GoaSusegadPage() {
           title="FAQ."
           items={faqs}
           bgClassName="bg-[#F6F0E6]"
+          className="scroll-mt-36 md:scroll-mt-40"
           align="left"
         />
 
