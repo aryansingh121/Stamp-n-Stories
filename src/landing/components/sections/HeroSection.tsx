@@ -45,7 +45,7 @@ export function HeroSection() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 border border-[#F26A2E]/30 bg-[#F26A2E]/10 text-[#F26A2E] px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold tracking-widest uppercase mb-3.5 lg:mb-4">
               <ShieldCheck className="h-3.5 w-3.5" />
-              INDIA’S WOMEN-FIRST SOCIAL COMMUNITY
+              INDIA’S WOMEN-FIRST COMMUNITY INCLUSIVE FOR ALL
             </div>
 
             {/* Heading with Go Out / More. line break */}
@@ -72,12 +72,12 @@ export function HeroSection() {
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row gap-3.5 lg:gap-4">
-              <Link to="/passport">
+              <Link to="/events/goa-susegad">
                 <Button
                   size="lg"
                   className="w-full sm:w-auto bg-[#F26A2E] hover:bg-[#F26A2E]/90 text-white rounded-full px-7 sm:px-8 h-12 sm:h-13 lg:h-13 text-sm sm:text-base font-medium transition-all shadow-[0_0_25px_rgba(242,106,46,0.35)]"
                 >
-                  Apply to Join
+                  Upcoming Event
                 </Button>
               </Link>
               <Link to="/safety">
