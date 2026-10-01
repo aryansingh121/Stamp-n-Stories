@@ -29,33 +29,33 @@ export function RoadToGoaNightScene() {
 
   // Vehicle perspective animation
   // Starts at bottom (y=100%), ends near vanishing point (y=40%)
-  const vehicleY = useTransform(smoothProgress, [0.2, 0.8], ["90%", "42%"]);
-  const vehicleScale = useTransform(smoothProgress, [0.2, 0.8], [1, 0.35]);
-  const vehicleOpacity = useTransform(smoothProgress, [0.05, 0.2, 0.85, 0.95], [0.8, 1, 1, 0.7]);
+  const vehicleY = useTransform(smoothProgress, [0.3, 0.85], ["90%", "42%"]);
+  const vehicleScale = useTransform(smoothProgress, [0.3, 0.85], [1, 0.3]);
+  const vehicleOpacity = useTransform(smoothProgress, [0.15, 0.3, 0.85, 0.95], [0, 1, 1, 0]);
 
   const finalVehicleY = prefersReduced ? "60%" : vehicleY;
   const finalVehicleScale = prefersReduced ? 0.6 : vehicleScale;
   const finalVehicleOpacity = prefersReduced ? 1 : vehicleOpacity;
 
-  // Scene fade in - ensure scene is visible when entering viewport
-  const sceneOpacity = useTransform(smoothProgress, [0, 0.1], [0.8, 1]);
+  // Scene fade in
+  const sceneOpacity = useTransform(smoothProgress, [0, 0.15], [0, 1]);
   const finalSceneOpacity = prefersReduced ? 1 : sceneOpacity;
 
   // Markers
   const allMarkers = [
-    { id: 1, label: "PICKUP", progress: 0.25 },
-    { id: 2, label: "PASSPORT BRIEFING", progress: 0.35 },
-    { id: 3, label: "BLACK ENVELOPE", progress: 0.45 },
-    { id: 4, label: "COURTROOM DEBATE", progress: 0.55 },
-    { id: 5, label: "DINNER HALT", progress: 0.65 },
-    { id: 6, label: "LIGHTS-OFF REST", progress: 0.75 },
+    { id: 1, label: "PICKUP", progress: 0.35 },
+    { id: 2, label: "PASSPORT BRIEFING", progress: 0.45 },
+    { id: 3, label: "BLACK ENVELOPE", progress: 0.55 },
+    { id: 4, label: "COURTROOM DEBATE", progress: 0.65 },
+    { id: 5, label: "DINNER HALT", progress: 0.75 },
+    { id: 6, label: "LIGHTS-OFF REST", progress: 0.8 },
     { id: 7, label: "GOA ARRIVAL", progress: 0.85 },
   ];
 
   const mobileMarkers = [
-    { id: 1, label: "PICKUP", progress: 0.25 },
-    { id: 4, label: "COURTROOM DEBATE", progress: 0.55 },
-    { id: 5, label: "DINNER HALT", progress: 0.65 },
+    { id: 1, label: "PICKUP", progress: 0.35 },
+    { id: 4, label: "COURTROOM DEBATE", progress: 0.6 },
+    { id: 5, label: "DINNER HALT", progress: 0.75 },
     { id: 7, label: "GOA ARRIVAL", progress: 0.85 },
   ];
 
@@ -71,19 +71,19 @@ export function RoadToGoaNightScene() {
   }));
 
   return (
-    <section ref={containerRef} className="relative w-full min-h-[580px] md:min-h-[680px] h-[75vh] md:h-[80vh] bg-[#202124] overflow-hidden py-10 md:py-14 flex flex-col items-center justify-center">
+    <section ref={containerRef} className="relative w-full h-[120vh] bg-[#202124] overflow-hidden py-16 md:py-24 flex items-center justify-center">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#234A3C]/20 to-[#202124] pointer-events-none" />
 
-      {/* Main Scene Body */}
-      <div className="relative w-full h-full overflow-hidden flex flex-col items-center justify-center">
+      {/* Sticky Container for Scene */}
+      <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
         
         {/* Title */}
         <motion.div 
-          className="absolute top-6 sm:top-10 md:top-12 z-30 flex flex-col items-center text-center px-4"
+          className="absolute top-16 md:top-24 z-30 flex flex-col items-center text-center px-4"
           style={{ opacity: finalSceneOpacity }}
         >
-          <span className="text-[10px] sm:text-xs uppercase tracking-widest text-[#F26A2E] mb-1 font-semibold">
+          <span className="text-[10px] sm:text-xs uppercase tracking-widest text-[#F26A2E] mb-2 font-semibold">
             The Overnight Overture
           </span>
           <h2 className="text-3xl sm:text-5xl font-serif text-[#FFFDF9]">
@@ -93,7 +93,7 @@ export function RoadToGoaNightScene() {
 
         {/* Scene Container */}
         <motion.div 
-          className="relative w-full max-w-5xl h-[70vh] flex-shrink-0"
+          className="relative w-full max-w-5xl h-[80vh] flex-shrink-0"
           style={{ opacity: finalSceneOpacity }}
         >
           {/* Background Layer: Sky, Moon, Stars, Distant Mountains */}

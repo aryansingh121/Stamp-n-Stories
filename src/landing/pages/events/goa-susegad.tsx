@@ -679,7 +679,7 @@ export function GoaSusegadPage() {
         {/* ── 2. HERO (COMMENCING AT VIEWPORT TOP Y=0) ── */}
         <section
           id="overview"
-          className="relative bg-[#202124] overflow-hidden scroll-mt-0"
+          className="relative min-h-[92vh] lg:min-h-screen flex items-end bg-[#202124] overflow-hidden scroll-mt-0"
         >
           {/* Parallax Background Image */}
           <div
@@ -701,7 +701,7 @@ export function GoaSusegadPage() {
           <div className="absolute inset-0 bg-radial-at-top-right from-transparent via-[#202124]/40 to-[#202124]/85 pointer-events-none" />
 
           {/* Hero Content Container with Safe Top Padding for Fixed Navbar */}
-          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-14 md:pb-16">
+          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-32 sm:pt-36 md:pt-40 pb-16 md:pb-24">
             <motion.div
               initial={prefersReduced ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -833,10 +833,15 @@ export function GoaSusegadPage() {
           </div>
         </nav>
 
-        {/* ── 4. THE IDEA (FLOWS NATURALLY DIRECTLY BELOW THE EVENT SUB-NAVIGATION) ── */}
+        {/* ── VIZ 1: ROAD TO GOA NIGHT JOURNEY ── */}
+        <Suspense fallback={null}>
+          <RoadToGoaNightScene />
+        </Suspense>
+
+        {/* ── 4. THE IDEA ── */}
         <section
           id="the-idea"
-          className="py-20 md:py-28 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-20 md:scroll-mt-24"
+          className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
         >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="flex items-center gap-3 mb-6">
@@ -940,9 +945,9 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── VIZ 1: ROAD TO GOA NIGHT JOURNEY (DAY 0 ROAD TO GOA OVERTURE) ── */}
+        {/* ── VIZ 2: SOUTH GOA JOURNEY MAP ── */}
         <Suspense fallback={null}>
-          <RoadToGoaNightScene />
+          <SouthGoaJourneyMap />
         </Suspense>
 
         {/* ── 6. THE JOURNEY (PROGRESSIVE VISUAL ITINERARY) ── */}
@@ -1058,11 +1063,6 @@ export function GoaSusegadPage() {
             })()}
           </div>
         </section>
-
-        {/* ── VIZ 2: SOUTH GOA JOURNEY MAP ── */}
-        <Suspense fallback={null}>
-          <SouthGoaJourneyMap />
-        </Suspense>
 
         {/* ── VIZ 3: DAY 2 TERRAIN ELEVATION ── */}
         <Suspense fallback={null}>
