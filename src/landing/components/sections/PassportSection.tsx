@@ -47,7 +47,7 @@ export function PassportSection() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-sm font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-              The STAMP & STORIES PASSPORT
+              The STAMPNSTORIES PASSPORT
             </h2>
             <h3 className="text-4xl md:text-5xl font-serif leading-tight mb-6 text-[#FFFDF9]">
               Not a ticket. Not a souvenir. A member identity that grows.
