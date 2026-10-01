@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as SiteRouteImport } from './routes/_site'
 import { Route as PassportIndexRouteImport } from './routes/passport.index'
 import { Route as SiteIndexRouteImport } from './routes/_site.index'
+import { Route as PassportSquadRouteImport } from './routes/passport.squad'
 import { Route as PassportAuthenticatedRouteImport } from './routes/passport._authenticated'
 import { Route as PCodeRouteImport } from './routes/p.$code'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
@@ -67,6 +68,11 @@ const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SiteRoute,
+} as any)
+const PassportSquadRoute = PassportSquadRouteImport.update({
+  id: '/squad',
+  path: '/squad',
+  getParentRoute: () => PassportRoute,
 } as any)
 const PassportAuthenticatedRoute = PassportAuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -208,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/vision': typeof SiteVisionRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/p/$code': typeof PCodeRoute
+  '/passport/squad': typeof PassportSquadRoute
   '/passport/': typeof PassportIndexRoute
   '/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
   '/passport/admin': typeof PassportAuthenticatedAdminRoute
@@ -235,6 +242,7 @@ export interface FileRoutesByTo {
   '/auth/callback': typeof AuthCallbackRoute
   '/p/$code': typeof PCodeRoute
   '/passport': typeof PassportIndexRoute
+  '/passport/squad': typeof PassportSquadRoute
   '/': typeof SiteIndexRoute
   '/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
   '/passport/admin': typeof PassportAuthenticatedAdminRoute
@@ -266,6 +274,7 @@ export interface FileRoutesById {
   '/auth/callback': typeof AuthCallbackRoute
   '/p/$code': typeof PCodeRoute
   '/passport/_authenticated': typeof PassportAuthenticatedRouteWithChildren
+  '/passport/squad': typeof PassportSquadRoute
   '/_site/': typeof SiteIndexRoute
   '/passport/': typeof PassportIndexRoute
   '/_site/events/goa-susegad': typeof SiteEventsGoaSusegadRoute
@@ -298,6 +307,7 @@ export interface FileRouteTypes {
     | '/vision'
     | '/auth/callback'
     | '/p/$code'
+    | '/passport/squad'
     | '/passport/'
     | '/events/goa-susegad'
     | '/passport/admin'
@@ -325,6 +335,7 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/p/$code'
     | '/passport'
+    | '/passport/squad'
     | '/'
     | '/events/goa-susegad'
     | '/passport/admin'
@@ -355,6 +366,7 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/p/$code'
     | '/passport/_authenticated'
+    | '/passport/squad'
     | '/_site/'
     | '/passport/'
     | '/_site/events/goa-susegad'
@@ -420,6 +432,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof SiteIndexRouteImport
       parentRoute: typeof SiteRoute
+    }
+    '/passport/squad': {
+      id: '/passport/squad'
+      path: '/squad'
+      fullPath: '/passport/squad'
+      preLoaderRoute: typeof PassportSquadRouteImport
+      parentRoute: typeof PassportRoute
     }
     '/passport/_authenticated': {
       id: '/passport/_authenticated'
@@ -670,11 +689,13 @@ const PassportAuthenticatedRouteWithChildren =
 
 interface PassportRouteChildren {
   PassportAuthenticatedRoute: typeof PassportAuthenticatedRouteWithChildren
+  PassportSquadRoute: typeof PassportSquadRoute
   PassportIndexRoute: typeof PassportIndexRoute
 }
 
 const PassportRouteChildren: PassportRouteChildren = {
   PassportAuthenticatedRoute: PassportAuthenticatedRouteWithChildren,
+  PassportSquadRoute: PassportSquadRoute,
   PassportIndexRoute: PassportIndexRoute,
 }
 

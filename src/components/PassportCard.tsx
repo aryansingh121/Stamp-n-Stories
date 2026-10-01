@@ -89,7 +89,7 @@ export function PassportCard({
         <div className="flex items-center gap-2">
           <Plane className="h-4 w-4 text-coral" />
           <span className="font-display text-[10px] uppercase tracking-[0.22em] sm:text-[11px]">
-            Stamp &amp; Stories
+            STAMPNSTORIES
           </span>
         </div>
         <span className="font-display text-[10px] uppercase tracking-[0.22em] text-ink/60 sm:text-[11px]">

@@ -52,7 +52,7 @@ function Landing() {
                 variant="outline"
                 className="rounded-full border-ink/30 px-7"
               >
-                <Link to="/passport/leaderboard">Community Members</Link>
+                <Link to="/passport/discover">Community Members</Link>
               </Button>
             </div>
             <div className="mt-12 flex justify-center gap-8 text-xs uppercase tracking-widest text-ink/50 font-display">
@@ -107,8 +107,8 @@ function Landing() {
               },
               {
                 icon: Plane,
-                t: "Levels & leaderboard",
-                d: "New Member → Elite Member. Most active members get featured.",
+                t: "Member levels",
+                d: "New Member → Elite Member. Earn stamps as you travel and connect.",
               },
             ].map(({ icon: Icon, t, d }) => (
               <div
@@ -140,7 +140,7 @@ function Landing() {
         </section>
       </main>
       <footer className="border-t border-ink/10 py-6 text-center text-xs text-ink/50">
-        © {new Date().getFullYear()} stamp & stories · community passport
+        © {new Date().getFullYear()} Stamp N Stories · Community Passport
       </footer>
     </div>
   );

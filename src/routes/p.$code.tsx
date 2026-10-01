@@ -82,12 +82,10 @@ function PublicPassport() {
     <div className="min-h-screen bg-background">
       <header className="border-b border-ink/10 bg-paper/85 backdrop-blur sticky top-0 z-30">
         <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-coral text-primary-foreground">
-              <Plane className="h-4 w-4" />
-            </span>
-            <span className="font-display">
-              stamp<span className="text-coral">&</span>stories
+          <Link to="/" className="flex items-center gap-3 min-w-0">
+            <img src="/logo.png" alt="Stamp N Stories" className="h-9 w-auto mix-blend-multiply" />
+            <span className="font-serif text-lg md:text-xl font-bold tracking-widest uppercase text-ink">
+              STAMP<span className="text-coral">N</span>STORIES
             </span>
           </Link>
           <Button asChild size="sm" className="rounded-full bg-ink text-paper hover:bg-coral">

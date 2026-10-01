@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -5,8 +6,9 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Stamp & Stories — "Sunset Wanderer" design system
- * Coral + sun + cream paper, ink text. Premium, fun, Gen-Z passport vibe.
+ * Stamp N Stories — Design System
+ * Playfair Display (Serif) + Plus Jakarta Sans (Body)
+ * Warm White / Paper Cream (#FFFDF9, #F6F0E6) + Passport Charcoal (#202124) + Burnt Orange (#F26A2E) + Forest Green (#234A3C)
  */
 
 @theme inline {
@@ -17,8 +19,9 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
 
-  --font-display: "Unbounded", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-script: "Caveat", cursive;
 
   --color-background: var(--background);
@@ -47,92 +50,100 @@
   --color-coral: var(--coral);
   --color-stamp: var(--stamp);
 
-  --shadow-stamp: 0 8px 0 -4px var(--ink), 0 12px 24px -8px rgba(26, 26, 26, 0.25);
-  --shadow-card: 0 24px 48px -16px rgba(255, 107, 91, 0.35);
+  --color-burnt-orange: #F26A2E;
+  --color-passport-charcoal: #202124;
+  --color-paper-cream: #F6F0E6;
+  --color-forest-green: #234A3C;
+  --color-warm-white: #FFFDF9;
+
+  --shadow-stamp: 0 8px 0 -4px var(--ink), 0 12px 24px -8px rgba(32, 33, 36, 0.15);
+  --shadow-card: 0 12px 24px -4px rgba(32, 33, 36, 0.08), 0 4px 8px -4px rgba(32, 33, 36, 0.04);
 }
 
 :root {
   --radius: 1rem;
 
   /* Paper / ink */
-  --background: oklch(0.97 0.025 80);          /* warm cream */
-  --foreground: oklch(0.17 0.02 50);            /* ink */
-  --paper: oklch(0.97 0.025 80);
-  --ink: oklch(0.17 0.02 50);
+  --background: #FFFDF9;          /* warm white */
+  --foreground: #202124;          /* passport charcoal */
+  --paper: #F6F0E6;               /* paper cream */
+  --ink: #202124;
 
-  --card: oklch(0.99 0.015 85);
-  --card-foreground: oklch(0.17 0.02 50);
-  --popover: oklch(0.99 0.015 85);
-  --popover-foreground: oklch(0.17 0.02 50);
+  --card: #FFFDF9;
+  --card-foreground: #202124;
+  --popover: #FFFDF9;
+  --popover-foreground: #202124;
 
-  --primary: oklch(0.68 0.21 28);               /* coral */
-  --primary-foreground: oklch(0.99 0.01 80);
-  --coral: oklch(0.68 0.21 28);
+  --primary: #F26A2E;             /* coral / burnt orange */
+  --primary-foreground: #FFFDF9;
+  --coral: #F26A2E;
 
-  --secondary: oklch(0.86 0.13 80);             /* sun */
-  --secondary-foreground: oklch(0.17 0.02 50);
-  --sun: oklch(0.86 0.13 80);
+  --secondary: #234A3C;           /* forest green */
+  --secondary-foreground: #FFFDF9;
+  --sun: #E58A3C;
 
-  --muted: oklch(0.94 0.025 70);
-  --muted-foreground: oklch(0.42 0.03 50);
+  --muted: #F6F0E6;
+  --muted-foreground: rgba(32, 33, 36, 0.65);
 
-  --accent: oklch(0.78 0.16 50);                /* peach */
-  --accent-foreground: oklch(0.17 0.02 50);
+  --accent: #F6F0E6;
+  --accent-foreground: #202124;
 
-  --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(0.99 0.01 80);
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFDF9;
 
-  --border: oklch(0.85 0.03 70);
-  --input: oklch(0.9 0.025 75);
-  --ring: oklch(0.68 0.21 28);
+  --border: rgba(32, 33, 36, 0.12);
+  --input: rgba(32, 33, 36, 0.15);
+  --ring: #F26A2E;
 
-  --stamp: oklch(0.52 0.19 22);                 /* deep stamp red */
+  --stamp: #C84626;
 
-  --sidebar: oklch(0.97 0.025 80);
-  --sidebar-foreground: oklch(0.17 0.02 50);
-  --sidebar-primary: oklch(0.68 0.21 28);
-  --sidebar-primary-foreground: oklch(0.99 0.01 80);
-  --sidebar-accent: oklch(0.94 0.025 70);
-  --sidebar-accent-foreground: oklch(0.17 0.02 50);
-  --sidebar-border: oklch(0.85 0.03 70);
-  --sidebar-ring: oklch(0.68 0.21 28);
+  --sidebar: #F6F0E6;
+  --sidebar-foreground: #202124;
+  --sidebar-primary: #F26A2E;
+  --sidebar-primary-foreground: #FFFDF9;
+  --sidebar-accent: #FFFDF9;
+  --sidebar-accent-foreground: #202124;
+  --sidebar-border: rgba(32, 33, 36, 0.12);
+  --sidebar-ring: #F26A2E;
 
-  --chart-1: oklch(0.68 0.21 28);
-  --chart-2: oklch(0.86 0.13 80);
-  --chart-3: oklch(0.55 0.15 200);
-  --chart-4: oklch(0.62 0.17 145);
-  --chart-5: oklch(0.5 0.18 320);
+  --chart-1: #F26A2E;
+  --chart-2: #234A3C;
+  --chart-3: #202124;
+  --chart-4: #F6F0E6;
+  --chart-5: #FFFDF9;
 }
 
 .dark {
-  --background: oklch(0.18 0.03 40);
-  --foreground: oklch(0.97 0.025 80);
-  --paper: oklch(0.22 0.03 40);
-  --ink: oklch(0.97 0.025 80);
-  --card: oklch(0.22 0.03 40);
-  --card-foreground: oklch(0.97 0.025 80);
-  --popover: oklch(0.22 0.03 40);
-  --popover-foreground: oklch(0.97 0.025 80);
-  --primary: oklch(0.72 0.2 30);
-  --primary-foreground: oklch(0.15 0.02 40);
-  --secondary: oklch(0.5 0.1 70);
-  --secondary-foreground: oklch(0.97 0.02 80);
-  --muted: oklch(0.28 0.03 40);
-  --muted-foreground: oklch(0.75 0.02 70);
-  --accent: oklch(0.55 0.15 50);
-  --accent-foreground: oklch(0.97 0.02 80);
-  --destructive: oklch(0.6 0.22 27);
-  --destructive-foreground: oklch(0.97 0.02 80);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.72 0.2 30);
+  --background: #1A1C1A;
+  --foreground: #F6F0E6;
+  --paper: #232624;
+  --ink: #F6F0E6;
+  --card: #232624;
+  --card-foreground: #F6F0E6;
+  --popover: #232624;
+  --popover-foreground: #F6F0E6;
+  --primary: #F26A2E;
+  --primary-foreground: #FFFDF9;
+  --secondary: #234A3C;
+  --secondary-foreground: #FFFDF9;
+  --muted: #2A2E2B;
+  --muted-foreground: rgba(246, 240, 230, 0.65);
+  --accent: #2A2E2B;
+  --accent-foreground: #F6F0E6;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFDF9;
+  --border: rgba(246, 240, 230, 0.12);
+  --input: rgba(246, 240, 230, 0.15);
+  --ring: #F26A2E;
 }
 
 @layer base {
   * { border-color: var(--color-border); }
   html, body { background-color: var(--color-background); color: var(--color-foreground); }
   body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, h4, .font-display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
+  h1, h2, h3, h4, .font-display { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em; }
+  .font-serif { font-family: var(--font-serif); }
+  .font-sans { font-family: var(--font-sans); }
   .font-script { font-family: var(--font-script); }
 }
 
@@ -140,24 +151,24 @@
 .paper-texture {
   background-color: var(--paper);
   background-image:
-    radial-gradient(circle at 25% 15%, oklch(0.78 0.16 50 / 0.15), transparent 45%),
-    radial-gradient(circle at 80% 85%, oklch(0.68 0.21 28 / 0.12), transparent 50%),
-    repeating-linear-gradient(45deg, oklch(0.17 0.02 50 / 0.025) 0 1px, transparent 1px 6px),
-    repeating-linear-gradient(-45deg, oklch(0.17 0.02 50 / 0.02) 0 1px, transparent 1px 9px);
+    radial-gradient(circle at 25% 15%, rgba(242, 106, 46, 0.08), transparent 45%),
+    radial-gradient(circle at 80% 85%, rgba(35, 74, 60, 0.08), transparent 50%),
+    repeating-linear-gradient(45deg, rgba(32, 33, 36, 0.015) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(-45deg, rgba(32, 33, 36, 0.012) 0 1px, transparent 1px 9px);
 }
 
 .paper-edge {
-  border: 1.5px solid oklch(0.17 0.02 50 / 0.18);
+  border: 1.5px solid rgba(32, 33, 36, 0.15);
   box-shadow:
     inset 0 0 0 6px var(--paper),
-    inset 0 0 0 7px oklch(0.17 0.02 50 / 0.12),
-    0 20px 50px -20px rgba(0,0,0,0.35);
+    inset 0 0 0 7px rgba(32, 33, 36, 0.08),
+    0 20px 50px -20px rgba(0, 0, 0, 0.25);
 }
 
 .guilloche {
   background-image:
-    repeating-radial-gradient(circle at 0 0, transparent 0, oklch(0.68 0.21 28 / 0.08) 1px, transparent 2px, transparent 8px),
-    repeating-radial-gradient(circle at 100% 100%, transparent 0, oklch(0.86 0.13 80 / 0.1) 1px, transparent 2px, transparent 10px);
+    repeating-radial-gradient(circle at 0 0, transparent 0, rgba(242, 106, 46, 0.05) 1px, transparent 2px, transparent 8px),
+    repeating-radial-gradient(circle at 100% 100%, transparent 0, rgba(35, 74, 60, 0.05) 1px, transparent 2px, transparent 10px);
 }
 
 .stamp-ring {
