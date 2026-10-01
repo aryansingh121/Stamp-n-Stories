@@ -2,9 +2,6 @@ import { motion } from "framer-motion";
 
 export function RulesSection() {
   const nos = [
-    "No pressure for numbers, DMs, photos, dancing or social media.",
-    "No unwanted touching, comments or forced closeness.",
-    "No filming private moments without consent.",
     "No alcohol-led behaviour that affects others' comfort.",
     "No disrespect towards women, crew, locals or other members.",
     "No passport, no entry to offline experiences.",
@@ -12,10 +9,9 @@ export function RulesSection() {
 
   const yeses = [
     "Be friendly, not forceful.",
-    "Ask before recording.",
     "Respect silence, rest and personal space.",
     "Contribute to the group without dominating.",
-    "Report discomfort privately and early.",
+    "Report any type of discomfort on community helpline 24x7.",
     "Earn trust by how you behave, not by what you pay.",
   ];
 
