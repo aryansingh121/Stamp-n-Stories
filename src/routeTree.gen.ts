@@ -18,6 +18,7 @@ import { Route as SiteIndexRouteImport } from './routes/_site.index'
 import { Route as PassportAuthenticatedRouteImport } from './routes/passport._authenticated'
 import { Route as PCodeRouteImport } from './routes/p.$code'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as SiteVisionRouteImport } from './routes/_site.vision'
 import { Route as SiteSafetyRouteImport } from './routes/_site.safety'
 import { Route as SiteRulesRouteImport } from './routes/_site.rules'
 import { Route as SiteRefundPolicyRouteImport } from './routes/_site.refund-policy'
@@ -80,6 +81,11 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   id: '/callback',
   path: '/callback',
   getParentRoute: () => AuthRoute,
+} as any)
+const SiteVisionRoute = SiteVisionRouteImport.update({
+  id: '/vision',
+  path: '/vision',
+  getParentRoute: () => SiteRoute,
 } as any)
 const SiteSafetyRoute = SiteSafetyRouteImport.update({
   id: '/safety',
@@ -199,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/refund-policy': typeof SiteRefundPolicyRoute
   '/rules': typeof SiteRulesRoute
   '/safety': typeof SiteSafetyRoute
+  '/vision': typeof SiteVisionRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/p/$code': typeof PCodeRoute
   '/passport/': typeof PassportIndexRoute
@@ -224,6 +231,7 @@ export interface FileRoutesByTo {
   '/refund-policy': typeof SiteRefundPolicyRoute
   '/rules': typeof SiteRulesRoute
   '/safety': typeof SiteSafetyRoute
+  '/vision': typeof SiteVisionRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/p/$code': typeof PCodeRoute
   '/passport': typeof PassportIndexRoute
@@ -254,6 +262,7 @@ export interface FileRoutesById {
   '/_site/refund-policy': typeof SiteRefundPolicyRoute
   '/_site/rules': typeof SiteRulesRoute
   '/_site/safety': typeof SiteSafetyRoute
+  '/_site/vision': typeof SiteVisionRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/p/$code': typeof PCodeRoute
   '/passport/_authenticated': typeof PassportAuthenticatedRouteWithChildren
@@ -286,6 +295,7 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/rules'
     | '/safety'
+    | '/vision'
     | '/auth/callback'
     | '/p/$code'
     | '/passport/'
@@ -311,6 +321,7 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/rules'
     | '/safety'
+    | '/vision'
     | '/auth/callback'
     | '/p/$code'
     | '/passport'
@@ -340,6 +351,7 @@ export interface FileRouteTypes {
     | '/_site/refund-policy'
     | '/_site/rules'
     | '/_site/safety'
+    | '/_site/vision'
     | '/auth/callback'
     | '/p/$code'
     | '/passport/_authenticated'
@@ -429,6 +441,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/callback'
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/_site/vision': {
+      id: '/_site/vision'
+      path: '/vision'
+      fullPath: '/vision'
+      preLoaderRoute: typeof SiteVisionRouteImport
+      parentRoute: typeof SiteRoute
     }
     '/_site/safety': {
       id: '/_site/safety'
@@ -593,6 +612,7 @@ interface SiteRouteChildren {
   SiteRefundPolicyRoute: typeof SiteRefundPolicyRoute
   SiteRulesRoute: typeof SiteRulesRoute
   SiteSafetyRoute: typeof SiteSafetyRoute
+  SiteVisionRoute: typeof SiteVisionRoute
   SiteIndexRoute: typeof SiteIndexRoute
 }
 
@@ -606,6 +626,7 @@ const SiteRouteChildren: SiteRouteChildren = {
   SiteRefundPolicyRoute: SiteRefundPolicyRoute,
   SiteRulesRoute: SiteRulesRoute,
   SiteSafetyRoute: SiteSafetyRoute,
+  SiteVisionRoute: SiteVisionRoute,
   SiteIndexRoute: SiteIndexRoute,
 }
 

@@ -46,6 +46,7 @@ export function Navbar() {
   const navLinks = [
     { label: "Passport", href: "/passport" },
     { label: "How It Works", href: "/how-it-works" },
+    { label: "Vision", href: "/vision" },
     { label: "Experiences", href: "/experiences" },
     { label: "For Brands", href: "/brands" },
     { label: "Rules", href: "/rules" },

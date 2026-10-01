@@ -6,6 +6,7 @@ export function Footer() {
     { label: "Home", href: "/" },
     { label: "Passport", href: "/passport" },
     { label: "How It Works", href: "/how-it-works" },
+    { label: "Vision", href: "/vision" },
     { label: "Experiences", href: "/experiences" },
     { label: "For Brands", href: "/partner" },
     { label: "Rules", href: "/rules" },
@@ -37,7 +38,7 @@ export function Footer() {
                 Navigation
               </h4>
               <ul className="flex flex-col gap-4">
-                {navLinks.slice(0, 4).map((link) => (
+                {navLinks.slice(0, 5).map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
@@ -54,7 +55,7 @@ export function Footer() {
                 Navigation 2
               </h4>
               <ul className="flex flex-col gap-4">
-                {navLinks.slice(4).map((link) => (
+                {navLinks.slice(5).map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
