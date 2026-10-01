@@ -637,6 +637,7 @@ export function GoaSusegadPage() {
   const [activeSection, setActiveSection] = useState("overview");
   const [scrollY, setScrollY] = useState(0);
   const prefersReduced = useReducedMotion();
+  const isScrolled = scrollY > 20;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -675,11 +676,61 @@ export function GoaSusegadPage() {
       {/* ── 1. MAIN GLOBAL NAVBAR ── */}
       <Navbar />
 
+      {/* ── 2. ATTACHED CHAPTER SUB-NAV (ATTACHED JUST BELOW 1ST NAVBAR AT TOP-16 MD:TOP-20, APPEARS ON SCROLL WHEN 1ST NAVBAR COLOUR CHANGES) ── */}
+      <nav
+        aria-label="Experience Chapter Navigation"
+        className={`fixed top-16 md:top-20 left-0 w-full z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-b border-[#202124]/10 shadow-xs transition-all duration-300 ${
+          isScrolled
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-3 pointer-events-none"
+        }`}
+      >
+        <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl flex items-center justify-between gap-4 h-14">
+          {/* Scrollable Chapter Navigation */}
+          <div className="flex items-center gap-6 sm:gap-7 text-xs font-sans overflow-x-auto no-scrollbar py-1 min-w-0">
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`relative py-3.5 whitespace-nowrap transition-colors duration-200 ${
+                  activeSection === item.id
+                    ? "text-[#F26A2E] font-semibold"
+                    : "text-[#202124]/70 hover:text-[#202124]"
+                }`}
+              >
+                {item.label}
+                {activeSection === item.id && (
+                  <motion.span
+                    layoutId="subnav-active-pill"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#F26A2E] rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </a>
+            ))}
+          </div>
+
+          {/* Right Status & Action */}
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-[#F26A2E] bg-[#F26A2E]/10 px-2.5 py-1 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F26A2E] animate-pulse" />
+              Waiting List Open
+            </span>
+            <Link
+              to="/events/goa-susegad/request-invite"
+              className="bg-[#F26A2E] hover:bg-[#d9561e] text-white text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2 rounded-full transition-colors whitespace-nowrap shadow-xs"
+            >
+              Request Invite
+            </Link>
+          </div>
+        </div>
+      </nav>
+
       <main className="flex-1">
-        {/* ── 2. HERO (COMMENCING AT VIEWPORT TOP Y=0) ── */}
+        {/* ── 3. HERO (COMMENCING AT VIEWPORT TOP Y=0) ── */}
         <section
           id="overview"
-          className="relative min-h-[92vh] lg:min-h-screen flex items-end bg-[#202124] overflow-hidden scroll-mt-0"
+          className="relative bg-[#202124] overflow-hidden scroll-mt-0"
         >
           {/* Parallax Background Image */}
           <div
@@ -701,7 +752,7 @@ export function GoaSusegadPage() {
           <div className="absolute inset-0 bg-radial-at-top-right from-transparent via-[#202124]/40 to-[#202124]/85 pointer-events-none" />
 
           {/* Hero Content Container with Safe Top Padding for Fixed Navbar */}
-          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-32 sm:pt-36 md:pt-40 pb-16 md:pb-24">
+          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20">
             <motion.div
               initial={prefersReduced ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -787,61 +838,10 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 3. STICKY CHAPTER SUB-NAV (ATTACHING SEAMLESSLY AT TOP-16 MD:TOP-20) ── */}
-        <nav
-          aria-label="Experience Chapter Navigation"
-          className="sticky top-16 md:top-20 z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-y border-[#202124]/10 shadow-xs transition-all duration-200"
-        >
-          <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl flex items-center justify-between gap-4 h-14">
-            {/* Scrollable Chapter Navigation */}
-            <div className="flex items-center gap-6 sm:gap-7 text-xs font-sans overflow-x-auto no-scrollbar py-1 min-w-0">
-              {navItems.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  className={`relative py-3.5 whitespace-nowrap transition-colors duration-200 ${
-                    activeSection === item.id
-                      ? "text-[#F26A2E] font-semibold"
-                      : "text-[#202124]/70 hover:text-[#202124]"
-                  }`}
-                >
-                  {item.label}
-                  {activeSection === item.id && (
-                    <motion.span
-                      layoutId="subnav-active-pill"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#F26A2E] rounded-full"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </a>
-              ))}
-            </div>
-
-            {/* Right Status & Action */}
-            <div className="flex items-center gap-3 shrink-0">
-              <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-[#F26A2E] bg-[#F26A2E]/10 px-2.5 py-1 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F26A2E] animate-pulse" />
-                Waiting List Open
-              </span>
-              <Link
-                to="/events/goa-susegad/request-invite"
-                className="bg-[#F26A2E] hover:bg-[#d9561e] text-white text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2 rounded-full transition-colors whitespace-nowrap shadow-xs"
-              >
-                Request Invite
-              </Link>
-            </div>
-          </div>
-        </nav>
-
-        {/* ── VIZ 1: ROAD TO GOA NIGHT JOURNEY ── */}
-        <Suspense fallback={null}>
-          <RoadToGoaNightScene />
-        </Suspense>
-
-        {/* ── 4. THE IDEA ── */}
+        {/* ── 4. THE IDEA (FLOWS NATURALLY DIRECTLY BELOW THE HERO IN DOCUMENT FLOW) ── */}
         <section
           id="the-idea"
-          className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
+          className="py-20 md:py-28 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-32 md:scroll-mt-40"
         >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="flex items-center gap-3 mb-6">
@@ -945,9 +945,9 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── VIZ 2: SOUTH GOA JOURNEY MAP ── */}
+        {/* ── VIZ 1: ROAD TO GOA NIGHT JOURNEY (DAY 0 ROAD TO GOA OVERTURE) ── */}
         <Suspense fallback={null}>
-          <SouthGoaJourneyMap />
+          <RoadToGoaNightScene />
         </Suspense>
 
         {/* ── 6. THE JOURNEY (PROGRESSIVE VISUAL ITINERARY) ── */}
@@ -1063,6 +1063,11 @@ export function GoaSusegadPage() {
             })()}
           </div>
         </section>
+
+        {/* ── VIZ 2: SOUTH GOA JOURNEY MAP ── */}
+        <Suspense fallback={null}>
+          <SouthGoaJourneyMap />
+        </Suspense>
 
         {/* ── VIZ 3: DAY 2 TERRAIN ELEVATION ── */}
         <Suspense fallback={null}>
