@@ -11,13 +11,11 @@ import {
   ChevronDown,
   PhoneCall,
   Award,
-  RotateCcw,
   Sparkles,
   Compass,
-  FileCheck2,
 } from "lucide-react";
 
-/* ─────────────── DATA DEFINITIONS (LOCKED & PRESERVED) ─────────────── */
+/* ─────────────── DATA DEFINITIONS (LOCKED) ─────────────── */
 
 const upcomingBatches = ["15 October", "29 October", "12 November"];
 
@@ -26,53 +24,49 @@ const stamps = [
     id: "ROOTS",
     title: "Roots Stamp",
     color: "#234A3C",
-    edgeColor: "#142c23",
+    accentBg: "rgba(35, 74, 60, 0.12)",
     meaning: "Curiosity & Connection",
     philosophy:
       "Goa has lived for centuries before tourism arrived. Roots is about slowing down enough to listen to the people and heritage that anchor this land.",
     challenge:
       "Step into local Goa with genuine humility. Learn one local story, engage with at least one new person, and contribute your hands to the collective villa cookout.",
     proof: "One local story line + one co-traveller signature + assigned cookout role.",
-    defaultTilt: { x: 4, y: -6 },
   },
   {
     id: "WILD",
     title: "Wild Stamp",
     color: "#202124",
-    edgeColor: "#111213",
+    accentBg: "rgba(32, 33, 36, 0.12)",
     meaning: "Attention & Courage",
     philosophy:
       "True wildness isn't reckless speed or loud adrenaline. It is quiet attention — walking through nature without performing for a camera.",
     challenge:
       "Complete the 30-minute silent beach walk with zero digital distraction. Respect the forest trail to Netravali waterfall, taking personal responsibility for shared group safety.",
     proof: "Silent walk observation notes + nature trek participation.",
-    defaultTilt: { x: -4, y: 5 },
   },
   {
     id: "FIRE",
     title: "Fire Stamp",
     color: "#F26A2E",
-    edgeColor: "#a33e10",
+    accentBg: "rgba(242, 106, 46, 0.12)",
     meaning: "Honesty & Listening",
     philosophy:
       "Warmth doesn't happen by accident. It is created when people dare to ask real questions and listen without rushing to respond.",
     challenge:
       "Participate in the dusk Question Challenge. Paddle together on Cola backwaters, honor camera-down windows, and hold space for stories around the table.",
     proof: "Completed Question Challenge card + kayak participation + listening moment witness.",
-    defaultTilt: { x: 5, y: 6 },
   },
   {
     id: "SUSEGAD",
     title: "Susegad Stamp",
     color: "#7B5E3A",
-    edgeColor: "#47351f",
+    accentBg: "rgba(123, 94, 58, 0.12)",
     meaning: "Presence & Community",
     philosophy:
       "Susegad is not laziness. It is the profound art of contentment — knowing that the moment you are currently living is completely enough.",
     challenge:
       "Embrace the collective pace. Shape raw earth with your hands in group pottery, complete the closing passport exchange, and leave Goa kinder than you arrived.",
     proof: '"You made my Goa ______." — hand-written memory line signed by a co-traveller.',
-    defaultTilt: { x: -5, y: -4 },
   },
 ];
 
@@ -420,107 +414,9 @@ const navItems = [
   { label: "FAQ", id: "faq" },
 ];
 
-/* ─────────────── REAL 3D PHYSICAL ARTIFACTS ─────────────── */
+/* ─────────────── 3D / TILT COMPONENTS ─────────────── */
 
-/**
- * 3D ELEMENT #1: Prominent Floating Physical Passport Stamp Block in Hero
- */
-function HeroFloating3DStamp({ reducedMotion }: { reducedMotion: boolean | null }) {
-  const [rotate, setRotate] = useState({ x: -10, y: 15 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    if (reducedMotion) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    setRotate({ x: (y / rect.height) * -22, y: (x / rect.width) * 26 });
-  }
-
-  function handleMouseLeave() {
-    setRotate({ x: -10, y: 15 });
-    setIsHovered(false);
-  }
-
-  return (
-    <div
-      style={{ perspective: 1200 }}
-      className="relative w-64 sm:w-72 h-64 sm:h-72 select-none"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* 3D Physical Stamp Slab */}
-      <motion.div
-        animate={
-          reducedMotion
-            ? {}
-            : isHovered
-              ? { x: 0, y: -6 }
-              : { y: [0, -12, 0], rotateZ: [0, 1.5, 0] }
-        }
-        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-        style={{
-          transformStyle: "preserve-3d",
-          transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
-          transition: isHovered ? "transform 0.12s ease-out" : "transform 0.8s ease-out",
-        }}
-        className="w-full h-full rounded-3xl p-6 bg-[#234A3C] text-[#FFFDF9] cursor-grab active:cursor-grabbing border border-[#FFFDF9]/20 relative"
-      >
-        {/* Physical 3D Extruded Depth Shadow Layers */}
-        <div
-          className="absolute inset-0 rounded-3xl pointer-events-none"
-          style={{
-            boxShadow:
-              "0 2px 0 #142a22, 0 4px 0 #142a22, 0 6px 0 #142a22, 0 8px 0 #142a22, 0 10px 0 #142a22, 0 12px 0 #142a22, 0 24px 35px rgba(0,0,0,0.6)",
-          }}
-        />
-
-        {/* Floating Brass Seal Ring (Raised Z) */}
-        <div
-          style={{ transform: "translateZ(32px)" }}
-          className="w-full h-full rounded-2xl border-2 border-dashed border-[#F26A2E] p-4 flex flex-col justify-between items-center text-center bg-radial from-[#234A3C] to-[#162e25]"
-        >
-          <div className="flex items-center justify-between w-full text-[10px] font-mono tracking-widest text-[#F26A2E] font-bold uppercase">
-            <span>OFFICIAL SEAL</span>
-            <span>2026</span>
-          </div>
-
-          <div className="space-y-1">
-            <span className="text-[10px] tracking-[0.25em] uppercase text-[#FFFDF9]/60 font-sans block">
-              STAMPNSTORIES
-            </span>
-            <div className="text-xl sm:text-2xl font-serif text-[#FFFDF9] font-bold tracking-wider">
-              SUSEGAD
-            </div>
-            <span className="text-[10px] font-mono tracking-widest text-[#F26A2E] font-bold block">
-              ★ GOA UNCOVERED ★
-            </span>
-          </div>
-
-          <div className="w-full pt-2 border-t border-[#FFFDF9]/15 flex items-center justify-between text-[9px] font-sans text-[#FFFDF9]/70">
-            <span>14 MEMBERS</span>
-            <span className="text-[#25D366] font-bold">VERIFIED</span>
-          </div>
-        </div>
-
-        {/* Physical Ground Drop Shadow */}
-        <div
-          style={{
-            transform: "translateZ(-30px) translateY(24px) scale(0.85)",
-            filter: "blur(18px)",
-          }}
-          className="absolute inset-x-4 bottom-0 h-10 bg-black/60 rounded-full pointer-events-none"
-        />
-      </motion.div>
-    </div>
-  );
-}
-
-/**
- * 3D ELEMENT #2 & #3: Interactive 3D Stamp Object with 3D Flip/Spin on Click
- */
-function Physical3DStampCard({
+function Stamp3DCard({
   stamp,
   index,
   reducedMotion,
@@ -529,328 +425,116 @@ function Physical3DStampCard({
   index: number;
   reducedMotion: boolean | null;
 }) {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [tilt, setTilt] = useState(stamp.defaultTilt);
-  const [isHovered, setIsHovered] = useState(false);
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    if (reducedMotion || isFlipped) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    setTilt({ x: (y / rect.height) * -16, y: (x / rect.width) * 18 });
-  }
-
-  function handleMouseLeave() {
-    setTilt(stamp.defaultTilt);
-    setIsHovered(false);
-  }
-
-  return (
-    <div
-      style={{ perspective: 1200 }}
-      className="w-full min-h-[380px] select-none cursor-pointer"
-      onClick={() => setIsFlipped((v) => !v)}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
-    >
-      <motion.div
-        animate={{
-          rotateY: isFlipped ? 180 : tilt.y,
-          rotateX: isFlipped ? 0 : tilt.x,
-          translateY: isHovered ? -8 : 0,
-        }}
-        transition={{ duration: 0.65, ease: [0.23, 1, 0.32, 1] }}
-        style={{ transformStyle: "preserve-3d" }}
-        className="relative w-full h-full min-h-[380px] rounded-3xl"
-      >
-        {/* ── FRONT FACE (Physical 3D Stamp Slab) ── */}
-        <div
-          style={{
-            backfaceVisibility: "hidden",
-            boxShadow: `0 2px 0 ${stamp.edgeColor}, 0 4px 0 ${stamp.edgeColor}, 0 6px 0 ${stamp.edgeColor}, 0 8px 0 ${stamp.edgeColor}, 0 16px 28px rgba(0,0,0,0.55)`,
-            transform: "translateZ(1px)",
-          }}
-          className="absolute inset-0 rounded-3xl p-8 border border-white/15 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md flex flex-col justify-between"
-        >
-          {/* Raised Front Layer */}
-          <div style={{ transform: "translateZ(26px)" }}>
-            <div className="flex items-start justify-between gap-4 mb-6">
-              <div>
-                <span
-                  className="text-[11px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full border inline-block mb-2.5"
-                  style={{
-                    borderColor: stamp.color === "#202124" ? "rgba(255,255,255,0.3)" : stamp.color,
-                    color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color,
-                  }}
-                >
-                  PHYSICAL SEAL · {stamp.id}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-serif text-[#FFFDF9]">{stamp.title}</h3>
-                <p className="text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/65 mt-1">
-                  {stamp.meaning}
-                </p>
-              </div>
-
-              {/* 3D Round Stamp Coin */}
-              <div
-                style={{
-                  transform: "translateZ(18px)",
-                  boxShadow: `0 3px 0 ${stamp.edgeColor}, 0 6px 12px rgba(0,0,0,0.4)`,
-                  borderColor: stamp.color === "#202124" ? "#FFFDF9" : stamp.color,
-                }}
-                className="w-16 h-16 rounded-full border-2 border-dashed flex items-center justify-center shrink-0 bg-white/5"
-              >
-                <span
-                  className="text-[11px] font-bold tracking-widest font-mono"
-                  style={{ color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
-                >
-                  {stamp.id}
-                </span>
-              </div>
-            </div>
-
-            <p className="text-sm font-sans text-[#FFFDF9]/80 leading-relaxed mb-6">{stamp.philosophy}</p>
-
-            <div className="p-4 rounded-xl bg-black/35 border border-white/10 mb-4">
-              <span className="text-[10px] uppercase tracking-widest font-bold text-[#F26A2E] block mb-1">
-                The Challenge
-              </span>
-              <p className="text-xs font-sans text-[#FFFDF9]/85 leading-relaxed">{stamp.challenge}</p>
-            </div>
-          </div>
-
-          {/* Interactive Flip Hint */}
-          <div
-            style={{ transform: "translateZ(14px)" }}
-            className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-sans text-[#FFFDF9]/60"
-          >
-            <span className="truncate pr-2">Proof: {stamp.proof}</span>
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#F26A2E] shrink-0">
-              <RotateCcw className="w-3.5 h-3.5 animate-spin-slow" />
-              <span>Click to Flip</span>
-            </span>
-          </div>
-        </div>
-
-        {/* ── BACK FACE (Physical 3D Inked Proof Seal) ── */}
-        <div
-          style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg) translateZ(1px)",
-            boxShadow: `0 2px 0 ${stamp.edgeColor}, 0 4px 0 ${stamp.edgeColor}, 0 6px 0 ${stamp.edgeColor}, 0 8px 0 ${stamp.edgeColor}, 0 16px 28px rgba(0,0,0,0.55)`,
-          }}
-          className="absolute inset-0 rounded-3xl p-8 border-2 border-[#F26A2E]/50 bg-[#1e2022] text-[#FFFDF9] flex flex-col justify-between"
-        >
-          <div className="text-center space-y-3 pt-2">
-            <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#F26A2E] uppercase block">
-              OFFICIAL PASSPORT CREDENTIAL
-            </span>
-            <div className="w-20 h-20 mx-auto rounded-full border-2 border-dashed border-[#F26A2E] flex flex-col items-center justify-center p-2 bg-[#F26A2E]/10">
-              <Award className="w-7 h-7 text-[#F26A2E] mb-1" />
-              <span className="text-[9px] font-bold font-mono tracking-widest uppercase text-[#FFFDF9]">
-                {stamp.id}
-              </span>
-            </div>
-            <h4 className="text-xl font-serif text-[#FFFDF9]">{stamp.title} Certification</h4>
-          </div>
-
-          <div className="p-4 rounded-xl bg-black/40 border border-white/10 my-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFFDF9]/60 block mb-1">
-              Validation Condition
-            </span>
-            <p className="text-xs font-sans text-[#FFFDF9]/90 leading-relaxed font-medium">
-              {stamp.proof}
-            </p>
-          </div>
-
-          <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-[#FFFDF9]/60 font-sans">
-            <span>WITNESS: 2 SnS HOSTS + COHORT</span>
-            <span className="text-[#F26A2E] font-bold flex items-center gap-1">
-              <RotateCcw className="w-3.5 h-3.5" />
-              Flip to Front
-            </span>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-/**
- * 3D ELEMENT #4: Floating 3D Passport Booklet/Card in "The Idea"
- */
-function FloatingPassportCard3D({ reducedMotion }: { reducedMotion: boolean | null }) {
-  const [tilt, setTilt] = useState({ x: -6, y: 12 });
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (reducedMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    setTilt({ x: (y / rect.height) * -20, y: (x / rect.width) * 22 });
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    // max ±7 degrees subtle rotation
+    const rotateX = ((y - centerY) / centerY) * -7;
+    const rotateY = ((x - centerX) / centerX) * 7;
+    setRotate({ x: rotateX, y: rotateY });
   }
 
   function handleMouseLeave() {
-    setTilt({ x: -6, y: 12 });
+    setRotate({ x: 0, y: 0 });
     setIsHovered(false);
   }
 
   return (
-    <div
-      style={{ perspective: 1200 }}
-      className="w-full max-w-md mx-auto select-none"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
+    <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      style={{ perspective: 1000 }}
+      className="group"
     >
-      <motion.div
-        animate={
-          reducedMotion
-            ? {}
-            : isHovered
-              ? { y: -8 }
-              : { y: [0, -10, 0] }
-        }
-        transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
-        style={{
-          transformStyle: "preserve-3d",
-          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transition: isHovered ? "transform 0.1s ease-out" : "transform 0.7s ease-out",
-          boxShadow:
-            "0 2px 0 #141f1b, 0 4px 0 #141f1b, 0 6px 0 #141f1b, 0 8px 0 #141f1b, 0 10px 0 #141f1b, 0 25px 40px rgba(0,0,0,0.35)",
-        }}
-        className="rounded-3xl p-7 bg-[#234A3C] text-[#FFFDF9] border border-[#FFFDF9]/20 relative overflow-hidden"
-      >
-        {/* Floating Gold Foil Title Layer */}
-        <div style={{ transform: "translateZ(30px)" }} className="space-y-4">
-          <div className="flex items-center justify-between border-b border-[#FFFDF9]/15 pb-4">
-            <div className="flex items-center gap-2">
-              <Compass className="w-5 h-5 text-[#F26A2E]" />
-              <span className="font-serif text-lg tracking-widest font-bold uppercase text-[#FFFDF9]">
-                STAMP<span className="text-[#F26A2E]">N</span>STORIES
-              </span>
-            </div>
-            <span className="text-[10px] font-mono tracking-widest uppercase bg-[#FFFDF9]/15 px-2.5 py-0.5 rounded-full text-[#FFFDF9]/85">
-              PASSPORT
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-black/25 border border-white/10 space-y-2">
-            <span className="text-[10px] uppercase font-mono tracking-widest text-[#F26A2E] block">
-              EXPERIENCE CREDENTIAL
-            </span>
-            <div className="font-serif text-2xl text-[#FFFDF9]">Goa Uncovered</div>
-            <p className="text-xs font-sans text-[#FFFDF9]/75">
-              South Goa · 14 Travellers · 4 Earned Stamps
-            </p>
-          </div>
-
-          <div className="grid grid-cols-4 gap-2 pt-2 text-center text-[10px] font-mono font-bold">
-            <div className="p-2 rounded-xl bg-white/10 border border-white/15">
-              <span className="block text-[#FFFDF9]/50 text-[8px]">01</span>
-              ROOTS
-            </div>
-            <div className="p-2 rounded-xl bg-white/10 border border-white/15">
-              <span className="block text-[#FFFDF9]/50 text-[8px]">02</span>
-              WILD
-            </div>
-            <div className="p-2 rounded-xl bg-white/10 border border-white/15">
-              <span className="block text-[#FFFDF9]/50 text-[8px]">03</span>
-              FIRE
-            </div>
-            <div className="p-2 rounded-xl bg-white/10 border border-white/15">
-              <span className="block text-[#FFFDF9]/50 text-[8px]">04</span>
-              SUSEGAD
-            </div>
-          </div>
-        </div>
-
-        {/* Embossed Watermark in Back */}
-        <div
-          style={{ transform: "translateZ(10px)" }}
-          className="mt-6 pt-4 border-t border-[#FFFDF9]/15 flex items-center justify-between text-[11px] font-sans text-[#FFFDF9]/65"
-        >
-          <span>Physical Handover on Day 0</span>
-          <span className="text-[#25D366] font-bold">Verified Member ID</span>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-/**
- * 3D ELEMENT #5: 3D Interactive Journey Route Progression Path
- */
-function JourneyPath3D({
-  activeDay,
-  onSelectDay,
-}: {
-  activeDay: number;
-  onSelectDay: (idx: number) => void;
-}) {
-  return (
-    <div style={{ perspective: 1000 }} className="relative mb-12 py-6 select-none">
-      {/* 3D Isometric Base Line */}
       <div
-        style={{ transform: "rotateX(20deg)", transformStyle: "preserve-3d" }}
-        className="relative"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform:
+            !reducedMotion && isHovered
+              ? `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) translateY(-8px)`
+              : "rotateX(0deg) rotateY(0deg) translateY(0px)",
+          transition: isHovered ? "transform 0.1s ease-out" : "transform 0.5s ease-out",
+          transformStyle: "preserve-3d",
+        }}
+        className="rounded-3xl p-8 border border-white/10 bg-white/5 backdrop-blur-md flex flex-col justify-between hover:border-white/25 transition-all duration-300 shadow-md hover:shadow-2xl relative overflow-hidden"
       >
-        <div className="absolute top-1/2 left-0 right-0 h-2 bg-[#202124]/10 rounded-full -translate-y-1/2 hidden md:block shadow-inner" />
+        {/* Subtle ambient stamp glow */}
         <div
-          className="absolute top-1/2 left-0 h-2 bg-gradient-to-r from-[#F26A2E] to-[#234A3C] rounded-full -translate-y-1/2 hidden md:block transition-all duration-500 shadow-md"
-          style={{ width: `${(activeDay / (itineraryDays.length - 1)) * 100}%` }}
+          className="absolute -right-12 -top-12 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none transition-opacity duration-500 group-hover:opacity-40"
+          style={{ background: stamp.color === "#202124" ? "#F26A2E" : stamp.color }}
         />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
-          {itineraryDays.map((d, i) => {
-            const isActive = activeDay === i;
-            return (
-              <button
-                key={d.dayNumber}
-                onClick={() => onSelectDay(i)}
+        <div style={{ transform: "translateZ(20px)" }}>
+          {/* Stamp Header */}
+          <div className="flex items-start justify-between gap-4 mb-6">
+            <div>
+              <span
+                className="text-[11px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full border inline-block mb-2"
                 style={{
-                  transformStyle: "preserve-3d",
-                  transform: isActive ? "translateZ(18px) translateY(-6px)" : "translateZ(0px)",
-                  boxShadow: isActive
-                    ? "0 2px 0 #152b23, 0 4px 0 #152b23, 0 6px 0 #152b23, 0 16px 24px rgba(0,0,0,0.25)"
-                    : "0 2px 0 #ded6c8",
+                  borderColor: stamp.color === "#202124" ? "rgba(255,255,255,0.2)" : stamp.color + "90",
+                  color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color,
                 }}
-                className={`flex items-center gap-3 p-4 rounded-2xl border text-left transition-all duration-300 ${
-                  isActive
-                    ? "bg-[#202124] text-white border-[#202124]"
-                    : "bg-[#F6F0E6] text-[#202124]/75 border-[#202124]/10 hover:border-[#202124]/30"
-                }`}
               >
-                <span
-                  style={{ transform: "translateZ(10px)" }}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 shadow-xs ${
-                    isActive ? "bg-[#F26A2E] text-white" : "bg-white text-[#202124]"
-                  }`}
-                >
-                  {i}
-                </span>
-                <div className="min-w-0" style={{ transform: "translateZ(8px)" }}>
-                  <span className="text-[10px] font-mono tracking-widest uppercase opacity-75 block">
-                    {d.dayNumber}
-                  </span>
-                  <span className="text-xs font-bold truncate block">{d.title}</span>
-                </div>
-              </button>
-            );
-          })}
+                SEAL: {stamp.id}
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-serif text-[#FFFDF9]">{stamp.title}</h3>
+              <p className="text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/60 mt-1">
+                {stamp.meaning}
+              </p>
+            </div>
+
+            <div
+              className="w-16 h-16 rounded-full border-2 border-dashed flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:rotate-6 transition-all duration-500"
+              style={{
+                borderColor: stamp.color === "#202124" ? "rgba(255,255,255,0.4)" : stamp.color,
+                background: stamp.accentBg,
+              }}
+            >
+              <span
+                className="text-[10px] font-bold tracking-widest"
+                style={{ color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
+              >
+                {stamp.id}
+              </span>
+            </div>
+          </div>
+
+          <p className="text-sm font-sans text-[#FFFDF9]/80 leading-relaxed mb-6">{stamp.philosophy}</p>
+
+          <div className="p-4 rounded-xl bg-black/30 border border-white/5 mb-6">
+            <span className="text-[10px] uppercase tracking-widest font-bold text-[#F26A2E] block mb-1">
+              The Challenge
+            </span>
+            <p className="text-xs font-sans text-[#FFFDF9]/85 leading-relaxed">{stamp.challenge}</p>
+          </div>
+        </div>
+
+        <div
+          style={{ transform: "translateZ(10px)" }}
+          className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-sans text-[#FFFDF9]/60"
+        >
+          <span>
+            <strong className="text-[#FFFDF9]/90 font-medium">Passport Proof: </strong>
+            {stamp.proof}
+          </span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-/**
- * 3D ELEMENT #6: Floating 3D Experience Image Card
- */
-function ExperienceImageCard3D({
+function ExperienceImageCard({
   image,
   alt,
   subtitle,
@@ -861,19 +545,24 @@ function ExperienceImageCard3D({
   subtitle: string;
   reducedMotion: boolean | null;
 }) {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (reducedMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    setTilt({ x: (y / rect.height) * -8, y: (x / rect.width) * 10 });
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    // max ±5 degrees
+    const rotateX = ((y - centerY) / centerY) * -5;
+    const rotateY = ((x - centerX) / centerX) * 5;
+    setRotate({ x: rotateX, y: rotateY });
   }
 
   function handleMouseLeave() {
-    setTilt({ x: 0, y: 0 });
+    setRotate({ x: 0, y: 0 });
     setIsHovered(false);
   }
 
@@ -887,29 +576,24 @@ function ExperienceImageCard3D({
     >
       <div
         style={{
+          transform:
+            !reducedMotion && isHovered
+              ? `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) translateY(-6px)`
+              : "rotateX(0deg) rotateY(0deg) translateY(0px)",
+          transition: isHovered ? "transform 0.1s ease-out" : "transform 0.5s ease-out",
           transformStyle: "preserve-3d",
-          transform: !reducedMotion && isHovered
-            ? `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(-8px)`
-            : "rotateX(0deg) rotateY(0deg) translateY(0px)",
-          transition: isHovered ? "transform 0.12s ease-out" : "transform 0.6s ease-out",
-          boxShadow: isHovered
-            ? "0 4px 0 #ded6c8, 0 8px 0 #ded6c8, 0 20px 35px rgba(0,0,0,0.18)"
-            : "0 2px 0 #ded6c8, 0 6px 14px rgba(0,0,0,0.06)",
         }}
-        className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-[#202124]/15 bg-[#202124]"
+        className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-[#202124]/15 shadow-sm group hover:shadow-xl transition-shadow duration-300"
       >
         <img
           src={image}
           alt={alt}
-          className="w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#202124]/75 via-transparent to-transparent pointer-events-none" />
-        <div
-          style={{ transform: "translateZ(20px)" }}
-          className="absolute bottom-5 left-6 right-6 pointer-events-none"
-        >
-          <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9] font-sans drop-shadow-md">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#202124]/70 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute bottom-5 left-6 right-6 pointer-events-none">
+          <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/90 font-sans drop-shadow-sm">
             {subtitle}
           </span>
         </div>
@@ -918,24 +602,27 @@ function ExperienceImageCard3D({
   );
 }
 
-/* ─────────────── MAIN PAGE CONTROLLER ─────────────── */
+/* ─────────────── MAIN PAGE COMPONENT ─────────────── */
 
 export function GoaSusegadPage() {
   const [activeDay, setActiveDay] = useState(0);
   const [activeSection, setActiveSection] = useState("overview");
+  const [scrollY, setScrollY] = useState(0);
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Active section scroll spy
+  // Parallax & Active Section tracking
   useEffect(() => {
     let ticking = false;
 
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+
           const scrollPos = window.scrollY + 220;
           for (let i = navItems.length - 1; i >= 0; i--) {
             const el = document.getElementById(navItems[i].id);
@@ -957,16 +644,127 @@ export function GoaSusegadPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FFFDF9] text-[#202124] antialiased selection:bg-[#F26A2E]/20 selection:text-[#F26A2E]">
-      {/* ── 1. MAIN GLOBAL NAVBAR (SOLID CREAM, FULLY VISIBLE, 64px / 80px) ── */}
+      {/* ── 1. MAIN GLOBAL NAVBAR ── */}
       <Navbar />
 
-      {/* ── 2. EVENT SUB-NAVIGATION (STACKED DIRECTLY UNDER MAIN NAVBAR) ── */}
-      <div className="pt-16 md:pt-20">
+      <main className="flex-1">
+        {/* ── 2. HERO (COMMENCING AT VIEWPORT TOP Y=0) ── */}
+        <section
+          id="overview"
+          className="relative min-h-[92vh] lg:min-h-screen flex items-end bg-[#202124] overflow-hidden scroll-mt-0"
+        >
+          {/* Parallax Background Image */}
+          <div
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            style={{
+              transform: !prefersReduced && scrollY < 1200 ? `translateY(${scrollY * 0.22}px)` : "none",
+              willChange: "transform",
+            }}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1920&auto=format&fit=crop"
+              alt="Goa Uncovered coastline"
+              className="w-full h-full object-cover object-center opacity-45 mix-blend-luminosity scale-105"
+            />
+          </div>
+
+          {/* Cinematic Vignette Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/60 to-[#202124]/40 pointer-events-none" />
+          <div className="absolute inset-0 bg-radial-at-top-right from-transparent via-[#202124]/40 to-[#202124]/85 pointer-events-none" />
+
+          {/* Hero Content Container with Safe Top Padding for Fixed Navbar */}
+          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-32 sm:pt-36 md:pt-40 pb-16 md:pb-24">
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-4xl"
+            >
+              {/* Category & Status Eyebrow */}
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs tracking-widest uppercase text-[#F6F0E6]/85 font-sans mb-6">
+                <span className="text-[#F26A2E] font-bold">ROAD TRIP</span>
+                <span>·</span>
+                <span>TRAVEL</span>
+                <span>·</span>
+                <span className="text-[#F6F0E6]">SUSEGAD STAMP</span>
+                <span>·</span>
+                <span className="bg-[#FFFDF9]/10 border border-[#FFFDF9]/20 text-[#FFFDF9] text-[10px] px-2.5 py-0.5 rounded-full font-bold">
+                  PASSPORT REQUIRED
+                </span>
+                <span className="bg-[#FFFDF9]/10 border border-[#FFFDF9]/20 text-[#FFFDF9] text-[10px] px-2.5 py-0.5 rounded-full font-bold">
+                  4 STAMPS TO EARN
+                </span>
+              </div>
+
+              {/* Title & Editorial Hook */}
+              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-serif text-[#FFFDF9] tracking-tight leading-[0.95] mb-6">
+                GOA <span className="italic font-normal text-[#F6F0E6]/90">UNCOVERED.</span>
+              </h1>
+
+              <p className="text-xl sm:text-2xl md:text-3xl font-serif text-[#F6F0E6]/90 italic font-normal max-w-2xl leading-relaxed mb-8">
+                “Not the Goa you came for.
+                <br />
+                The Goa you almost missed.”
+              </p>
+
+              {/* Editorial Metadata Bar */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-5 px-6 rounded-2xl bg-[#FFFDF9]/10 backdrop-blur-md border border-[#FFFDF9]/15 mb-10 max-w-3xl">
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
+                    Location
+                  </span>
+                  <span className="text-sm font-sans font-semibold text-[#FFFDF9]">South Goa</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
+                    Duration
+                  </span>
+                  <span className="text-sm font-sans font-semibold text-[#FFFDF9]">Day 0 + 3 Days</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
+                    Cohort
+                  </span>
+                  <span className="text-sm font-sans font-semibold text-[#FFFDF9]">14 People Only</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
+                    Investment
+                  </span>
+                  <span className="text-sm font-sans font-semibold text-[#F26A2E]">₹22,999 / Person</span>
+                </div>
+              </div>
+
+              {/* CTA Row */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <Link
+                  to="/events/goa-susegad/request-invite"
+                  className="bg-[#F26A2E] hover:bg-[#d9561e] text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-all shadow-lg hover:shadow-[#F26A2E]/25 text-center flex items-center justify-center gap-2 group"
+                >
+                  <span>Request Invite</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <a
+                  href="#the-idea"
+                  className="border border-[#FFFDF9]/30 hover:border-[#FFFDF9]/70 text-[#FFFDF9] hover:bg-[#FFFDF9]/5 text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-colors text-center"
+                >
+                  Explore The Journey
+                </a>
+                <div className="flex items-center gap-2 px-3 text-xs text-[#FFFDF9]/70 font-sans">
+                  <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+                  <span>WAITING LIST IS OPEN</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── 3. STICKY CHAPTER SUB-NAV (ATTACHING SEAMLESSLY AT TOP-16 MD:TOP-20) ── */}
         <nav
           aria-label="Experience Chapter Navigation"
-          className="sticky top-16 md:top-20 z-40 bg-[#FFFDF9] border-b border-[#202124]/10 shadow-xs"
+          className="sticky top-16 md:top-20 z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-y border-[#202124]/10 shadow-xs transition-all duration-200"
         >
-          <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl flex items-center justify-between gap-4 h-13 sm:h-14">
+          <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl flex items-center justify-between gap-4 h-14">
             {/* Scrollable Chapter Navigation */}
             <div className="flex items-center gap-6 sm:gap-7 text-xs font-sans overflow-x-auto no-scrollbar py-1 min-w-0">
               {navItems.map((item) => (
@@ -976,7 +774,7 @@ export function GoaSusegadPage() {
                   className={`relative py-3.5 whitespace-nowrap transition-colors duration-200 ${
                     activeSection === item.id
                       ? "text-[#F26A2E] font-semibold"
-                      : "text-[#202124]/75 hover:text-[#202124]"
+                      : "text-[#202124]/70 hover:text-[#202124]"
                   }`}
                 >
                   {item.label}
@@ -1007,109 +805,7 @@ export function GoaSusegadPage() {
           </div>
         </nav>
 
-        {/* ── 3. HERO (SEAMLESSLY COMMENCING DIRECTLY BENEATH SUB-NAV) ── */}
-        <section
-          id="overview"
-          className="relative min-h-[85vh] lg:min-h-[90vh] flex items-center bg-[#202124] overflow-hidden scroll-mt-28 md:scroll-mt-36"
-        >
-          {/* Background Image Layer */}
-          <img
-            src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1920&auto=format&fit=crop"
-            alt="Goa Uncovered coastline"
-            className="absolute inset-0 w-full h-full object-cover object-center opacity-40 mix-blend-luminosity scale-105 pointer-events-none"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/65 to-[#202124]/40 pointer-events-none" />
-
-          {/* Hero Content with 3D Stamp Placement */}
-          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl py-16 sm:py-20 md:py-24">
-            <div className="grid lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-8">
-                {/* Category & Status Eyebrow */}
-                <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs tracking-widest uppercase text-[#F6F0E6]/85 font-sans mb-6">
-                  <span className="text-[#F26A2E] font-bold">ROAD TRIP</span>
-                  <span>·</span>
-                  <span>TRAVEL</span>
-                  <span>·</span>
-                  <span className="text-[#F6F0E6]">SUSEGAD STAMP</span>
-                  <span>·</span>
-                  <span className="bg-[#FFFDF9]/10 border border-[#FFFDF9]/20 text-[#FFFDF9] text-[10px] px-2.5 py-0.5 rounded-full font-bold">
-                    PASSPORT REQUIRED
-                  </span>
-                  <span className="bg-[#FFFDF9]/10 border border-[#FFFDF9]/20 text-[#FFFDF9] text-[10px] px-2.5 py-0.5 rounded-full font-bold">
-                    4 STAMPS TO EARN
-                  </span>
-                </div>
-
-                {/* Title & Editorial Hook */}
-                <h1 className="text-5xl sm:text-7xl lg:text-8xl font-serif text-[#FFFDF9] tracking-tight leading-[0.95] mb-6">
-                  GOA <span className="italic font-normal text-[#F6F0E6]/90">UNCOVERED.</span>
-                </h1>
-
-                <p className="text-xl sm:text-2xl md:text-3xl font-serif text-[#F6F0E6]/90 italic font-normal max-w-2xl leading-relaxed mb-8">
-                  “Not the Goa you came for.
-                  <br />
-                  The Goa you almost missed.”
-                </p>
-
-                {/* Editorial Metadata Bar */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-5 px-6 rounded-2xl bg-[#FFFDF9]/10 backdrop-blur-md border border-[#FFFDF9]/15 mb-10 max-w-3xl">
-                  <div>
-                    <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
-                      Location
-                    </span>
-                    <span className="text-sm font-sans font-semibold text-[#FFFDF9]">South Goa</span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
-                      Duration
-                    </span>
-                    <span className="text-sm font-sans font-semibold text-[#FFFDF9]">Day 0 + 3 Days</span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
-                      Cohort
-                    </span>
-                    <span className="text-sm font-sans font-semibold text-[#FFFDF9]">14 People Only</span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
-                      Investment
-                    </span>
-                    <span className="text-sm font-sans font-semibold text-[#F26A2E]">₹22,999 / Person</span>
-                  </div>
-                </div>
-
-                {/* CTA Row */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                  <Link
-                    to="/events/goa-susegad/request-invite"
-                    className="bg-[#F26A2E] hover:bg-[#d9561e] text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-all shadow-lg hover:shadow-[#F26A2E]/25 text-center flex items-center justify-center gap-2 group"
-                  >
-                    <span>Request Invite</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <a
-                    href="#the-idea"
-                    className="border border-[#FFFDF9]/30 hover:border-[#FFFDF9]/70 text-[#FFFDF9] hover:bg-[#FFFDF9]/5 text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-colors text-center"
-                  >
-                    Explore The Journey
-                  </a>
-                  <div className="flex items-center gap-2 px-3 text-xs text-[#FFFDF9]/70 font-sans">
-                    <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-                    <span>WAITING LIST IS OPEN</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 3D ELEMENT #1: Prominent Physical Floating 3D Stamp */}
-              <div className="lg:col-span-4 flex justify-center lg:justify-end">
-                <HeroFloating3DStamp reducedMotion={prefersReduced} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── 4. THE IDEA (WITH 3D PASSPORT BOOKLET ARTIFACT) ── */}
+        {/* ── 4. THE IDEA ── */}
         <section
           id="the-idea"
           className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
@@ -1120,17 +816,19 @@ export function GoaSusegadPage() {
               <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E]">THE IDEA</span>
             </div>
 
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
               <div className="lg:col-span-7">
                 <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif text-[#202124] leading-tight mb-8">
                   GOA, BUT DIFFERENT.
                 </h2>
-                <p className="text-xl sm:text-2xl font-serif text-[#202124]/85 leading-relaxed italic mb-8">
+                <p className="text-xl sm:text-2xl font-serif text-[#202124]/85 leading-relaxed italic">
                   Three days of slow mornings, curated brunches, meaningful local experiences, women-first comfort, beach
                   walks, community challenges, and moments meant to be lived rather than constantly photographed.
                 </p>
+              </div>
 
-                <div className="p-6 rounded-2xl bg-[#F6F0E6] border border-[#202124]/10 mb-8">
+              <div className="lg:col-span-5 space-y-6 pt-2">
+                <div className="p-6 rounded-2xl bg-[#F6F0E6] border border-[#202124]/10">
                   <div className="text-xs font-bold tracking-widest uppercase text-[#7B5E3A] mb-2">
                     GOA UNCOVERED · SUSEGAD STAMP
                   </div>
@@ -1159,16 +857,11 @@ export function GoaSusegadPage() {
                   </div>
                 </div>
               </div>
-
-              {/* 3D ELEMENT #4: Floating 3D Passport Booklet */}
-              <div className="lg:col-span-5 flex justify-center">
-                <FloatingPassportCard3D reducedMotion={prefersReduced} />
-              </div>
             </div>
           </div>
         </section>
 
-        {/* ── 5. WHAT THIS GOA FEELS LIKE (3D EXPERIENCE CARDS) ── */}
+        {/* ── 5. WHAT THIS GOA FEELS LIKE ── */}
         <section
           id="feels-like"
           className="py-24 md:py-32 bg-[#F6F0E6] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
@@ -1195,7 +888,7 @@ export function GoaSusegadPage() {
                   }`}
                 >
                   <div className={`lg:col-span-7 ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
-                    <ExperienceImageCard3D
+                    <ExperienceImageCard
                       image={item.image}
                       alt={item.title}
                       subtitle={item.subtitle}
@@ -1219,7 +912,7 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 6. THE JOURNEY (3D PROGRESSION ROUTE PATH) ── */}
+        {/* ── 6. THE JOURNEY (PROGRESSIVE VISUAL ITINERARY) ── */}
         <section
           id="journey"
           className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
@@ -1237,8 +930,42 @@ export function GoaSusegadPage() {
               </p>
             </div>
 
-            {/* 3D ELEMENT #5: 3D Isometric Progression Path */}
-            <JourneyPath3D activeDay={activeDay} onSelectDay={setActiveDay} />
+            {/* Interactive Journey Milestones Path */}
+            <div className="relative mb-12 py-4">
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#202124]/10 -translate-y-1/2 hidden md:block" />
+              <div
+                className="absolute top-1/2 left-0 h-0.5 bg-[#F26A2E] -translate-y-1/2 hidden md:block transition-all duration-500"
+                style={{ width: `${(activeDay / (itineraryDays.length - 1)) * 100}%` }}
+              />
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 relative z-10">
+                {itineraryDays.map((d, i) => (
+                  <button
+                    key={d.dayNumber}
+                    onClick={() => setActiveDay(i)}
+                    className={`flex items-center gap-3 p-3.5 rounded-2xl border text-left transition-all ${
+                      activeDay === i
+                        ? "bg-[#202124] text-white border-[#202124] shadow-md -translate-y-1"
+                        : "bg-[#F6F0E6] text-[#202124]/75 border-[#202124]/10 hover:border-[#202124]/30"
+                    }`}
+                  >
+                    <span
+                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                        activeDay === i ? "bg-[#F26A2E] text-white" : "bg-white text-[#202124]"
+                      }`}
+                    >
+                      {i}
+                    </span>
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-mono tracking-widest uppercase opacity-70 block">
+                        {d.dayNumber}
+                      </span>
+                      <span className="text-xs font-bold truncate block">{d.title}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
 
             {/* Selected Day View */}
             {(() => {
@@ -1299,7 +1026,7 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 7. FOUR STAMPS (3D PHYSICAL STAMPS WITH 3D SPIN ON CLICK) ── */}
+        {/* ── 7. FOUR STAMPS (HERO 3D DIFFERENTIATOR SECTION) ── */}
         <section
           id="stamps"
           className="py-24 md:py-32 bg-[#202124] text-[#FFFDF9] scroll-mt-28 md:scroll-mt-36"
@@ -1316,14 +1043,13 @@ export function GoaSusegadPage() {
               </h2>
               <p className="mt-4 text-[#FFFDF9]/70 font-sans text-base max-w-xl">
                 A Stamp N Stories passport is never an attendance card. Each seal represents a distinct human virtue
-                earned through mindful participation. Click any physical stamp to inspect its proof.
+                earned through mindful participation.
               </p>
             </div>
 
-            {/* 3D ELEMENT #2 & #3: The 4 Physical 3D Stamps */}
-            <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+            <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
               {stamps.map((stamp, idx) => (
-                <Physical3DStampCard
+                <Stamp3DCard
                   key={stamp.id}
                   stamp={stamp}
                   index={idx}
@@ -1748,7 +1474,7 @@ export function GoaSusegadPage() {
             </motion.div>
           </div>
         </section>
-      </div>
+      </main>
 
       <Footer />
     </div>
