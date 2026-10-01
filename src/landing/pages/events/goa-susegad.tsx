@@ -2,7 +2,7 @@ import { Navbar } from "@/landing/components/layout/Navbar";
 import { Footer } from "@/landing/components/layout/Footer";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, lazy, Suspense } from "react";
 import {
   Users,
   Check,
@@ -14,6 +14,34 @@ import {
   Sparkles,
   Compass,
 } from "lucide-react";
+
+/* ─────────────── 3D VISUAL STORYTELLING SCENES (LAZY) ─────────────── */
+
+const RoadToGoaNightScene = lazy(() =>
+  import("@/landing/components/goa-visuals/RoadToGoaNightScene").then((m) => ({
+    default: m.RoadToGoaNightScene,
+  }))
+);
+const SouthGoaJourneyMap = lazy(() =>
+  import("@/landing/components/goa-visuals/SouthGoaJourneyMap").then((m) => ({
+    default: m.SouthGoaJourneyMap,
+  }))
+);
+const DayTwoTerrainScene = lazy(() =>
+  import("@/landing/components/goa-visuals/DayTwoTerrainScene").then((m) => ({
+    default: m.DayTwoTerrainScene,
+  }))
+);
+const FourStampsJourneyScene = lazy(() =>
+  import("@/landing/components/goa-visuals/FourStampsJourneyScene").then((m) => ({
+    default: m.FourStampsJourneyScene,
+  }))
+);
+const SusegadClosingScene = lazy(() =>
+  import("@/landing/components/goa-visuals/SusegadClosingScene").then((m) => ({
+    default: m.SusegadClosingScene,
+  }))
+);
 
 /* ─────────────── DATA DEFINITIONS (LOCKED) ─────────────── */
 
@@ -805,6 +833,11 @@ export function GoaSusegadPage() {
           </div>
         </nav>
 
+        {/* ── VIZ 1: ROAD TO GOA NIGHT JOURNEY ── */}
+        <Suspense fallback={null}>
+          <RoadToGoaNightScene />
+        </Suspense>
+
         {/* ── 4. THE IDEA ── */}
         <section
           id="the-idea"
@@ -911,6 +944,11 @@ export function GoaSusegadPage() {
             </div>
           </div>
         </section>
+
+        {/* ── VIZ 2: SOUTH GOA JOURNEY MAP ── */}
+        <Suspense fallback={null}>
+          <SouthGoaJourneyMap />
+        </Suspense>
 
         {/* ── 6. THE JOURNEY (PROGRESSIVE VISUAL ITINERARY) ── */}
         <section
@@ -1026,6 +1064,11 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
+        {/* ── VIZ 3: DAY 2 TERRAIN ELEVATION ── */}
+        <Suspense fallback={null}>
+          <DayTwoTerrainScene />
+        </Suspense>
+
         {/* ── 7. FOUR STAMPS (HERO 3D DIFFERENTIATOR SECTION) ── */}
         <section
           id="stamps"
@@ -1068,6 +1111,11 @@ export function GoaSusegadPage() {
             </div>
           </div>
         </section>
+
+        {/* ── VIZ 4: FOUR STAMPS SPATIAL JOURNEY ── */}
+        <Suspense fallback={null}>
+          <FourStampsJourneyScene />
+        </Suspense>
 
         {/* ── 8. THE PEOPLE (14 ONLY) ── */}
         <section
@@ -1246,6 +1294,11 @@ export function GoaSusegadPage() {
             </div>
           </div>
         </section>
+
+        {/* ── VIZ 5: SUSEGAD CLOSING SCENE ── */}
+        <Suspense fallback={null}>
+          <SusegadClosingScene />
+        </Suspense>
 
         {/* ── 10. WHAT'S INCLUDED / NOT INCLUDED ── */}
         <section
