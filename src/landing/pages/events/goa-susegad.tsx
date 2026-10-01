@@ -374,12 +374,10 @@ const packingList = [
 ];
 
 const communityRules = [
-  "No pressure for photos, dancing, drinking, conversations or social media exchange.",
-  "Consent is required before posting or recording anyone closely.",
+  "No pressure for photos, dancing, conversations or social media exchange.",
   "Women-first comfort: crowd quality, boundaries and respect come before entertainment.",
-  "No one is forced to speak in emotional moments or participate.",
-  "Late-night music has a cut-off so rest remains respected.",
-  "Passport stamps are not given because someone attended; they are earned by showing up differently.",
+  "No one is forced to speak in emotional moments. Listening is valid participation.",
+  "Passport stamps are not given because someone paid. They are earned by showing up differently.",
 ];
 
 const safetySnapshot = [
