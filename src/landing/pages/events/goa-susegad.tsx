@@ -32,16 +32,7 @@ const DayTwoTerrainScene = lazy(() =>
     default: m.DayTwoTerrainScene,
   }))
 );
-const FourStampsJourneyScene = lazy(() =>
-  import("@/landing/components/goa-visuals/FourStampsJourneyScene").then((m) => ({
-    default: m.FourStampsJourneyScene,
-  }))
-);
-const SusegadClosingScene = lazy(() =>
-  import("@/landing/components/goa-visuals/SusegadClosingScene").then((m) => ({
-    default: m.SusegadClosingScene,
-  }))
-);
+
 
 /* ─────────────── DATA DEFINITIONS (LOCKED) ─────────────── */
 
@@ -1117,11 +1108,6 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── VIZ 4: FOUR STAMPS SPATIAL JOURNEY ── */}
-        <Suspense fallback={null}>
-          <FourStampsJourneyScene />
-        </Suspense>
-
         {/* ── 8. THE PEOPLE (14 ONLY) ── */}
         <section
           id="people"
@@ -1299,11 +1285,6 @@ export function GoaSusegadPage() {
             </div>
           </div>
         </section>
-
-        {/* ── VIZ 5: SUSEGAD CLOSING SCENE ── */}
-        <Suspense fallback={null}>
-          <SusegadClosingScene />
-        </Suspense>
 
         {/* ── 10. WHAT'S INCLUDED / NOT INCLUDED ── */}
         <section
