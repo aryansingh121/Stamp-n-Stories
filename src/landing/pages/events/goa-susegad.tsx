@@ -752,7 +752,7 @@ export function GoaSusegadPage() {
           <div className="absolute inset-0 bg-radial-at-top-right from-transparent via-[#202124]/40 to-[#202124]/85 pointer-events-none" />
 
           {/* Hero Content Container with Safe Top Padding for Fixed Navbar */}
-          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20">
+          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-24 sm:pt-28 md:pt-30 pb-8 sm:pb-10 md:pb-12">
             <motion.div
               initial={prefersReduced ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -841,7 +841,7 @@ export function GoaSusegadPage() {
         {/* ── 4. THE IDEA (FLOWS NATURALLY DIRECTLY BELOW THE HERO IN DOCUMENT FLOW) ── */}
         <section
           id="the-idea"
-          className="py-20 md:py-28 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-32 md:scroll-mt-40"
+          className="pt-8 sm:pt-10 md:pt-12 pb-16 md:pb-24 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-32 md:scroll-mt-40"
         >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="flex items-center gap-3 mb-6">

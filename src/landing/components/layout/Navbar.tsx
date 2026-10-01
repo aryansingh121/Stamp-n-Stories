@@ -54,7 +54,7 @@ export function Navbar() {
   ];
 
   const hasDarkHero = location === "/" || location === "/events/goa-susegad";
-  const isTransparentDark = hasDarkHero && !isScrolled;
+  const isTransparentDark = hasDarkHero && !isScrolled && !mobileMenuOpen;
   const useDarkHeaderText = !isTransparentDark;
   const textColor = useDarkHeaderText ? "text-[#202124]/80" : "text-[#FFFDF9]/80";
   const activeColor = "text-[#F26A2E]";
@@ -76,7 +76,7 @@ export function Navbar() {
             src="/logo.png"
             alt="Stamp N Stories"
             className={`h-8 md:h-9 w-auto object-contain transition-all duration-300 ${
-              isTransparentDark ? "brightness-0 invert drop-shadow-sm" : "mix-blend-multiply"
+              isTransparentDark ? "invert drop-shadow-sm" : ""
             }`}
           />
           <span
