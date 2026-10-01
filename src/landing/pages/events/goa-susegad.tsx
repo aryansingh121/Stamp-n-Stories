@@ -1,1127 +1,1242 @@
 import { Navbar } from "@/landing/components/layout/Navbar";
 import { Footer } from "@/landing/components/layout/Footer";
-import { FAQSection } from "@/landing/components/sections/FAQSection";
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { EyeOff, MessageSquare, ShieldCheck, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  ShieldCheck,
+  Users,
+  EyeOff,
+  Compass,
+  Sparkles,
+  MapPin,
+  Calendar,
+  Check,
+  X,
+  HeartHandshake,
+  ArrowRight,
+  ChevronDown,
+  Clock,
+  PhoneCall,
+  Lock,
+} from "lucide-react";
 
-/* ─────────────── DATA FROM PDF ─────────────── */
+/* ─────────────── DATA DEFINITIONS ─────────────── */
+
+const upcomingBatches = ["15 October", "29 October", "12 November"];
 
 const stamps = [
   {
     id: "ROOTS",
+    title: "Roots Stamp",
     color: "#234A3C",
+    accentBg: "rgba(35, 74, 60, 0.08)",
     meaning: "Curiosity & Connection",
-    earnedBy:
-      "Learning one local story, connecting with at least one new person, respecting the place and contributing to the shared cookout.",
-    proof: "One local story line + one co-traveller signature + one cookout role.",
+    philosophy:
+      "Goa has lived for centuries before tourism arrived. Roots is about slowing down enough to listen to the people and heritage that anchor this land.",
+    challenge:
+      "Step into local Goa with genuine humility. Learn one local story, engage with at least one new person, and contribute your hands to the collective villa cookout.",
+    proof: "One local story line + one co-traveller signature + assigned cookout role.",
   },
   {
     id: "WILD",
+    title: "Wild Stamp",
     color: "#202124",
+    accentBg: "rgba(32, 33, 36, 0.08)",
     meaning: "Attention & Courage",
-    earnedBy:
-      "Completing the silent beach walk, respecting the nature route, choosing one safe act of courage and being responsible for self or group comfort.",
-    proof: "Silent walk notes + nature trek participation.",
+    philosophy:
+      "True wildness isn't reckless speed or loud adrenaline. It is quiet attention — walking through nature without performing for a camera.",
+    challenge:
+      "Complete the 30-minute silent beach walk with zero digital distraction. Respect the forest trail to Netravali waterfall, taking personal responsibility for shared group safety.",
+    proof: "Silent walk observation notes + nature trek participation.",
   },
   {
     id: "FIRE",
+    title: "Fire Stamp",
     color: "#F26A2E",
+    accentBg: "rgba(242, 106, 46, 0.08)",
     meaning: "Honesty & Listening",
-    earnedBy:
-      "Participating in the question challenge, listening without interrupting, respecting phone/recording boundaries and adding warmth to the group.",
-    proof: "Question challenge card + kayak participation + listening moment.",
+    philosophy:
+      "Warmth doesn't happen by accident. It is created when people dare to ask real questions and listen without rushing to respond.",
+    challenge:
+      "Participate in the dusk Question Challenge. Paddle together on Cola backwaters, honor camera-down windows, and hold space for stories around the table.",
+    proof: "Completed Question Challenge card + kayak participation + listening moment witness.",
   },
   {
     id: "SUSEGAD",
+    title: "Susegad Stamp",
     color: "#7B5E3A",
+    accentBg: "rgba(123, 94, 58, 0.08)",
     meaning: "Presence & Community",
-    earnedBy:
-      "Respecting the group's pace, participating in pottery, completing the passport ritual and leaving the group space better than you found it.",
-    proof: '"You made my Goa ______." — one line signed by a co-traveller.',
+    philosophy:
+      "Susegad is not laziness. It is the profound art of contentment — knowing that the moment you are currently living is completely enough.",
+    challenge:
+      "Embrace the collective pace. Shape raw earth with your hands in group pottery, complete the closing passport exchange, and leave Goa kinder than you arrived.",
+    proof: '"You made my Goa ______." — hand-written memory line signed by a co-traveller.',
   },
 ];
 
-const itinerary = [
+const itineraryDays = [
   {
-    day: "Day 0",
-    label: "ROAD TO GOA",
-    theme: "The road journey is where the gang begins.",
-    date: "MUMBAI / BANGALORE — OVERNIGHT",
-    stamp: null,
-    items: [
+    dayNumber: "DAY 0",
+    badge: "THE OVERNIGHT OVERTURE",
+    title: "Road to Goa",
+    departure: "MUMBAI / BANGALORE → OVERNIGHT JOURNEY",
+    stampAwarded: null,
+    story:
+      "The experience does not start at the villa doorstep; it begins the moment you step on board. The road is where guards drop, small conversations kindle, and the gang takes shape.",
+    schedule: [
       {
-        time: "Pickup",
-        label: "Road journey begins",
-        note: "Trip captain verifies names, comfort needs and emergency contacts at the confirmed pickup point.",
+        tag: "Pickup",
+        heading: "Pickup & Quiet Welcome",
+        desc: "Meet verified SnS trip captains at designated points. Group comfort check, emergency verification, and initial settling.",
       },
       {
-        time: "Briefing",
-        label: "Passport & stamp explanation",
-        note: "Explain the STAMP & STORIES PASSPORT, how stamps are earned and why this is not an attendance-based trip.",
+        tag: "Briefing",
+        heading: "The Passport & Ritual Briefing",
+        desc: "Introduction to the philosophy of earned stamps. Why this is an intentional travel chapter rather than an attendance tour.",
       },
       {
-        time: "Handover",
-        label: "Physical passport handover",
-        note: "Each traveller receives the passport, name card and mission sheet. The passport becomes your identity.",
+        tag: "Handover",
+        heading: "Physical Passport Handover",
+        desc: "Each traveller receives their physical STAMPNSTORIES Passport, personalised name card, and the journey's Mission Sheet.",
       },
       {
-        time: "Challenge 1",
-        label: "Black Envelope Mission",
-        note: "Every traveller receives a sealed envelope with one secret role or personal road challenge. Revealed later.",
+        tag: "Mission 01",
+        heading: "The Black Envelope Mission",
+        desc: "A sealed envelope containing one private road challenge and personal observation role, to be revealed when prompted.",
       },
       {
-        time: "Challenge 2",
-        label: "Goa Courtroom debate",
-        note: '"Goa is overrated vs Goa is misunderstood." Funny, respectful points only.',
+        tag: "Debate",
+        heading: "The Goa Courtroom Debate",
+        desc: '"Goa is overrated vs Goa is misunderstood." High-spirited, humorous, and respectful perspectives shared across the aisle.',
       },
       {
-        time: "Dinner halt",
-        label: "Road dinner & comfort break",
-        note: "Keep the group together. Check comfort and restart with lighter energy.",
+        tag: "Rest Halt",
+        heading: "Road Dinner & Group Reset",
+        desc: "Shared pit stop to keep everyone refreshed, fed, and hydrated with light, grounded energy.",
       },
       {
-        time: "Night",
-        label: "Music, playlist & lights-off",
-        note: "A controlled music window, short jam moment and group playlist. After lights-off, rest is respected.",
+        tag: "Night",
+        heading: "Controlled Music & Lights-Off Rest",
+        desc: "A warm acoustic playlist window followed by strict quiet hours so everyone arrives in Goa restored and ready.",
       },
     ],
-    note: "No stamp yet. Day 0 unlocks the journey and prepares the group for the Roots Stamp.",
   },
   {
-    day: "Day 1",
-    label: "ROOTS STAMP",
-    theme: "Local Goa, villa arrival, sunset and shared meal.",
-    date: "ARRIVAL IN GOA",
-    stamp: "ROOTS",
-    items: [
+    dayNumber: "DAY 1",
+    badge: "HERITAGE, GAON & COOKOUT",
+    title: "Roots",
+    departure: "SOUTH GOA VILLA ARRIVAL",
+    stampAwarded: "ROOTS",
+    story:
+      "Wake up to coconut palms and sea breeze. Today is dedicated to local roots: an authentic meal in a 90-year-old home, cycling colonial lanes, and cooking together under the open sky.",
+    schedule: [
       {
-        time: "Arrival",
-        label: "Check-in at South Goa villa",
-        note: "Arrive, freshen up and settle. No forced games immediately. First hour is light.",
+        tag: "Morning",
+        heading: "Villa Arrival & Soft Check-In",
+        desc: "Arrive at our curated heritage South Goa villa. Freshen up, explore the grounds, unpack. Zero forced introductions — the first hour is gentle.",
       },
       {
-        time: "Briefing",
-        label: "Detailed day briefing",
-        note: "Route, timings, community code, phone policy and Roots Stamp earning conditions explained.",
+        tag: "Briefing",
+        heading: "Community Code & Phone Boundaries",
+        desc: "Alignment on the Women-First social contract, consent-first photography, and criteria for earning the Roots Stamp.",
       },
       {
-        time: "Spot 1",
-        label: "90-year-old auntie's house / local gaon lunch",
-        note: "A local meal and story-led interaction. Learn one real Goa story instead of a tourist meal.",
+        tag: "Heritage Lunch",
+        heading: "90-Year-Old Auntie's House & Gaon Meal",
+        desc: "Sit down inside an ancestral village home. Savor authentic regional recipes while hearing generational stories of old Goa.",
       },
       {
-        time: "Spot 2",
-        label: "Cycling in Portuguese lanes",
-        note: "Cycle through old Fontainhas-style lanes. Focus on slow observation, photos with consent and local respect.",
+        tag: "Exploration",
+        heading: "Portuguese Lane Cycling",
+        desc: "Gentle bicycle ride through timeless Fontainhas-style lanes. Observation prompts focused on architecture, colors, and quiet respect.",
       },
       {
-        time: "Spot 3",
-        label: "Cabo de Rama Beach / Fort sunset",
-        note: "One of the strongest sunset views in South Goa. A group memory, not a production set.",
+        tag: "Golden Hour",
+        heading: "Cabo de Rama Fort & Beach Sunset",
+        desc: "Watch the sun sink into the Arabian Sea from historic cliff battlements. A group memory, not a content-creation photoshoot.",
       },
       {
-        time: "Evening",
-        label: "Back to villa — change & relax",
-        note: "Soft reset before dinner. Rest, swim or journal.",
+        tag: "Reset",
+        heading: "Villa Dip, Rest & Journaling",
+        desc: "Return to basecamp. Swim in the pool, sit with tea, or journal your initial impressions.",
       },
       {
-        time: "Night",
-        label: "Gang cookout with local guide",
-        note: "The group cooks together with assigned roles. Nobody stays only a spectator.",
+        tag: "Cookout",
+        heading: "Gang Cookout with Local Guide",
+        desc: "Everyone has a role: chopping, tasting, seasoning, serving. A participatory feast crafted together as a crew.",
       },
       {
-        time: "Late night",
-        label: "Jamming, horror stories & letter to future self",
-        note: "Group circle. Everyone writes one private future-self letter to keep inside the passport.",
+        tag: "Night Circle",
+        heading: "Acoustic Jamming & Letter to Future Self",
+        desc: "Sit around the courtyard. Write a private letter to your future self, sealed inside your passport pocket for years to come.",
       },
     ],
-    note: "ROOTS STAMP earned by: learning one local story, connecting with at least one new person, respecting the place and contributing to the shared cookout.",
   },
   {
-    day: "Day 2 AM",
-    label: "WILD STAMP",
-    theme: "Kokolem Beach, Netravali Valley and the Wild Stamp.",
-    date: "WATER, SILENCE & WILDERNESS",
-    stamp: "WILD",
-    items: [
+    dayNumber: "DAY 2",
+    badge: "SILENCE, WATERFALL & FIRE",
+    title: "Wild → Fire",
+    departure: "KOKOLEM · NETRAVALI · COLA BEACH",
+    stampAwarded: "WILD & FIRE",
+    story:
+      "A transition from the stillness of hidden beaches to the adrenaline of mountain waterfalls, culminating in backwater kayaking and fireside honesty at Cola Beach.",
+    schedule: [
       {
-        time: "Early AM",
-        label: "Calm wake-up & depart",
-        note: "No loud announcements. Water, light snack and essentials before leaving.",
+        tag: "Early AM",
+        heading: "Calm Sunrise Departure",
+        desc: "Gentle wake-up with fresh coffee and fruit. Depart before the heat and long before any tourist crowd arrives.",
       },
       {
-        time: "Morning",
-        label: "Kokolem Beach — arrive before the crowd",
-        note: "A quiet beach start.",
+        tag: "Kokolem",
+        heading: "30-Minute Silent Beach Walk",
+        desc: "Phones off. Shoes off. Walk along the deserted sands of Kokolem. Notice the foam, the cliffs, your thoughts. Write 3 observations.",
       },
       {
-        time: "Mission",
-        label: "30-minute silent beach walk",
-        note: "No phones, no talking, no photos. Just you, water and sky. Each person writes three things they noticed.",
+        tag: "Breakfast",
+        heading: "Beachside Breakfast",
+        desc: "Warm, wholesome breakfast enjoyed by the sound of breaking waves. Simple, unhurried, and grounded.",
       },
       {
-        time: "Breakfast",
-        label: "Breakfast at the beach",
-        note: "Simple, slow and grounded. Not rushed.",
+        tag: "Trek",
+        heading: "Guided Netravali Waterfall Trek",
+        desc: "45-minute trail through lush Western Ghat foliage. Certified local guide, safe routes, and dip in crystalline forest spring waters.",
       },
       {
-        time: "Reset",
-        label: "Back to villa for rest",
-        note: "Enough time to freshen up, change and reset before the waterfall route.",
+        tag: "Feast",
+        heading: "Traditional Goan Fish Thali (Veg Options Pre-set)",
+        desc: "Authentic lunch following the trek. Freshly sourced local preparations with pre-arranged vegan and allergy care.",
       },
       {
-        time: "Nature",
-        label: "Netravali Valley waterfall trek",
-        note: "A 45-minute guided trek. Subject to weather, permissions and safety confirmation.",
+        tag: "Backwaters",
+        heading: "Cola Beach Kayaking (45 Mins)",
+        desc: "Paddle along the emerald backwater lagoon framed by palm groves. Life jackets, safety briefing, and tandem buddy system.",
       },
       {
-        time: "Pause",
-        label: "Peaceful time at the waterfall",
-        note: "No compulsory jumping or risky pressure. Enjoy the space, water and silence safely.",
+        tag: "Dusk Ritual",
+        heading: "Cola Lagoon Sunset & The Question Challenge",
+        desc: "Pair up with a fellow traveller. Draw a question card designed to bypass small talk and spark genuine personal dialogue.",
       },
       {
-        time: "Lunch",
-        label: "Local cuisine / fish thali",
-        note: "A local lunch after the trek. Vegetarian and allergy-safe alternatives pre-arranged.",
+        tag: "Night Ritual",
+        heading: "The Memory Auction & Passport Stamping",
+        desc: "Teams 'bid' with stories, songs, and observations to win memory relics. Official verification and stamping of Wild & Fire credentials.",
       },
     ],
-    note: "Safety note: trek, waterfall access and swimming are guide-approved only. No one earns extra value through unsafe risk.",
   },
   {
-    day: "Day 2 PM",
-    label: "FIRE STAMP",
-    theme: "Cola Beach, kayaking, dinner discussion and group entertainment.",
-    date: "BACKWATER, QUESTIONS & NIGHT RITUAL",
-    stamp: "FIRE",
-    items: [
+    dayNumber: "DAY 3",
+    badge: "PRESENCE & CLOSING RITUAL",
+    title: "Susegad",
+    departure: "COMMUNITY CLOSING & RETURN",
+    stampAwarded: "SUSEGAD",
+    story:
+      "Slow mornings, tactile pottery, and the final stamp ceremony. Leave Goa not exhausted from checklist travel, but enriched by genuine connections.",
+    schedule: [
       {
-        time: "Afternoon",
-        label: "Off to Cola Beach",
-        note: "Move after lunch with buffer for traffic, road conditions and light.",
+        tag: "Morning",
+        heading: "Unscheduled Susegad Morning",
+        desc: "Zero wake-up alarms. Wake slowly, sit on the veranda, linger over fresh breakfast, and pack at your own gentle rhythm.",
       },
       {
-        time: "Mission",
-        label: "Backwater kayaking — 45 minutes",
-        note: "With safety briefing, life jackets and confirmed guide/vendor.",
+        tag: "Workshop",
+        heading: "Hands-On Group Pottery Session",
+        desc: "Sit at the potter's wheel with a local Goan artisan. Shape raw wet clay — a physical meditation on patience, touch, and centering.",
       },
       {
-        time: "Sunset",
-        label: "Cola Beach sunset",
-        note: "Slow sunset pause. Capture ambience and group memory, not forced content.",
+        tag: "Memory",
+        heading: '"You Made My Goa ______" Exchange',
+        desc: "Each traveller writes and receives handwritten words of affirmation and memory signatures directly into their physical passports.",
       },
       {
-        time: "Challenge",
-        label: "Question Challenge",
-        note: "Each traveller asks one meaningful question to someone new. Honest connection, not performance.",
+        tag: "Ceremony",
+        heading: "Official Susegad Stamp Ceremony",
+        desc: "The final seal is inked and embossed. Group photos with passports held high. Final toast to the chapter shared.",
       },
       {
-        time: "Return",
-        label: "Back to villa — freshen up",
-        note: "Relax into a dinner setting.",
-      },
-      {
-        time: "Dinner",
-        label: "Local Goa dinner + morning question discussion",
-        note: "Discuss what people noticed during the silent walk. Voluntary and respectful.",
-      },
-      {
-        time: "Ritual",
-        label: "Passport stamping ritual",
-        note: "Wild and Fire proofs checked: silent walk notes, kayak participation, question challenge and listening moment.",
-      },
-      {
-        time: "Entertainment",
-        label: "The Memory Auction",
-        note: 'Teams "bid" with stories, songs or inside jokes to win memory cards. No money, no pressure.',
+        tag: "Return",
+        heading: "AC Road Transport Return",
+        desc: "Comfortable transit back to Mumbai / Bangalore. The journey concludes, while the WhatsApp batch fellowship stays active forever.",
       },
     ],
-    note: "FIRE STAMP earned by: participating in the question challenge, listening without interrupting, respecting phone/recording boundaries and adding warmth to the group.",
-  },
-  {
-    day: "Day 3",
-    label: "SUSEGAD STAMP",
-    theme: "Slow morning, pottery and the final stamp.",
-    date: "THE CLOSING CHAPTER",
-    stamp: "SUSEGAD",
-    items: [
-      {
-        time: "Morning",
-        label: "Slow morning — no loud energy",
-        note: "Wake at your own pace. Sit quietly, talk, journal or pack slowly.",
-      },
-      {
-        time: "Breakfast",
-        label: "Shared breakfast table at villa",
-        note: "One last meal together before checkout.",
-      },
-      {
-        time: "Checkout",
-        label: "Check out from villa",
-        note: "Luggage loaded, rooms checked and shared items collected.",
-      },
-      {
-        time: "Skill",
-        label: "Group pottery session",
-        note: "Learn a new skill together. Pottery is a physical metaphor for patience, presence and community.",
-      },
-      {
-        time: "Ritual",
-        label: "Trip-end passport ritual",
-        note: '"You made my Goa ______." Every traveller receives one memorable line from co-travellers with signatures.',
-      },
-      {
-        time: "Photo",
-        label: "Final group photo with passports",
-        note: "The official batch memory.",
-      },
-      {
-        time: "Final stamp",
-        label: "Susegad Stamp ceremony",
-        note: "The SUSEGAD STAMP is given after the closing ritual — not casually before departure.",
-      },
-      {
-        time: "Return",
-        label: "Back to Mumbai / Bangalore by road",
-        note: "Trip ends. The WhatsApp group continues as the batch community.",
-      },
-    ],
-    note: "SUSEGAD STAMP earned by: respecting pace, participating in pottery, completing the passport ritual and leaving the group space better than you found it.",
   },
 ];
 
-const included = [
+const inclusions = [
   {
-    icon: "🚌",
-    label: "Road transport",
-    detail: "Mumbai / Bangalore → Goa → return by road (AC vehicle)",
+    title: "AC Road Transit",
+    desc: "Mumbai / Bangalore ⇄ Goa round trip in comfortable, vetted air-conditioned vehicles.",
   },
   {
-    icon: "🏡",
-    label: "South Goa villa stay",
-    detail: "Shared villa with cookout permission and quiet-hour policy",
+    title: "South Goa Villa Stay",
+    desc: "Curated heritage property (shared occupancy, 2–3 per room) with pool, cookout kitchen, and quiet hours.",
   },
   {
-    icon: "🍽️",
-    label: "All meals",
-    detail: "Local gaon lunch, gang cookout, beach breakfast, fish thali, Goa dinners",
+    title: "All Meals Included",
+    desc: "Authentic gaon lunch, gang cookout, beach breakfast, coastal thali, and village dinners.",
   },
   {
-    icon: "🚲",
-    label: "Cycling in Portuguese lanes",
-    detail: "Guided route through Fontainhas-style lanes with local map prompts",
+    title: "Portuguese Lane Cycling",
+    desc: "Guided cycling tour through heritage Latin-style lanes with local storytelling prompts.",
   },
   {
-    icon: "🌊",
-    label: "Backwater kayaking",
-    detail: "45 minutes with life jackets and safety briefing",
+    title: "Backwater Kayaking (45m)",
+    desc: "Complete kayak gear, certified life jackets, and guide assistance on Cola Lagoon.",
   },
   {
-    icon: "🥾",
-    label: "Netravali Valley trek",
-    detail: "45-minute guided waterfall trek (weather and safety dependent)",
+    title: "Guided Netravali Trek",
+    desc: "Forest trail permit, certified local nature guide, and safety-verified waterfall access.",
   },
   {
-    icon: "🏖️",
-    label: "Beach experiences",
-    detail: "Kokolem Beach silent walk + Cola Beach sunset",
+    title: "Secret Beach Access",
+    desc: "Curated entry and silent walk facilitation at uncrowded shores (Kokolem and Cola).",
   },
   {
-    icon: "🏺",
-    label: "Group pottery session",
-    detail: "Group pottery session — patience, presence and community",
+    title: "Artisan Pottery Workshop",
+    desc: "Private clay workshop with a traditional Goan artisan to shape your own keepsake.",
   },
   {
-    icon: "📖",
-    label: "Physical STAMP & STORIES passport",
-    detail: "Passport + name card + mission sheet",
+    title: "STAMPNSTORIES Passport",
+    desc: "Physical collector's passport, custom name card, mission sheets, and black envelope.",
   },
   {
-    icon: "🎟️",
-    label: "Four stamps",
-    detail: "Roots, Wild, Fire and Susegad — earned through participation, not attendance",
+    title: "Four Collectible Stamps",
+    desc: "Roots, Wild, Fire, and Susegad seals earned through genuine participation.",
   },
   {
-    icon: "📸",
-    label: "Community photographer",
-    detail: "No faces posted without explicit consent",
+    title: "Consent-First Photography",
+    desc: "Dedicated community photographer. Strict consent: zero photos published without explicit signoff.",
   },
-  { icon: "🛡️", label: "Trip captain + hosts", detail: "Two trained SnS hosts present throughout" },
+  {
+    title: "2 Verified SnS Hosts",
+    desc: "Two full-time, vetted trip captains on ground ensuring comfort, logistics, and women-first care.",
+  },
 ];
 
-const notIncluded = [
-  "Personal travel to/from pickup point",
-  "Alcohol",
-  "Personal shopping or spa treatments",
-  "Any activity outside the itinerary",
+const exclusions = [
+  "Personal transit to/from the confirmed pickup and drop-off hubs in Mumbai / Bangalore.",
+  "Alcohol — strictly not permitted anywhere during official Stamp N Stories itinerary events.",
+  "Personal shopping, cafe splurges, or individual spa appointments outside the schedule.",
+  "Any unapproved activity or hazardous route outside the guided group itinerary.",
 ];
 
-const packingList = [
-  "Comfortable road outfit",
-  "Beachwear",
-  "Walking shoes",
-  "Extra slippers",
-  "Small towel",
-  "Sunscreen",
-  "Refillable bottle",
-  "Personal medicines",
-  "Light jacket",
-  "Power bank",
-  "ID proof",
-  "Journal",
-  "One white/light outfit for sunset or group photo",
-];
-
-const communityRules = [
-  "No pressure for photos, dancing, conversations or social media exchange.",
-  "Women-first comfort: crowd quality, boundaries and respect come before entertainment.",
-  "No one is forced to speak in emotional moments. Listening is valid participation.",
-  "Passport stamps are not given because someone paid. They are earned by showing up differently.",
-];
-
-const safetySnapshot = [
+const experienceMoments = [
   {
-    icon: ShieldCheck,
-    title: "Before",
-    desc: "Passport verification, confirmed pickup points, route details, group size and emergency contacts are checked before departure.",
+    title: "SLOW MORNINGS",
+    subtitle: "UNRUSHED SUNLIGHT",
+    desc: "No wake-up sirens or rushing through breakfast to beat a tourist queue. You wake to the sound of birds, enjoy hot chai without glancing at a watch, and breathe before the day begins.",
+    image:
+      "https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?q=80&w=1200&auto=format&fit=crop",
+    quote: "“The luxury of an unscripted sunrise is something modern travel has completely forgotten.”",
   },
   {
-    icon: Users,
-    title: "During",
-    desc: "Two SnS staff are included in the 14-person group, with trip briefings, guide-approved activities and clear participation boundaries.",
+    title: "LOCAL STORIES",
+    subtitle: "BEYOND THE TOURIST LAYER",
+    desc: "Step through the wooden doors of a 90-year-old auntie’s village home. Taste recipes passed down across generations and learn the Goa that exists far away from commercial beach shacks.",
+    image:
+      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1200&auto=format&fit=crop",
+    quote: "“You don’t experience Goa by consuming it; you experience it by listening.”",
   },
   {
-    icon: MessageSquare,
-    title: "After",
-    desc: "Feedback, discomfort reports and red-flag concerns can be raised with the team and may affect future access.",
+    title: "BEACHES WITHOUT THE CROWD",
+    subtitle: "KOKOLEM & COLA",
+    desc: "Golden sand fringed by basalt cliffs, where the only tracks are your own. A 30-minute silent walk with phones tucked away leaves room for your thoughts to finally catch up with your life.",
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    quote: "“Silence by the ocean isn’t empty; it is deeply, beautifully restorative.”",
   },
   {
-    icon: EyeOff,
-    title: "Privacy",
-    desc: "No faces are posted without explicit consent, and phone or recording boundaries are part of the community code.",
+    title: "THE GROUP BECOMES THE STORY",
+    subtitle: "14 PEOPLE, NOT A CROWD",
+    desc: "Chopping garlic side-by-side during the villa cookout, paddling in tandem through emerald lagoons, and answering cards that ask who you actually are. Shared rituals turn strangers into travel family.",
+    image:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop",
+    quote: "“You’re not joining a bus full of strangers. You’re joining a small chapter of people.”",
   },
 ];
 
 const faqs = [
   {
-    q: "Do I need a verified passport to join?",
-    a: "Yes. This experience is for verified members only. Apply for your passport first — once accepted you can register for events.",
+    q: "Who is this trip for?",
+    a: "Goa Uncovered is designed for travellers who are exhausted by chaotic, commercial sightseeing and crave a slower, more intentional community journey. It is especially suited for solo women, thoughtful explorers, and anyone wanting genuine human connection without forced partying.",
   },
   {
-    q: "Is this a party trip?",
-    a: "No. It is a mission-led, curated community experience. There is no alcohol, no nightclub, and no pressure to perform or create content.",
+    q: "Why is the group strictly limited to 14 people?",
+    a: "Mass group travel creates chaos and cliques. A small circle of 12 travellers and 2 verified hosts means seamless coordination, genuine dinner table conversations, personal comfort, and hosts who can look out for every single person individually.",
   },
   {
-    q: "How do I earn the stamps?",
-    a: "Every stamp needs a challenge, participation, a witness and a ceremony. You cannot buy a stamp — you earn it by showing up differently.",
+    q: "Do I need a Stamp N Stories Passport?",
+    a: "Yes, passport verification is required to join. If you haven't received yours yet, simply submit your invite request — we verify IDs and issue your physical passport upon arrival during Day 0.",
   },
   {
-    q: "What if I want to sit out an activity?",
-    a: "Everything is community-first and safe. No risky pressure. Choosing not to do something is respected.",
+    q: "What exactly is the ₹22,999 price?",
+    a: "It is an all-inclusive price covering round-trip AC road transport from Mumbai/Bangalore, South Goa villa accommodation, all breakfasts, lunches, and dinners, guided cycling, Cola backwater kayaking, Netravali trek, pottery session, physical passport kit, and dedicated hosts.",
   },
   {
-    q: "Can I come alone?",
-    a: "Yes — most women do. The format is designed so you feel at ease whether you come solo or with a friend.",
+    q: "What does the ₹5,000 booking amount mean?",
+    a: "The ₹5,000 booking amount reserves your confirmed spot and counts directly towards the total ₹22,999 trip cost. It is NOT an extra fee. The remaining ₹17,999 is paid later.",
   },
   {
-    q: "What is the pickup point?",
-    a: "Confirmed pickup points in Mumbai and Bangalore will be shared on registration. The road journey itself is part of the experience.",
+    q: "When is the remaining payment due?",
+    a: "The remaining ₹17,999 must be settled at least 7 days prior to departure, following full verification and logistics finalisation.",
   },
   {
-    q: "What's the refund policy?",
-    a: "Full refund up to 14 days before departure. 50% refund 7–14 days before. No refund within 7 days, but your spot can be transferred to another verified member.",
+    q: "What happens after I request an invite?",
+    a: "Our community team reviews your application within 24–48 hours. If approved, we reach out via WhatsApp/email with a private payment link to confirm your batch spot with the ₹5,000 booking advance.",
+  },
+  {
+    q: "Is alcohol allowed on the trip?",
+    a: "No. Alcohol is strictly prohibited during official Stamp N Stories itinerary events and shared villa moments. We maintain a high-trust, safe, and clear-headed space where nobody feels uncomfortable or pressured.",
+  },
+  {
+    q: "What if I don't want to be photographed?",
+    a: "We operate on strict consent-first photography. If you prefer to stay off camera, your boundaries are 100% honored. Zero images or videos with recognizable faces are published without prior written consent.",
+  },
+  {
+    q: "What happens if I don't want to participate in an activity?",
+    a: "Everything is optional and respectful. If you prefer to sit by the pool, journal, or rest during a trek or kayak window, you are welcomed to do so with complete peace of mind. Nobody is judged or pressured.",
+  },
+  {
+    q: "How does the Stamp system work?",
+    a: "Stamps are earned through genuine participation, reflection, and peer witness — not merely by buying a ticket. Each stamp (Roots, Wild, Fire, Susegad) represents a unique ritual validated in your physical passport.",
+  },
+  {
+    q: "What should I pack?",
+    a: "Comfortable road clothing, walking/trekking shoes, beach slippers, sunscreen, a refillable water bottle, personal medicines, light cottons for daytime, a light jacket for road AC, a journal, and one white or pastel outfit for the closing photo ritual.",
   },
 ];
 
-/* ─────────────── COMPONENTS ─────────────── */
-
-function StampBadge({ id, color }: { id: string; color: string }) {
-  return (
-    <div
-      className="relative w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 border-dashed shrink-0"
-      style={{ borderColor: color + "60", background: color + "15" }}
-    >
-      <p
-        className="text-[9px] font-bold tracking-widest text-center leading-none"
-        style={{ color }}
-      >
-        {id}
-      </p>
-    </div>
-  );
-}
-
-
-const stampColors: Record<string, string> = {
-  ROOTS: "#234A3C",
-  WILD: "#202124",
-  FIRE: "#F26A2E",
-  SUSEGAD: "#7B5E3A",
-};
-
-/* ─────────────── PAGE ─────────────── */
+/* ─────────────── COMPONENT ─────────────── */
 
 export function GoaSusegadPage() {
+  const [activeDay, setActiveDay] = useState(0);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FFFDF9]">
+    <div className="flex flex-col min-h-screen bg-[#FFFDF9] text-[#202124] antialiased selection:bg-[#F26A2E]/20 selection:text-[#F26A2E]">
       <Navbar />
 
-      {/* ── Hero ── */}
-      <section className="relative min-h-[70vh] flex items-end bg-[#202124] overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1600&auto=format&fit=crop"
-          alt="Goa"
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/60 to-transparent" />
-
-        <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-6xl pb-16 md:pb-24 pt-32">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/70 mb-6">
-              <a href="/#events" className="hover:text-[#F26A2E] transition-colors">
-                Events
-              </a>
-              <span>/</span>
-              <span className="text-[#FFFDF9]/70">Goa Susegad Weekend</span>
-            </div>
-
-            <div className="flex flex-wrap gap-3 mb-6">
-              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] border border-[#F26A2E]/40 rounded-full px-3 py-1">
-                ROAD TRIP
-              </span>
-              <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/75 border border-[#FFFDF9]/20 rounded-full px-3 py-1">
-                4 Stamps to Earn
-              </span>
-              <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/75 border border-[#FFFDF9]/20 rounded-full px-3 py-1">
-                Passport Required
-              </span>
-            </div>
-
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#FFFDF9] leading-tight mb-6">
-              The Susegad
-              <br />
-              <span className="italic text-[#F6F0E6]/80">Stamp — Goa</span>
-            </h1>
-
-            <div className="flex flex-wrap gap-8 text-sm font-sans text-[#FFFDF9]/75 mb-8">
-              <div>
-                <span className="text-[#FFFDF9]/65 block text-xs uppercase tracking-widest mb-1">
-                  Departure
-                </span>
-                Mumbai / Bangalore
-              </div>
-              <div>
-                <span className="text-[#FFFDF9]/65 block text-xs uppercase tracking-widest mb-1">
-                  Destination
-                </span>
-                South Goa (villa stay)
-              </div>
-              <div>
-                <span className="text-[#FFFDF9]/65 block text-xs uppercase tracking-widest mb-1">
-                  Duration
-                </span>
-                Day 0 road + 3 days
-              </div>
-              <div>
-                <span className="text-[#FFFDF9]/65 block text-xs uppercase tracking-widest mb-1">
-                  Stamps
-                </span>
-                Roots · Wild · Fire · Susegad
-              </div>
-            </div>
-
-            {/* Four stamp pills */}
-            <div className="flex gap-3 flex-wrap">
-              {stamps.map((s) => (
-                <div
-                  key={s.id}
-                  className="flex items-center gap-2 rounded-full px-3 py-1.5 border"
-                  style={{ borderColor: s.color + "50", background: s.color + "20" }}
-                >
-                  <span
-                    className="text-[10px] font-bold tracking-widest uppercase"
-                    style={{ color: s.color }}
-                  >
-                    {s.id}
-                  </span>
-                  <span className="text-[10px] text-[#FFFDF9]/70 font-sans">{s.meaning}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Sticky nav bar ── */}
-      <div className="sticky top-[72px] md:top-[80px] z-40 bg-[#FFFDF9] border-b border-[#202124]/10 py-3 shadow-xs">
-        <div className="container mx-auto px-6 md:px-12 max-w-6xl flex items-center justify-between gap-4">
-          <div className="flex items-center gap-6 text-xs font-sans text-[#202124]/70 overflow-x-auto scrollbar-none py-1 min-w-0">
-            <a
-              href="#overview"
-              className="hover:text-[#F26A2E] whitespace-nowrap transition-colors"
-            >
+      {/* ── STICKY SUB-NAV BAR ── */}
+      <nav
+        aria-label="Experience Sub-Navigation"
+        className="sticky top-[72px] md:top-[80px] z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-b border-[#202124]/10 shadow-xs"
+      >
+        <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl flex items-center justify-between gap-4 h-14">
+          <div className="flex items-center gap-5 sm:gap-7 text-xs font-sans text-[#202124]/75 overflow-x-auto no-scrollbar py-2 min-w-0">
+            <a href="#hero" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
               Overview
             </a>
-            <a href="#event-safety" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
-              Safety
+            <a href="#the-idea" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
+              The Idea
             </a>
-            <a href="#stamps" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
+            <a href="#feels-like" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
+              Experience
+            </a>
+            <a href="#journey" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
+              Journey
+            </a>
+            <a href="#stamps" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
               Stamps
             </a>
-            <a
-              href="#itinerary"
-              className="hover:text-[#F26A2E] whitespace-nowrap transition-colors"
-            >
-              Itinerary
+            <a href="#people" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
+              The Group
             </a>
-            <a
-              href="#includes"
-              className="hover:text-[#F26A2E] whitespace-nowrap transition-colors"
-            >
+            <a href="#safety-code" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
+              Safety & Code
+            </a>
+            <a href="#included" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
               Included
             </a>
-            <a href="#rules" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
-              Rules
+            <a href="#price" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
+              Price
             </a>
-            <a href="#packing" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
-              Packing
-            </a>
-            <a href="#faq" className="hover:text-[#F26A2E] whitespace-nowrap transition-colors">
+            <a href="#faq" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
               FAQ
             </a>
           </div>
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            <div className="text-right hidden sm:block">
-              <p className="text-xs text-[#F26A2E] font-bold uppercase tracking-widest">
-                4 spots left
-              </p>
-              <p className="text-xs text-[#202124]/40 font-sans">of 14 total</p>
-            </div>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-[#F26A2E] bg-[#F26A2E]/10 px-2.5 py-1 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F26A2E] animate-pulse" />
+              Waiting List Open
+            </span>
             <Link
               to="/events/goa-susegad/request-invite"
-              className="bg-[#F26A2E] text-white text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-[#e0571c] transition-colors whitespace-nowrap inline-flex items-center justify-center shrink-0"
+              className="bg-[#F26A2E] hover:bg-[#d9561e] text-white text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2 rounded-full transition-colors whitespace-nowrap shadow-xs"
             >
               Request Invite
             </Link>
           </div>
         </div>
-      </div>
+      </nav>
 
       <main className="flex-1">
-        {/* ── Overview ── */}
-        <section id="overview" className="py-20 md:py-28 scroll-mt-36 md:scroll-mt-40">
-          <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <div className="grid md:grid-cols-2 gap-16 items-start">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                  What this is
-                </p>
-                <h2 className="text-3xl md:text-4xl font-serif text-[#202124] mb-6 leading-tight">
-                  A mission-led Goa itinerary built around the Community Passport.
-                </h2>
-                <div className="space-y-4 text-[#202124]/70 font-sans leading-relaxed text-base">
-                  <p>
-                    This is not a random package, not a dating trip, not only a party, not a
-                    forced-content creator trip. It is a curated women-first social hangout
-                    experience where members meet, explore and collect stories through guided
-                    challenges.
-                  </p>
-                  <p>
-                    The road journey, local food, beaches, backwaters, conversations and pottery are
-                    all turned into earned memories inside the STAMP &amp; STORIES PASSPORT. Four
-                    stamps. Four meanings. All earned — not given.
-                  </p>
-                  <p className="font-bold text-[#202124]">
-                    Challenge + Participation + Witness + Ceremony = Earned Stamp.
-                  </p>
-                </div>
-              </motion.div>
+        {/* ── 1. HERO ── */}
+        <section id="hero" className="relative min-h-[90vh] lg:min-h-screen flex items-end bg-[#202124] overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1920&auto=format&fit=crop"
+            alt="Goa Uncovered coastline"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-45 mix-blend-luminosity scale-105 transition-transform duration-1000 ease-out"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/65 to-[#202124]/30" />
+          <div className="absolute inset-0 bg-radial-at-top-right from-transparent via-[#202124]/40 to-[#202124]/80" />
 
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="space-y-4"
-              >
-                {/* Availability */}
-                <div className="bg-[#202124] rounded-3xl p-8 text-[#FFFDF9]">
-                  <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-2">
-                    Availability
-                  </p>
-                  <p className="text-5xl font-serif text-[#F26A2E] mb-1">
-                    4 <span className="text-xl text-[#FFFDF9]/75 font-sans">spots left</span>
-                  </p>
-                  <div className="mt-4 mb-6">
-                    <div className="h-2 rounded-full bg-[#FFFDF9]/10">
-                      <div className="h-full rounded-full bg-[#F26A2E]" style={{ width: "71%" }} />
-                    </div>
-                    <p className="text-xs text-[#FFFDF9]/70 mt-2 font-sans">
-                      10 of 14 spots filled (incl. 2 SnS staff)
-                    </p>
-                  </div>
-                  <Link
-                    to="/events/goa-susegad/request-invite"
-                    className="flex justify-center items-center w-full bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm py-4 rounded-2xl hover:bg-[#e0571c] transition-colors"
-                  >
-                    Request Invite
-                  </Link>
-                  <p className="text-xs text-[#FFFDF9]/65 text-center mt-3 font-sans">
-                    Passport verification required ·{" "}
-                    <Link
-                      to="/refund-policy"
-                      className="underline hover:text-[#F26A2E] transition-colors"
-                    >
-                      Refund Policy
-                    </Link>
-                  </p>
-                </div>
-
-                {/* Quick facts */}
-                <div className="border border-[#202124]/10 rounded-3xl p-6 space-y-4">
-                  {[
-                    ["🚌", "Route", "Mumbai / Bangalore → South Goa → Return by road"],
-                    [
-                      "🏡",
-                      "Stay",
-                      "South Goa villa (shared, 2–3 per room) with cookout permission & quiet-hour policy",
-                    ],
-                    ["👥", "Group", "14 members — 12 travellers + 2 verified SnS staff"],
-                    ["📅", "Dates", "Day 0 departure + 3 days in Goa"],
-                    ["🎟️", "Stamps Earned", "Roots · Wild · Fire · Susegad"],
-                    [
-                      "💰",
-                      "Cost",
-                      "₹22,999 per person (transport + stay + all activities included)",
-                    ],
-                  ].map(([icon, label, value]) => (
-                    <div key={String(label)} className="flex gap-4 items-start">
-                      <span className="text-xl shrink-0 mt-0.5">{icon}</span>
-                      <div>
-                        <p className="text-xs font-bold tracking-widest uppercase text-[#202124]/40 mb-0.5">
-                          {label}
-                        </p>
-                        <p className="text-sm font-sans text-[#202124]/80">{value}</p>
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="pt-3 border-t border-[#202124]/10 flex items-center justify-between text-xs text-[#202124]/65 font-sans">
-                    <span>Cancellation &amp; Booking Terms</span>
-                    <Link
-                      to="/refund-policy"
-                      className="text-[#F26A2E] hover:underline font-semibold"
-                    >
-                      Refund Policy →
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
+          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-36 pb-16 md:pb-24">
             <motion.div
-              id="event-safety"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mt-16 rounded-3xl bg-[#F6F0E6] p-6 md:p-8 scroll-mt-36 md:scroll-mt-40"
+              initial={{ opacity: 0, y: 35 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl"
             >
-              <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-3">
-                    Safety snapshot
-                  </p>
-                  <h2 className="text-3xl md:text-4xl font-serif text-[#202124]">
-                    How this experience is structured.
-                  </h2>
-                </div>
-                <Link
-                  to="/safety"
-                  className="text-xs font-bold tracking-widest uppercase text-[#202124]/45 hover:text-[#F26A2E] transition-colors"
-                >
-                  Full safety guide
-                </Link>
+              {/* Category & Status Eyebrow */}
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs tracking-widest uppercase text-[#F6F0E6]/80 font-sans mb-6">
+                <span className="text-[#F26A2E] font-bold">ROAD TRIP</span>
+                <span>·</span>
+                <span>TRAVEL</span>
+                <span>·</span>
+                <span className="text-[#F6F0E6]">SUSEGAD STAMP</span>
+                <span>·</span>
+                <span className="bg-[#FFFDF9]/10 border border-[#FFFDF9]/20 text-[#FFFDF9] text-[10px] px-2.5 py-0.5 rounded-full font-bold">
+                  PASSPORT REQUIRED
+                </span>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {safetySnapshot.map(({ icon: Icon, title, desc }) => (
-                  <div key={title} className="rounded-2xl border border-[#202124]/10 bg-white p-5">
-                    <Icon className="h-5 w-5 text-[#F26A2E] mb-4" />
-                    <h3 className="font-serif text-xl text-[#202124] mb-2">{title}</h3>
-                    <p className="text-sm text-[#202124]/65 font-sans leading-relaxed">{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
+              {/* Title & Editorial Hook */}
+              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-serif text-[#FFFDF9] tracking-tight leading-[0.95] mb-6">
+                GOA <span className="italic font-normal text-[#F6F0E6]/90">UNCOVERED.</span>
+              </h1>
 
-        {/* ── Four Stamps ── */}
-        <section id="stamps" className="py-20 md:py-28 bg-[#202124] scroll-mt-36 md:scroll-mt-40">
-          <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-14"
-            >
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                What you earn
-              </p>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#FFFDF9] mb-3">Four stamps.</h2>
-              <p className="text-[#FFFDF9]/75 font-sans text-sm max-w-xl">
-                You cannot buy a stamp. You can only earn it by showing up differently.
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-5">
-              {stamps.map((s, i) => (
-                <motion.div
-                  key={s.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="rounded-2xl p-6 border"
-                  style={{ borderColor: s.color + "30", background: s.color + "15" }}
-                >
-                  <div className="flex items-start gap-4 mb-4">
-                    {/* Stamp circle */}
-                    <div
-                      className="w-14 h-14 rounded-full flex flex-col items-center justify-center border-2 border-dashed shrink-0"
-                      style={{ borderColor: s.color + "80" }}
-                    >
-                      <p
-                        className="text-[10px] font-bold tracking-widest leading-none text-center"
-                        style={{ color: s.color }}
-                      >
-                        {s.id}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="font-serif text-xl text-[#FFFDF9] leading-snug">{s.id} Stamp</p>
-                      <p
-                        className="text-xs font-sans tracking-widest uppercase mt-1"
-                        style={{ color: s.color }}
-                      >
-                        {s.meaning}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-sm text-[#FFFDF9]/75 font-sans leading-relaxed mb-3">
-                    {s.earnedBy}
-                  </p>
-                  <div className="border-t border-[#FFFDF9]/10 pt-3">
-                    <p className="text-xs text-[#FFFDF9]/65 font-sans">
-                      <span className="font-bold text-[#FFFDF9]/75">Passport proof: </span>
-                      {s.proof}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-8 border border-[#FFFDF9]/10 rounded-2xl p-5 text-center"
-            >
-              <p className="text-[#FFFDF9]/75 font-sans text-sm">
-                <span className="font-bold text-[#FFFDF9]/70">Core stamp rule: </span>
-                Challenge + Participation + Witness + Ceremony = Earned Stamp
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── Itinerary ── */}
-        <section id="itinerary" className="py-20 md:py-28 scroll-mt-36 md:scroll-mt-40">
-          <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-14"
-            >
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                Day by day
-              </p>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">Full itinerary.</h2>
-              <p className="text-[#202124]/40 font-sans mt-3 text-sm">
-                All timings are approximate. Draft itinerary subject to vendor, route, weather and
-                permission confirmation.
-              </p>
-            </motion.div>
-
-            <div className="space-y-10">
-              {itinerary.map((day, di) => {
-                const stampColor = day.stamp ? stampColors[day.stamp] : undefined;
-                return (
-                  <motion.div
-                    key={day.day}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: di * 0.08 }}
-                    className="rounded-3xl overflow-hidden border border-[#202124]/10"
-                  >
-                    {/* Day header */}
-                    <div
-                      className="px-6 md:px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
-                      style={{ background: stampColor ? stampColor : "#202124" }}
-                    >
-                      <div>
-                        <div className="flex items-center gap-3 mb-1">
-                          <span className="text-xs font-bold tracking-widest uppercase text-white/50">
-                            {day.date}
-                          </span>
-                          {day.stamp && (
-                            <span className="text-[10px] font-bold tracking-widest uppercase border border-white/30 rounded-full px-2 py-0.5 text-white/70">
-                              {day.stamp} STAMP
-                            </span>
-                          )}
-                        </div>
-                        <h3 className="font-serif text-2xl text-white">
-                          {day.day} — {day.label}
-                        </h3>
-                        <p className="text-sm text-white/50 font-sans italic mt-1">{day.theme}</p>
-                      </div>
-                    </div>
-
-                    {/* Activities */}
-                    <div className="divide-y divide-[#202124]/6 bg-white">
-                      {day.items.map((item, ii) => (
-                        <div key={ii} className="flex gap-4 sm:gap-6 items-start px-6 md:px-8 py-4">
-                          <span
-                            className="text-xs font-mono shrink-0 w-28 sm:w-32 font-bold uppercase tracking-wider pt-0.5"
-                            style={{ color: stampColor ?? "#F26A2E" }}
-                          >
-                            {item.time}
-                          </span>
-                          <div className="flex-1 min-w-0">
-                            <p className="font-serif text-[#202124] text-base font-medium">{item.label}</p>
-                            <p className="text-xs text-[#202124]/70 font-sans mt-1 leading-relaxed">
-                              {item.note}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Day note */}
-                    <div className="px-6 md:px-8 py-4 bg-[#F6F0E6] border-t border-[#202124]/10">
-                      <p className="text-xs font-sans text-[#202124]/60 leading-relaxed">
-                        <span className="font-bold text-[#202124]/70">Note: </span>
-                        {day.note}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* ── What's Included ── */}
-        <section id="includes" className="py-20 md:py-28 bg-[#F6F0E6] scroll-mt-36 md:scroll-mt-40">
-          <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-14"
-            >
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                What you get
-              </p>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">
-                Everything included.
-              </h2>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-4 mb-10">
-              {included.map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="flex gap-5 items-start bg-white rounded-2xl p-5 shadow-sm"
-                >
-                  <span className="text-2xl shrink-0">{item.icon}</span>
-                  <div>
-                    <p className="font-serif text-[#202124] text-base mb-0.5">{item.label}</p>
-                    <p className="text-sm text-[#202124]/60 font-sans">{item.detail}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="border border-[#202124]/10 rounded-2xl p-6 bg-white">
-              <p className="text-xs font-bold tracking-widest uppercase text-[#202124]/40 mb-4">
-                Not included
-              </p>
-              <ul className="grid md:grid-cols-2 gap-2">
-                {notIncluded.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-3 text-sm font-sans text-[#202124]/50"
-                  >
-                    <span className="w-4 h-4 rounded-full border border-[#202124]/20 flex items-center justify-center shrink-0 text-[10px] text-[#202124]/30">
-                      ✕
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Community Rules ── */}
-        <section id="rules" className="py-20 md:py-28 bg-[#202124] scroll-mt-36 md:scroll-mt-40">
-          <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-12"
-            >
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                Before you come
-              </p>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#FFFDF9]">Community code.</h2>
-              <p className="text-[#FFFDF9]/40 font-sans mt-3 text-sm">
-                Agreeing to these is part of your registration.
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              {communityRules.map((rule, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="flex gap-4 items-start bg-[#FFFDF9]/5 border border-[#FFFDF9]/10 rounded-2xl p-5"
-                >
-                  <span className="w-7 h-7 rounded-full bg-[#F26A2E]/20 border border-[#F26A2E]/40 text-[#F26A2E] text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                    {i + 1}
-                  </span>
-                  <p className="text-sm font-sans text-[#FFFDF9]/70 leading-relaxed">{rule}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Packing Guide ── */}
-        <section id="packing" className="py-20 md:py-28 scroll-mt-36 md:scroll-mt-40">
-          <div className="container mx-auto px-6 md:px-12 max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-12"
-            >
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                What to bring
-              </p>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#202124]">Packing guide.</h2>
-            </motion.div>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl">
-              {packingList.map((item, i) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: i * 0.04 }}
-                  className="flex items-center gap-3 bg-[#F6F0E6] rounded-xl px-4 py-3 min-h-[52px]"
-                >
-                  <span className="w-2 h-2 rounded-full bg-[#F26A2E] shrink-0" />
-                  <p className="text-sm font-sans text-[#202124]/80 leading-snug">{item}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── FAQ ── */}
-        <FAQSection
-          id="faq"
-          badge="Questions"
-          title="FAQ."
-          items={faqs}
-          bgClassName="bg-[#F6F0E6]"
-          className="scroll-mt-36 md:scroll-mt-40"
-          align="left"
-        />
-
-        {/* ── Bottom CTA ── */}
-        <section className="py-20 md:py-28 bg-[#202124] text-center">
-          <div className="container mx-auto px-6 md:px-12 max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                WAITING LIST IS OPEN
-              </p>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#FFFDF9] mb-6 leading-tight">
-                Road to Goa.
+              <p className="text-xl sm:text-2xl md:text-3xl font-serif text-[#F6F0E6]/90 italic font-normal max-w-2xl leading-relaxed mb-8">
+                “Not the Goa you came for.
                 <br />
-                <span className="italic text-[#FFFDF9]/40">Four stamps to earn.</span>
-              </h2>
-              <p className="text-[#FFFDF9]/50 font-sans mb-10 leading-relaxed">
-                This is not a trip you book. It is a chapter you earn. You need a verified passport
-                to register — apply first if you don't have one yet.
+                The Goa you almost missed.”
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+              {/* Editorial Metadata Bar */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-5 px-6 rounded-2xl bg-[#FFFDF9]/10 backdrop-blur-md border border-[#FFFDF9]/15 mb-10 max-w-3xl">
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
+                    Location
+                  </span>
+                  <span className="text-sm font-sans font-semibold text-[#FFFDF9]">South Goa</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
+                    Duration
+                  </span>
+                  <span className="text-sm font-sans font-semibold text-[#FFFDF9]">Day 0 + 3 Days</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
+                    Cohort
+                  </span>
+                  <span className="text-sm font-sans font-semibold text-[#FFFDF9]">14 People Only</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-[#FFFDF9]/50 font-sans mb-0.5">
+                    Investment
+                  </span>
+                  <span className="text-sm font-sans font-semibold text-[#F26A2E]">₹22,999 / Person</span>
+                </div>
+              </div>
+
+              {/* CTA Row */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <Link
                   to="/events/goa-susegad/request-invite"
-                  className="bg-[#F26A2E] text-white font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full hover:bg-[#e0571c] transition-colors inline-flex items-center justify-center text-center"
+                  className="bg-[#F26A2E] hover:bg-[#d9561e] text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-all shadow-lg hover:shadow-[#F26A2E]/25 text-center flex items-center justify-center gap-2 group"
+                >
+                  <span>Request Invite</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <a
+                  href="#the-idea"
+                  className="border border-[#FFFDF9]/30 hover:border-[#FFFDF9]/70 text-[#FFFDF9] hover:bg-[#FFFDF9]/5 text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-colors text-center"
+                >
+                  Explore The Journey
+                </a>
+                <div className="flex items-center gap-2 px-3 text-xs text-[#FFFDF9]/60 font-sans">
+                  <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+                  <span>Waiting List Is Open</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── 2. THE IDEA ── */}
+        <section id="the-idea" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-8 h-px bg-[#F26A2E]" />
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E]">THE IDEA</span>
+            </div>
+
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+              <div className="lg:col-span-7">
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif text-[#202124] leading-tight mb-8">
+                  GOA, BUT DIFFERENT.
+                </h2>
+                <p className="text-xl sm:text-2xl font-serif text-[#202124]/85 leading-relaxed italic">
+                  Three days of slow mornings, curated brunches, meaningful local experiences, women-first comfort, beach
+                  walks, community challenges, and moments meant to be lived rather than constantly photographed.
+                </p>
+              </div>
+
+              <div className="lg:col-span-5 space-y-6 pt-2">
+                <div className="p-6 rounded-2xl bg-[#F6F0E6] border border-[#202124]/10">
+                  <div className="text-xs font-bold tracking-widest uppercase text-[#7B5E3A] mb-2">
+                    GOA UNCOVERED · SUSEGAD STAMP
+                  </div>
+                  <p className="text-sm font-sans text-[#202124]/80 leading-relaxed">
+                    This is not about checking tourist attractions off a spreadsheet. It is about curiosity, connection,
+                    presence, active participation, and small-group community trust.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 text-xs font-sans">
+                  <div className="p-4 rounded-xl border border-[#202124]/10 bg-white">
+                    <span className="text-[#F26A2E] font-bold block mb-1">01. PRESENCE</span>
+                    <span className="text-[#202124]/70">Phone-down windows to hear the waves and conversations.</span>
+                  </div>
+                  <div className="p-4 rounded-xl border border-[#202124]/10 bg-white">
+                    <span className="text-[#234A3C] font-bold block mb-1">02. CONNECTION</span>
+                    <span className="text-[#202124]/70">Curated question challenges designed to bypass small talk.</span>
+                  </div>
+                  <div className="p-4 rounded-xl border border-[#202124]/10 bg-white">
+                    <span className="text-[#7B5E3A] font-bold block mb-1">03. RESPECT</span>
+                    <span className="text-[#202124]/70">Honoring ancestral villages and regional Goan households.</span>
+                  </div>
+                  <div className="p-4 rounded-xl border border-[#202124]/10 bg-white">
+                    <span className="text-[#202124] font-bold block mb-1">04. WOMAN-FIRST</span>
+                    <span className="text-[#202124]/70">Rigorous safety vetting, boundaries, and 24x7 host support.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 3. WHAT THIS GOA FEELS LIKE ── */}
+        <section id="feels-like" className="py-24 md:py-32 bg-[#F6F0E6] border-b border-[#202124]/10 scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+            <div className="max-w-2xl mb-16">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
+                IMMERSIVE STORYTELLING
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-serif text-[#202124] leading-tight">
+                What the journey actually feels like.
+              </h2>
+              <p className="mt-4 text-[#202124]/70 font-sans text-base">
+                Four distinct experiential chapters that anchor the rhythm of your Goa stay.
+              </p>
+            </div>
+
+            <div className="space-y-16">
+              {experienceMoments.map((item, idx) => (
+                <div
+                  key={item.title}
+                  className={`grid lg:grid-cols-12 gap-8 lg:gap-12 items-center ${
+                    idx % 2 === 1 ? "lg:flex-row-reverse" : ""
+                  }`}
+                >
+                  <div className={`lg:col-span-7 ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
+                    <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-[#202124]/15 shadow-sm group">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#202124]/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-5 left-6 right-6">
+                        <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/80 font-sans">
+                          {item.subtitle}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`lg:col-span-5 ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"} space-y-4`}>
+                    <span className="text-xs font-mono font-bold tracking-widest text-[#F26A2E]">
+                      MOMENT 0{idx + 1}
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-serif text-[#202124]">{item.title}</h3>
+                    <p className="text-sm sm:text-base font-sans text-[#202124]/75 leading-relaxed">{item.desc}</p>
+                    <blockquote className="pt-3 border-t border-[#202124]/10 text-sm font-serif italic text-[#7B5E3A]">
+                      {item.quote}
+                    </blockquote>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 4. THE JOURNEY (VERTICAL ITINERARY) ── */}
+        <section id="journey" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+            <div className="max-w-3xl mb-14">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
+                PROGRESSIVE ITINERARY
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-serif text-[#202124] leading-tight">
+                The Journey through Goa.
+              </h2>
+              <p className="mt-4 text-[#202124]/70 font-sans text-base">
+                An intentional 4-day progression from road overture to deep community presence.
+              </p>
+            </div>
+
+            {/* Day Selector Tabs */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-10 border-b border-[#202124]/10">
+              {itineraryDays.map((d, i) => (
+                <button
+                  key={d.dayNumber}
+                  onClick={() => setActiveDay(i)}
+                  className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all whitespace-nowrap ${
+                    activeDay === i
+                      ? "bg-[#202124] text-white shadow-xs"
+                      : "bg-[#F6F0E6] text-[#202124]/70 hover:text-[#202124]"
+                  }`}
+                >
+                  {d.dayNumber}: {d.title}
+                </button>
+              ))}
+            </div>
+
+            {/* Selected Day View */}
+            {(() => {
+              const d = itineraryDays[activeDay];
+              return (
+                <motion.div
+                  key={d.dayNumber}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="rounded-3xl border border-[#202124]/15 bg-[#F6F0E6]/50 p-6 sm:p-10"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-[#202124]/10">
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-xs font-mono font-bold tracking-widest uppercase text-[#F26A2E]">
+                          {d.dayNumber}
+                        </span>
+                        <span className="text-xs font-bold tracking-widest uppercase text-[#202124]/60">
+                          {d.departure}
+                        </span>
+                      </div>
+                      <h3 className="text-3xl sm:text-4xl font-serif text-[#202124]">{d.title}</h3>
+                    </div>
+
+                    {d.stampAwarded && (
+                      <div className="inline-flex items-center gap-2 bg-[#234A3C]/10 border border-[#234A3C]/25 text-[#234A3C] px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wider self-start md:self-auto">
+                        <Award className="w-3.5 h-3.5" />
+                        <span>STAMP: {d.stampAwarded}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="py-6 text-base font-serif italic text-[#202124]/80 leading-relaxed border-b border-[#202124]/10">
+                    {d.story}
+                  </p>
+
+                  <div className="pt-8 space-y-6">
+                    {d.schedule.map((item, idx) => (
+                      <div key={idx} className="flex gap-4 sm:gap-6 items-start">
+                        <div className="w-24 sm:w-28 shrink-0 text-right">
+                          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#F26A2E] bg-[#F26A2E]/10 px-2 py-1 rounded-md inline-block">
+                            {item.tag}
+                          </span>
+                        </div>
+                        <div className="flex-1 pb-6 border-b border-[#202124]/10 last:border-b-0">
+                          <h4 className="text-base sm:text-lg font-serif text-[#202124] font-medium mb-1">
+                            {item.heading}
+                          </h4>
+                          <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })()}
+          </div>
+        </section>
+
+        {/* ── 5. FOUR STAMPS (HERO DIFFERENTIATOR SECTION) ── */}
+        <section id="stamps" className="py-24 md:py-32 bg-[#202124] text-[#FFFDF9] scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+            <div className="max-w-3xl mb-16">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
+                THE PASSPORT IDENTITY
+              </span>
+              <h2 className="text-4xl sm:text-6xl font-serif text-[#FFFDF9] leading-tight">
+                FOUR STAMPS.
+                <br />
+                <span className="italic font-normal text-[#F6F0E6]/80">ONE JOURNEY.</span>
+              </h2>
+              <p className="mt-4 text-[#FFFDF9]/70 font-sans text-base max-w-xl">
+                A Stamp N Stories passport is never an attendance card. Each seal represents a distinct human virtue
+                earned through mindful participation.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+              {stamps.map((stamp) => (
+                <div
+                  key={stamp.id}
+                  className="rounded-3xl p-8 border border-white/10 bg-white/5 backdrop-blur-xs flex flex-col justify-between hover:border-white/20 transition-all group"
+                >
+                  <div>
+                    {/* Stamp Header */}
+                    <div className="flex items-start justify-between gap-4 mb-6">
+                      <div>
+                        <span
+                          className="text-[11px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full border inline-block mb-2"
+                          style={{ borderColor: stamp.color + "90", color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
+                        >
+                          SEAL: {stamp.id}
+                        </span>
+                        <h3 className="text-2xl sm:text-3xl font-serif text-[#FFFDF9]">{stamp.title}</h3>
+                        <p className="text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/60 mt-1">
+                          {stamp.meaning}
+                        </p>
+                      </div>
+
+                      <div
+                        className="w-16 h-16 rounded-full border-2 border-dashed flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform duration-500"
+                        style={{ borderColor: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
+                      >
+                        <span
+                          className="text-[10px] font-bold tracking-widest"
+                          style={{ color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
+                        >
+                          {stamp.id}
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className="text-sm font-sans text-[#FFFDF9]/80 leading-relaxed mb-6">{stamp.philosophy}</p>
+
+                    <div className="p-4 rounded-xl bg-black/25 border border-white/5 mb-6">
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-[#F26A2E] block mb-1">
+                        The Challenge
+                      </span>
+                      <p className="text-xs font-sans text-[#FFFDF9]/85 leading-relaxed">{stamp.challenge}</p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-sans text-[#FFFDF9]/60">
+                    <span>
+                      <strong className="text-[#FFFDF9]/90 font-medium">Passport Proof: </strong>
+                      {stamp.proof}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 text-center max-w-2xl mx-auto">
+              <p className="text-xs font-sans uppercase tracking-widest text-[#FFFDF9]/70">
+                Core Credo: <span className="text-[#F26A2E] font-bold">Challenge + Participation + Witness + Ceremony = Earned Stamp</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 6. THE PEOPLE (14 ONLY) ── */}
+        <section id="people" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              <div className="lg:col-span-6 space-y-6">
+                <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E]">COHORT DYNAMICS</span>
+                <h2 className="text-4xl sm:text-6xl font-serif text-[#202124] leading-tight">
+                  14 PEOPLE ONLY.
+                </h2>
+                <p className="text-xl font-serif italic text-[#7B5E3A]">
+                  “You’re not joining a bus full of strangers. You’re joining a small chapter of people.”
+                </p>
+                <p className="text-sm sm:text-base font-sans text-[#202124]/75 leading-relaxed">
+                  We strictly cap every batch to 12 verified travellers and 2 trained Stamp N Stories hosts. We do not
+                  believe in mass tour groups or anonymous attendance. A circle of 14 creates an environment where
+                  introverts can be themselves, conversations flow without yelling, and hosts are genuinely present for
+                  everyone.
+                </p>
+
+                <div className="grid grid-cols-2 gap-4 pt-4 text-xs font-sans">
+                  <div className="p-4 rounded-xl border border-[#202124]/10 bg-[#F6F0E6]">
+                    <span className="font-bold text-[#202124] block mb-1">12 Travellers</span>
+                    <span className="text-[#202124]/70">Verified members across creative, professional backgrounds.</span>
+                  </div>
+                  <div className="p-4 rounded-xl border border-[#202124]/10 bg-[#F6F0E6]">
+                    <span className="font-bold text-[#202124] block mb-1">2 Vetted Hosts</span>
+                    <span className="text-[#202124]/70">On-ground captains managing safety, pace, and logistics.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-6">
+                <div className="p-8 sm:p-10 rounded-3xl bg-[#234A3C] text-[#FFFDF9] relative overflow-hidden">
+                  <div className="relative z-10 space-y-6">
+                    <div className="inline-flex items-center gap-2 bg-[#FFFDF9]/10 px-3 py-1 rounded-full text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/80">
+                      <Users className="w-3.5 h-3.5 text-[#F26A2E]" />
+                      <span>The Cohort Philosophy</span>
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl font-serif text-[#FFFDF9]">
+                      Why Small Groups Change Everything
+                    </h3>
+
+                    <ul className="space-y-4 text-sm font-sans text-[#FFFDF9]/85">
+                      <li className="flex gap-3">
+                        <Check className="w-4 h-4 text-[#F26A2E] shrink-0 mt-0.5" />
+                        <span><strong>Easier, Natural Conversations:</strong> No awkward microphone announcements or crowded dining lines.</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <Check className="w-4 h-4 text-[#F26A2E] shrink-0 mt-0.5" />
+                        <span><strong>Zero Forced Chemistry:</strong> We don't guarantee instant best friends, but we guarantee space to be respected.</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <Check className="w-4 h-4 text-[#F26A2E] shrink-0 mt-0.5" />
+                        <span><strong>Active Host Attentiveness:</strong> 1 host for every 6 travellers ensures personalized comfort and safety.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 7. SAFETY + COMMUNITY CODE ── */}
+        <section id="safety-code" className="py-24 md:py-32 bg-[#F6F0E6] border-b border-[#202124]/10 scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+            <div className="max-w-3xl mb-16">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
+                MUTUAL SOCIAL CONTRACT
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-serif text-[#202124] leading-tight">
+                Safety &amp; Community Code.
+              </h2>
+              <p className="mt-4 text-[#202124]/70 font-sans text-base">
+                Our community principles are not legal fine print; they are the values that make our spaces peaceful and safe.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-12 gap-8 items-start">
+              {/* Community Code */}
+              <div className="lg:col-span-7 bg-[#234A3C] rounded-3xl p-8 sm:p-10 text-[#FFFDF9]">
+                <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+                  <span className="text-xs font-mono font-bold tracking-widest uppercase text-[#F26A2E]">
+                    BEFORE YOU COME
+                  </span>
+                  <span className="text-xs text-[#FFFDF9]/60 font-sans">Social Contract</span>
+                </div>
+
+                <div className="space-y-5 text-sm sm:text-base font-sans text-[#FFFDF9]/90">
+                  <div className="flex gap-3 items-start">
+                    <span className="w-6 h-6 rounded-full bg-[#F26A2E]/20 text-[#F26A2E] font-bold flex items-center justify-center shrink-0 text-xs">
+                      01
+                    </span>
+                    <p className="leading-relaxed">
+                      <strong>Zero Pressure:</strong> No pressure for photos, dancing, loud drinking, conversations or social media exchange.
+                    </p>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="w-6 h-6 rounded-full bg-[#F26A2E]/20 text-[#F26A2E] font-bold flex items-center justify-center shrink-0 text-xs">
+                      02
+                    </span>
+                    <p className="leading-relaxed">
+                      <strong>Alcohol-Free Operations:</strong> Alcohol is strictly not permitted on official itinerary segments.
+                    </p>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="w-6 h-6 rounded-full bg-[#F26A2E]/20 text-[#F26A2E] font-bold flex items-center justify-center shrink-0 text-xs">
+                      03
+                    </span>
+                    <p className="leading-relaxed">
+                      <strong>Women-First Comfort:</strong> Crowd quality, physical boundaries, and emotional respect take absolute precedence.
+                    </p>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="w-6 h-6 rounded-full bg-[#F26A2E]/20 text-[#F26A2E] font-bold flex items-center justify-center shrink-0 text-xs">
+                      04
+                    </span>
+                    <p className="leading-relaxed">
+                      <strong>Listening Is Valid:</strong> Nobody is forced to speak during deep circles. Silent listening is honorable participation.
+                    </p>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="w-6 h-6 rounded-full bg-[#F26A2E]/20 text-[#F26A2E] font-bold flex items-center justify-center shrink-0 text-xs">
+                      05
+                    </span>
+                    <p className="leading-relaxed">
+                      <strong>Earned Credibility:</strong> Passport stamps are earned by showing up differently, not purchased.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-white/10 flex items-center gap-3 text-xs text-[#FFFDF9]/70">
+                  <PhoneCall className="w-4 h-4 text-[#25D366]" />
+                  <span>24x7 Community Helpline accessible to every traveller throughout the trip.</span>
+                </div>
+              </div>
+
+              {/* Safety Structure */}
+              <div className="lg:col-span-5 space-y-4">
+                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10">
+                  <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-2">BEFORE TRIP</span>
+                  <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">
+                    Aadhaar / ID proof verification, verified pickup coordination, medical allergies, and emergency contacts vetted before departure.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10">
+                  <span className="text-xs font-bold tracking-widest uppercase text-[#234A3C] block mb-2">DURING TRIP</span>
+                  <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">
+                    2 trained SnS hosts present 24/7. Certified local trek guides, life jackets for kayaking, and structured quiet hours at night.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10">
+                  <span className="text-xs font-bold tracking-widest uppercase text-[#7B5E3A] block mb-2">PRIVACY &amp; PHOTOS</span>
+                  <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">
+                    Consent is mandatory before photographing anyone up close. Phones-down windows to protect presence and peace of mind.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10">
+                  <span className="text-xs font-bold tracking-widest uppercase text-[#202124] block mb-2">AFTER TRIP</span>
+                  <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">
+                    Confidential feedback loop and red-flag reporting. Any boundary violation permanently revokes future community passport access.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 8. WHAT'S INCLUDED / NOT INCLUDED ── */}
+        <section id="included" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+            <div className="max-w-3xl mb-16">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
+                TRANSPARENT VALUE
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-serif text-[#202124] leading-tight">
+                Honest Inclusions.
+              </h2>
+              <p className="mt-4 text-[#202124]/70 font-sans text-base">
+                Everything required for your stay, travel, meals, and curated experiences is handled seamlessly.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+              {inclusions.map((item, idx) => (
+                <div key={idx} className="p-6 rounded-2xl border border-[#202124]/10 bg-[#F6F0E6]/30 hover:bg-[#F6F0E6]/60 transition-colors">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Check className="w-4 h-4 text-[#234A3C]" />
+                    <h3 className="font-serif text-lg text-[#202124]">{item.title}</h3>
+                  </div>
+                  <p className="text-xs sm:text-sm font-sans text-[#202124]/70 leading-relaxed pl-6">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Exclusions Card */}
+            <div className="p-8 rounded-3xl border border-[#202124]/10 bg-white">
+              <div className="flex items-center gap-2 mb-4">
+                <X className="w-4 h-4 text-[#F26A2E]" />
+                <h3 className="font-serif text-xl text-[#202124]">What is not included</h3>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-3 text-xs sm:text-sm font-sans text-[#202124]/65">
+                {exclusions.map((ex, idx) => (
+                  <div key={idx} className="flex gap-2.5 items-start">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#202124]/30 shrink-0 mt-2" />
+                    <span>{ex}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 9. PRICE SECTION ── */}
+        <section id="price" className="py-24 md:py-32 bg-[#202124] text-[#FFFDF9] scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-16">
+                <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
+                  TRANSPARENT INVESTMENT
+                </span>
+                <h2 className="text-4xl sm:text-6xl font-serif text-[#FFFDF9]">THE TRIP</h2>
+                <p className="mt-4 text-[#FFFDF9]/65 font-sans text-sm sm:text-base">
+                  No hidden service surcharges or unexpected onsite fees.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-white/15 bg-white/5 backdrop-blur-md p-8 sm:p-12 relative overflow-hidden">
+                <div className="grid md:grid-cols-2 gap-10 items-center">
+                  <div>
+                    <span className="text-xs font-mono font-bold tracking-widest text-[#F26A2E] block mb-2">
+                      ALL-INCLUSIVE TOTAL
+                    </span>
+                    <div className="text-5xl sm:text-6xl font-serif text-[#FFFDF9] font-normal leading-tight">
+                      ₹22,999
+                    </div>
+                    <span className="text-xs font-sans uppercase tracking-widest text-[#FFFDF9]/60 block mt-1">
+                      Per Person · South Goa Chapter
+                    </span>
+
+                    <div className="mt-8 pt-8 border-t border-white/10 space-y-4">
+                      <div className="flex items-baseline justify-between text-sm font-sans">
+                        <span className="text-[#FFFDF9]/80">Initial Booking Advance</span>
+                        <span className="font-bold text-[#F26A2E] text-lg">₹5,000</span>
+                      </div>
+                      <div className="flex items-baseline justify-between text-sm font-sans">
+                        <span className="text-[#FFFDF9]/80">Remaining Balance</span>
+                        <span className="font-bold text-white text-lg">₹17,999</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6 md:border-l md:border-white/10 md:pl-10">
+                    <div className="p-4 rounded-2xl bg-black/30 border border-white/5 space-y-2">
+                      <p className="text-xs font-sans text-[#FFFDF9]/90 leading-relaxed">
+                        <strong>Payment Transparency:</strong> The ₹5,000 booking amount counts towards the full trip
+                        cost. It is NOT an additional fee.
+                      </p>
+                      <p className="text-xs font-sans text-[#FFFDF9]/70 leading-relaxed">
+                        The remaining ₹17,999 must be settled at least 7 days before the departure date.
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="text-[11px] font-mono tracking-widest uppercase text-[#FFFDF9]/50 block mb-2">
+                        UPCOMING BATCHES
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {upcomingBatches.map((batch) => (
+                          <span
+                            key={batch}
+                            className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/10 border border-white/20 text-[#FFFDF9]"
+                          >
+                            {batch}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="pt-2">
+                      <div className="flex items-center gap-2 text-xs text-[#25D366] font-sans mb-4">
+                        <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+                        <span>WAITING LIST IS OPEN · LIMITED TO 14 SPOTS</span>
+                      </div>
+                      <Link
+                        to="/events/goa-susegad/request-invite"
+                        className="w-full bg-[#F26A2E] hover:bg-[#d9561e] text-white text-sm font-bold tracking-widest uppercase py-4 px-8 rounded-full transition-all text-center flex items-center justify-center gap-2 group shadow-lg"
+                      >
+                        <span>Request Invite</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 10. FAQ SECTION ── */}
+        <section id="faq" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+          <div className="container mx-auto px-6 md:px-12 max-w-4xl">
+            <div className="text-center mb-16">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
+                QUESTIONS ANSWERED
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-serif text-[#202124]">Frequently Asked Questions</h2>
+              <p className="mt-4 text-[#202124]/70 font-sans text-sm sm:text-base">
+                Clear, honest answers to help you decide if this chapter is right for you.
+              </p>
+            </div>
+
+            <div className="divide-y divide-[#202124]/10 border-y border-[#202124]/10">
+              {faqs.map((faq, i) => (
+                <details key={i} className="group py-6 [&_summary::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 text-left font-serif text-lg sm:text-xl text-[#202124] hover:text-[#F26A2E] transition-colors">
+                    <span className="font-medium">{faq.q}</span>
+                    <ChevronDown className="w-5 h-5 shrink-0 text-[#202124]/40 group-open:rotate-180 transition-transform duration-300" />
+                  </summary>
+                  <p className="mt-4 text-sm sm:text-base font-sans text-[#202124]/70 leading-relaxed pr-6">
+                    {faq.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center text-xs font-sans text-[#202124]/60">
+              Have a specific question not covered here? Reach out on our{" "}
+              <a
+                href="https://chat.whatsapp.com/BdfvQOFIm4DEiseiXVwUwf?mode=gi_t"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#F26A2E] underline font-semibold"
+              >
+                WhatsApp Community
+              </a>
+              .
+            </div>
+          </div>
+        </section>
+
+        {/* ── 11. FINAL STORY CTA ── */}
+        <section className="py-24 md:py-32 bg-[#F6F0E6] text-center">
+          <div className="container mx-auto px-6 md:px-12 max-w-3xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-4">
+                WAITING LIST IS OPEN
+              </span>
+              <h2 className="text-4xl sm:text-6xl font-serif text-[#202124] mb-6 leading-tight">
+                Road to Goa.
+                <br />
+                <span className="italic font-normal text-[#7B5E3A]">Four stamps to earn.</span>
+              </h2>
+              <p className="text-[#202124]/75 font-sans text-base sm:text-lg mb-8 leading-relaxed max-w-xl mx-auto">
+                Tell us a little about yourself. We’ll take it from there. Remember, this isn’t a trip you casually book — it
+                is a chapter you earn.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link
+                  to="/events/goa-susegad/request-invite"
+                  className="bg-[#F26A2E] hover:bg-[#d9561e] text-white font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full transition-all shadow-md hover:shadow-lg w-full sm:w-auto"
                 >
                   Request Invite
                 </Link>
-                <a
-                  href="/#events"
-                  className="border border-[#FFFDF9]/20 text-[#FFFDF9]/70 font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full hover:border-[#FFFDF9]/40 hover:text-[#FFFDF9] transition-colors inline-flex items-center justify-center text-center"
+                <Link
+                  to="/experiences"
+                  className="border border-[#202124]/20 hover:border-[#202124]/50 text-[#202124] font-bold tracking-widest uppercase text-sm px-10 py-4 rounded-full transition-colors w-full sm:w-auto"
                 >
-                  See All Events
-                </a>
+                  All Experiences
+                </Link>
               </div>
+
+              <p className="mt-8 text-xs font-sans text-[#202124]/50">
+                14 members only per batch · Women-first safety &amp; verification ·{" "}
+                <Link to="/refund-policy" className="underline hover:text-[#F26A2E]">
+                  Refund Policy
+                </Link>
+              </p>
             </motion.div>
           </div>
         </section>
       </main>
+
       <Footer />
     </div>
   );
