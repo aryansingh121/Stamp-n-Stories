@@ -5,40 +5,16 @@ import { Button } from "@/landing/components/ui/button";
 
 const upcomingEvents = [
   {
-    title: "Susegad Stamp — Goa",
+    title: "Goa Uncovered",
     type: "TRAVEL",
-    stamp: "Susegad Stamp",
-    date: "02 – 04 Aug 2026",
+    stamp: "SUSEGAD STAMP",
+    date: "15 Sep & 25 Sep 2026",
     location: "South Goa",
-    spotsLeft: 4,
-    totalSpots: 14,
+    capacity: "14 People Only",
+    status: "Applications Open",
     href: "/events/goa-susegad",
     image:
       "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=400&auto=format&fit=crop",
-  },
-  {
-    title: "Mumbai Monsoon Meetup",
-    type: "CITY",
-    stamp: "City Stamp",
-    date: "10 Aug 2026",
-    location: "Bandra, Mumbai",
-    spotsLeft: 11,
-    totalSpots: 20,
-    href: "/#events",
-    image:
-      "https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=400&auto=format&fit=crop",
-  },
-  {
-    title: "Delhi House Soirée",
-    type: "HOUSE PARTY",
-    stamp: "Circle Stamp",
-    date: "17 Aug 2026",
-    location: "Hauz Khas, Delhi",
-    spotsLeft: 7,
-    totalSpots: 16,
-    href: "/#events",
-    image:
-      "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=400&auto=format&fit=crop",
   },
 ];
 
@@ -157,74 +133,58 @@ export function Navbar() {
 
                   {/* Event rows */}
                   <div className="divide-y divide-[#202124]/6">
-                    {upcomingEvents.map((ev) => {
-                      const filled = ev.totalSpots - ev.spotsLeft;
-                      const pct = Math.round((filled / ev.totalSpots) * 100);
-                      const urgent = ev.spotsLeft <= 4;
-                      return (
-                        <Link
-                          key={ev.title}
-                          to={ev.href}
-                          onClick={() => setEventsOpen(false)}
-                          className="flex gap-4 items-start p-4 hover:bg-[#F6F0E6] transition-colors group"
-                        >
-                          {/* Thumbnail */}
-                          <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-[#202124]">
-                            <img
-                              src={ev.image}
-                              alt={ev.title}
-                              className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
-                            />
-                          </div>
+                    {upcomingEvents.map((ev) => (
+                      <Link
+                        key={ev.title}
+                        to={ev.href}
+                        onClick={() => setEventsOpen(false)}
+                        className="flex gap-4 items-center p-4 hover:bg-[#F6F0E6] transition-colors group"
+                      >
+                        {/* Thumbnail */}
+                        <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-[#202124]">
+                          <img
+                            src={ev.image}
+                            alt={ev.title}
+                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
+                          />
+                        </div>
 
-                          {/* Info */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-[10px] font-bold tracking-widest uppercase text-[#F26A2E] border border-[#F26A2E]/30 rounded-full px-2 py-0.5">
-                                {ev.type}
-                              </span>
-                              <span className="text-[10px] text-[#202124]/40 font-sans tracking-widest uppercase">
-                                {ev.stamp}
-                              </span>
-                            </div>
-                            <p className="font-serif text-[#202124] text-base leading-snug mb-2 group-hover:text-[#F26A2E] transition-colors">
-                              {ev.title}
-                            </p>
-                            <div className="flex items-center gap-3 text-xs text-[#202124]/50 font-sans">
-                              <span className="flex items-center gap-1">
-                                <Calendar className="w-3 h-3" />
-                                {ev.date}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <MapPin className="w-3 h-3" />
-                                {ev.location}
-                              </span>
-                            </div>
+                        {/* Info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-[10px] font-bold tracking-widest uppercase text-[#F26A2E] border border-[#F26A2E]/30 rounded-full px-2 py-0.5">
+                              {ev.type}
+                            </span>
+                            <span className="text-[10px] text-[#202124]/40 font-sans tracking-widest uppercase">
+                              {ev.stamp}
+                            </span>
                           </div>
+                          <p className="font-serif text-[#202124] text-base leading-snug mb-2 group-hover:text-[#F26A2E] transition-colors">
+                            {ev.title}
+                          </p>
+                          <div className="flex flex-wrap items-center gap-3 text-xs text-[#202124]/50 font-sans">
+                            <span className="flex items-center gap-1 whitespace-nowrap">
+                              <Calendar className="w-3 h-3 shrink-0" />
+                              {ev.date}
+                            </span>
+                            <span className="flex items-center gap-1 whitespace-nowrap">
+                              <MapPin className="w-3 h-3 shrink-0" />
+                              {ev.location}
+                            </span>
+                          </div>
+                        </div>
 
-                          {/* Spots */}
-                          <div className="shrink-0 text-right min-w-[80px]">
-                            <p
-                              className={`text-sm font-bold font-sans ${urgent ? "text-[#F26A2E]" : "text-[#234A3C]"}`}
-                            >
-                              {ev.spotsLeft} left
-                            </p>
-                            <p className="text-[10px] text-[#202124]/30 font-sans mb-1.5">
-                              of {ev.totalSpots}
-                            </p>
-                            <div className="h-1 w-full rounded-full bg-[#202124]/10 overflow-hidden">
-                              <div
-                                className="h-full rounded-full"
-                                style={{
-                                  width: `${pct}%`,
-                                  background: urgent ? "#F26A2E" : "#234A3C",
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </Link>
-                      );
-                    })}
+                        {/* Availability */}
+                        <div className="shrink-0 text-right">
+                          <p className="text-xs font-bold font-sans text-[#202124] whitespace-nowrap">
+                            {ev.capacity}
+                          </p>
+                          <p className="text-[11px] font-bold tracking-wide uppercase text-[#F26A2E] font-sans mt-0.5 whitespace-nowrap">
+                            {ev.status}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
 
                   {/* Footer CTA */}
@@ -234,7 +194,7 @@ export function Navbar() {
                     </p>
                     <Link to="/passport" onClick={() => setEventsOpen(false)}>
                       <button className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] hover:text-[#FFFDF9] transition-colors">
-                        Get Passport →
+                        GET PASSPORT →
                       </button>
                     </Link>
                   </div>
@@ -319,16 +279,32 @@ export function Navbar() {
                     <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0">
                       <img src={ev.image} alt={ev.title} className="w-full h-full object-cover" />
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[10px] font-bold tracking-widest uppercase text-[#F26A2E] border border-[#F26A2E]/30 rounded-full px-2 py-0.5">
+                          {ev.type}
+                        </span>
+                        <span className="text-[10px] text-[#202124]/40 font-sans tracking-widest uppercase">
+                          {ev.stamp}
+                        </span>
+                      </div>
                       <p className="font-serif text-[#202124] text-base leading-snug">{ev.title}</p>
-                      <p className="text-xs text-[#202124]/50 font-sans mt-0.5 flex items-center gap-1">
-                        <Calendar className="w-3 h-3" /> {ev.date}
-                      </p>
-                      <p
-                        className={`text-xs font-bold mt-1 font-sans ${ev.spotsLeft <= 4 ? "text-[#F26A2E]" : "text-[#234A3C]"}`}
-                      >
-                        {ev.spotsLeft} spots left
-                      </p>
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-[#202124]/50 font-sans mt-0.5">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3 shrink-0" /> {ev.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3 h-3 shrink-0" /> {ev.location}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-[#202124]/10">
+                        <span className="text-xs font-bold font-sans text-[#202124]">
+                          {ev.capacity}
+                        </span>
+                        <span className="text-[11px] font-bold tracking-wide uppercase text-[#F26A2E] font-sans">
+                          {ev.status}
+                        </span>
+                      </div>
                     </div>
                   </Link>
                 ))}
