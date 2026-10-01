@@ -1,27 +1,21 @@
 import { Navbar } from "@/landing/components/layout/Navbar";
 import { Footer } from "@/landing/components/layout/Footer";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
-  ShieldCheck,
   Users,
-  EyeOff,
-  Compass,
-  Sparkles,
-  MapPin,
-  Calendar,
   Check,
   X,
-  HeartHandshake,
   ArrowRight,
   ChevronDown,
-  Clock,
   PhoneCall,
-  Lock,
+  Award,
+  Sparkles,
+  Compass,
 } from "lucide-react";
 
-/* ─────────────── DATA DEFINITIONS ─────────────── */
+/* ─────────────── DATA DEFINITIONS (LOCKED) ─────────────── */
 
 const upcomingBatches = ["15 October", "29 October", "12 November"];
 
@@ -30,7 +24,7 @@ const stamps = [
     id: "ROOTS",
     title: "Roots Stamp",
     color: "#234A3C",
-    accentBg: "rgba(35, 74, 60, 0.08)",
+    accentBg: "rgba(35, 74, 60, 0.12)",
     meaning: "Curiosity & Connection",
     philosophy:
       "Goa has lived for centuries before tourism arrived. Roots is about slowing down enough to listen to the people and heritage that anchor this land.",
@@ -42,7 +36,7 @@ const stamps = [
     id: "WILD",
     title: "Wild Stamp",
     color: "#202124",
-    accentBg: "rgba(32, 33, 36, 0.08)",
+    accentBg: "rgba(32, 33, 36, 0.12)",
     meaning: "Attention & Courage",
     philosophy:
       "True wildness isn't reckless speed or loud adrenaline. It is quiet attention — walking through nature without performing for a camera.",
@@ -54,7 +48,7 @@ const stamps = [
     id: "FIRE",
     title: "Fire Stamp",
     color: "#F26A2E",
-    accentBg: "rgba(242, 106, 46, 0.08)",
+    accentBg: "rgba(242, 106, 46, 0.12)",
     meaning: "Honesty & Listening",
     philosophy:
       "Warmth doesn't happen by accident. It is created when people dare to ask real questions and listen without rushing to respond.",
@@ -66,7 +60,7 @@ const stamps = [
     id: "SUSEGAD",
     title: "Susegad Stamp",
     color: "#7B5E3A",
-    accentBg: "rgba(123, 94, 58, 0.08)",
+    accentBg: "rgba(123, 94, 58, 0.12)",
     meaning: "Presence & Community",
     philosophy:
       "Susegad is not laziness. It is the profound art of contentment — knowing that the moment you are currently living is completely enough.",
@@ -407,93 +401,287 @@ const faqs = [
   },
 ];
 
-/* ─────────────── COMPONENT ─────────────── */
+const navItems = [
+  { label: "Overview", id: "overview" },
+  { label: "The Idea", id: "the-idea" },
+  { label: "Experience", id: "feels-like" },
+  { label: "Journey", id: "journey" },
+  { label: "Stamps", id: "stamps" },
+  { label: "The Group", id: "people" },
+  { label: "Safety & Code", id: "safety-code" },
+  { label: "Included", id: "included" },
+  { label: "Price", id: "price" },
+  { label: "FAQ", id: "faq" },
+];
+
+/* ─────────────── 3D / TILT COMPONENTS ─────────────── */
+
+function Stamp3DCard({
+  stamp,
+  index,
+  reducedMotion,
+}: {
+  stamp: (typeof stamps)[0];
+  index: number;
+  reducedMotion: boolean | null;
+}) {
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (reducedMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    // max ±7 degrees subtle rotation
+    const rotateX = ((y - centerY) / centerY) * -7;
+    const rotateY = ((x - centerX) / centerX) * 7;
+    setRotate({ x: rotateX, y: rotateY });
+  }
+
+  function handleMouseLeave() {
+    setRotate({ x: 0, y: 0 });
+    setIsHovered(false);
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      style={{ perspective: 1000 }}
+      className="group"
+    >
+      <div
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform:
+            !reducedMotion && isHovered
+              ? `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) translateY(-8px)`
+              : "rotateX(0deg) rotateY(0deg) translateY(0px)",
+          transition: isHovered ? "transform 0.1s ease-out" : "transform 0.5s ease-out",
+          transformStyle: "preserve-3d",
+        }}
+        className="rounded-3xl p-8 border border-white/10 bg-white/5 backdrop-blur-md flex flex-col justify-between hover:border-white/25 transition-all duration-300 shadow-md hover:shadow-2xl relative overflow-hidden"
+      >
+        {/* Subtle ambient stamp glow */}
+        <div
+          className="absolute -right-12 -top-12 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none transition-opacity duration-500 group-hover:opacity-40"
+          style={{ background: stamp.color === "#202124" ? "#F26A2E" : stamp.color }}
+        />
+
+        <div style={{ transform: "translateZ(20px)" }}>
+          {/* Stamp Header */}
+          <div className="flex items-start justify-between gap-4 mb-6">
+            <div>
+              <span
+                className="text-[11px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full border inline-block mb-2"
+                style={{
+                  borderColor: stamp.color === "#202124" ? "rgba(255,255,255,0.2)" : stamp.color + "90",
+                  color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color,
+                }}
+              >
+                SEAL: {stamp.id}
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-serif text-[#FFFDF9]">{stamp.title}</h3>
+              <p className="text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/60 mt-1">
+                {stamp.meaning}
+              </p>
+            </div>
+
+            <div
+              className="w-16 h-16 rounded-full border-2 border-dashed flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:rotate-6 transition-all duration-500"
+              style={{
+                borderColor: stamp.color === "#202124" ? "rgba(255,255,255,0.4)" : stamp.color,
+                background: stamp.accentBg,
+              }}
+            >
+              <span
+                className="text-[10px] font-bold tracking-widest"
+                style={{ color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
+              >
+                {stamp.id}
+              </span>
+            </div>
+          </div>
+
+          <p className="text-sm font-sans text-[#FFFDF9]/80 leading-relaxed mb-6">{stamp.philosophy}</p>
+
+          <div className="p-4 rounded-xl bg-black/30 border border-white/5 mb-6">
+            <span className="text-[10px] uppercase tracking-widest font-bold text-[#F26A2E] block mb-1">
+              The Challenge
+            </span>
+            <p className="text-xs font-sans text-[#FFFDF9]/85 leading-relaxed">{stamp.challenge}</p>
+          </div>
+        </div>
+
+        <div
+          style={{ transform: "translateZ(10px)" }}
+          className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-sans text-[#FFFDF9]/60"
+        >
+          <span>
+            <strong className="text-[#FFFDF9]/90 font-medium">Passport Proof: </strong>
+            {stamp.proof}
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function ExperienceImageCard({
+  image,
+  alt,
+  subtitle,
+  reducedMotion,
+}: {
+  image: string;
+  alt: string;
+  subtitle: string;
+  reducedMotion: boolean | null;
+}) {
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (reducedMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    // max ±5 degrees
+    const rotateX = ((y - centerY) / centerY) * -5;
+    const rotateY = ((x - centerX) / centerX) * 5;
+    setRotate({ x: rotateX, y: rotateY });
+  }
+
+  function handleMouseLeave() {
+    setRotate({ x: 0, y: 0 });
+    setIsHovered(false);
+  }
+
+  return (
+    <div
+      style={{ perspective: 1200 }}
+      className="w-full"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div
+        style={{
+          transform:
+            !reducedMotion && isHovered
+              ? `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) translateY(-6px)`
+              : "rotateX(0deg) rotateY(0deg) translateY(0px)",
+          transition: isHovered ? "transform 0.1s ease-out" : "transform 0.5s ease-out",
+          transformStyle: "preserve-3d",
+        }}
+        className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-[#202124]/15 shadow-sm group hover:shadow-xl transition-shadow duration-300"
+      >
+        <img
+          src={image}
+          alt={alt}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#202124]/70 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute bottom-5 left-6 right-6 pointer-events-none">
+          <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/90 font-sans drop-shadow-sm">
+            {subtitle}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── MAIN PAGE COMPONENT ─────────────── */
 
 export function GoaSusegadPage() {
   const [activeDay, setActiveDay] = useState(0);
+  const [activeSection, setActiveSection] = useState("overview");
+  const [scrollY, setScrollY] = useState(0);
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Parallax & Active Section tracking
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+
+          const scrollPos = window.scrollY + 220;
+          for (let i = navItems.length - 1; i >= 0; i--) {
+            const el = document.getElementById(navItems[i].id);
+            if (el && el.offsetTop <= scrollPos) {
+              setActiveSection(navItems[i].id);
+              break;
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-[#FFFDF9] text-[#202124] antialiased selection:bg-[#F26A2E]/20 selection:text-[#F26A2E]">
+      {/* ── 1. MAIN GLOBAL NAVBAR ── */}
       <Navbar />
 
-      {/* ── STICKY SUB-NAV BAR ── */}
-      <nav
-        aria-label="Experience Sub-Navigation"
-        className="sticky top-[72px] md:top-[80px] z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-b border-[#202124]/10 shadow-xs"
-      >
-        <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl flex items-center justify-between gap-4 h-14">
-          <div className="flex items-center gap-5 sm:gap-7 text-xs font-sans text-[#202124]/75 overflow-x-auto no-scrollbar py-2 min-w-0">
-            <a href="#hero" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              Overview
-            </a>
-            <a href="#the-idea" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              The Idea
-            </a>
-            <a href="#feels-like" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              Experience
-            </a>
-            <a href="#journey" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              Journey
-            </a>
-            <a href="#stamps" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              Stamps
-            </a>
-            <a href="#people" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              The Group
-            </a>
-            <a href="#safety-code" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              Safety & Code
-            </a>
-            <a href="#included" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              Included
-            </a>
-            <a href="#price" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              Price
-            </a>
-            <a href="#faq" className="hover:text-[#F26A2E] font-medium whitespace-nowrap transition-colors">
-              FAQ
-            </a>
-          </div>
-
-          <div className="flex items-center gap-3 shrink-0">
-            <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-[#F26A2E] bg-[#F26A2E]/10 px-2.5 py-1 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F26A2E] animate-pulse" />
-              Waiting List Open
-            </span>
-            <Link
-              to="/events/goa-susegad/request-invite"
-              className="bg-[#F26A2E] hover:bg-[#d9561e] text-white text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2 rounded-full transition-colors whitespace-nowrap shadow-xs"
-            >
-              Request Invite
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       <main className="flex-1">
-        {/* ── 1. HERO ── */}
-        <section id="hero" className="relative min-h-[90vh] lg:min-h-screen flex items-end bg-[#202124] overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1920&auto=format&fit=crop"
-            alt="Goa Uncovered coastline"
-            className="absolute inset-0 w-full h-full object-cover object-center opacity-45 mix-blend-luminosity scale-105 transition-transform duration-1000 ease-out"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/65 to-[#202124]/30" />
-          <div className="absolute inset-0 bg-radial-at-top-right from-transparent via-[#202124]/40 to-[#202124]/80" />
+        {/* ── 2. HERO (COMMENCING AT VIEWPORT TOP Y=0) ── */}
+        <section
+          id="overview"
+          className="relative min-h-[92vh] lg:min-h-screen flex items-end bg-[#202124] overflow-hidden scroll-mt-0"
+        >
+          {/* Parallax Background Image */}
+          <div
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            style={{
+              transform: !prefersReduced && scrollY < 1200 ? `translateY(${scrollY * 0.22}px)` : "none",
+              willChange: "transform",
+            }}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1920&auto=format&fit=crop"
+              alt="Goa Uncovered coastline"
+              className="w-full h-full object-cover object-center opacity-45 mix-blend-luminosity scale-105"
+            />
+          </div>
 
-          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-36 pb-16 md:pb-24">
+          {/* Cinematic Vignette Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#202124] via-[#202124]/60 to-[#202124]/40 pointer-events-none" />
+          <div className="absolute inset-0 bg-radial-at-top-right from-transparent via-[#202124]/40 to-[#202124]/85 pointer-events-none" />
+
+          {/* Hero Content Container with Safe Top Padding for Fixed Navbar */}
+          <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-7xl pt-32 sm:pt-36 md:pt-40 pb-16 md:pb-24">
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
+              initial={prefersReduced ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="max-w-4xl"
             >
               {/* Category & Status Eyebrow */}
-              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs tracking-widest uppercase text-[#F6F0E6]/80 font-sans mb-6">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs tracking-widest uppercase text-[#F6F0E6]/85 font-sans mb-6">
                 <span className="text-[#F26A2E] font-bold">ROAD TRIP</span>
                 <span>·</span>
                 <span>TRAVEL</span>
@@ -502,6 +690,9 @@ export function GoaSusegadPage() {
                 <span>·</span>
                 <span className="bg-[#FFFDF9]/10 border border-[#FFFDF9]/20 text-[#FFFDF9] text-[10px] px-2.5 py-0.5 rounded-full font-bold">
                   PASSPORT REQUIRED
+                </span>
+                <span className="bg-[#FFFDF9]/10 border border-[#FFFDF9]/20 text-[#FFFDF9] text-[10px] px-2.5 py-0.5 rounded-full font-bold">
+                  4 STAMPS TO EARN
                 </span>
               </div>
 
@@ -559,17 +750,66 @@ export function GoaSusegadPage() {
                 >
                   Explore The Journey
                 </a>
-                <div className="flex items-center gap-2 px-3 text-xs text-[#FFFDF9]/60 font-sans">
+                <div className="flex items-center gap-2 px-3 text-xs text-[#FFFDF9]/70 font-sans">
                   <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-                  <span>Waiting List Is Open</span>
+                  <span>WAITING LIST IS OPEN</span>
                 </div>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* ── 2. THE IDEA ── */}
-        <section id="the-idea" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+        {/* ── 3. STICKY CHAPTER SUB-NAV (ATTACHING SEAMLESSLY AT TOP-16 MD:TOP-20) ── */}
+        <nav
+          aria-label="Experience Chapter Navigation"
+          className="sticky top-16 md:top-20 z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-y border-[#202124]/10 shadow-xs transition-all duration-200"
+        >
+          <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl flex items-center justify-between gap-4 h-14">
+            {/* Scrollable Chapter Navigation */}
+            <div className="flex items-center gap-6 sm:gap-7 text-xs font-sans overflow-x-auto no-scrollbar py-1 min-w-0">
+              {navItems.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`relative py-3.5 whitespace-nowrap transition-colors duration-200 ${
+                    activeSection === item.id
+                      ? "text-[#F26A2E] font-semibold"
+                      : "text-[#202124]/70 hover:text-[#202124]"
+                  }`}
+                >
+                  {item.label}
+                  {activeSection === item.id && (
+                    <motion.span
+                      layoutId="subnav-active-pill"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#F26A2E] rounded-full"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
+              ))}
+            </div>
+
+            {/* Right Status & Action */}
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-[#F26A2E] bg-[#F26A2E]/10 px-2.5 py-1 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F26A2E] animate-pulse" />
+                Waiting List Open
+              </span>
+              <Link
+                to="/events/goa-susegad/request-invite"
+                className="bg-[#F26A2E] hover:bg-[#d9561e] text-white text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2 rounded-full transition-colors whitespace-nowrap shadow-xs"
+              >
+                Request Invite
+              </Link>
+            </div>
+          </div>
+        </nav>
+
+        {/* ── 4. THE IDEA ── */}
+        <section
+          id="the-idea"
+          className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="flex items-center gap-3 mb-6">
               <span className="w-8 h-px bg-[#F26A2E]" />
@@ -621,8 +861,11 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 3. WHAT THIS GOA FEELS LIKE ── */}
-        <section id="feels-like" className="py-24 md:py-32 bg-[#F6F0E6] border-b border-[#202124]/10 scroll-mt-24">
+        {/* ── 5. WHAT THIS GOA FEELS LIKE ── */}
+        <section
+          id="feels-like"
+          className="py-24 md:py-32 bg-[#F6F0E6] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="max-w-2xl mb-16">
               <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
@@ -645,20 +888,12 @@ export function GoaSusegadPage() {
                   }`}
                 >
                   <div className={`lg:col-span-7 ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
-                    <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-[#202124]/15 shadow-sm group">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#202124]/60 via-transparent to-transparent" />
-                      <div className="absolute bottom-5 left-6 right-6">
-                        <span className="text-xs font-bold tracking-widest uppercase text-[#FFFDF9]/80 font-sans">
-                          {item.subtitle}
-                        </span>
-                      </div>
-                    </div>
+                    <ExperienceImageCard
+                      image={item.image}
+                      alt={item.title}
+                      subtitle={item.subtitle}
+                      reducedMotion={prefersReduced}
+                    />
                   </div>
 
                   <div className={`lg:col-span-5 ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"} space-y-4`}>
@@ -677,8 +912,11 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 4. THE JOURNEY (VERTICAL ITINERARY) ── */}
-        <section id="journey" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+        {/* ── 6. THE JOURNEY (PROGRESSIVE VISUAL ITINERARY) ── */}
+        <section
+          id="journey"
+          className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="max-w-3xl mb-14">
               <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
@@ -692,21 +930,41 @@ export function GoaSusegadPage() {
               </p>
             </div>
 
-            {/* Day Selector Tabs */}
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-10 border-b border-[#202124]/10">
-              {itineraryDays.map((d, i) => (
-                <button
-                  key={d.dayNumber}
-                  onClick={() => setActiveDay(i)}
-                  className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all whitespace-nowrap ${
-                    activeDay === i
-                      ? "bg-[#202124] text-white shadow-xs"
-                      : "bg-[#F6F0E6] text-[#202124]/70 hover:text-[#202124]"
-                  }`}
-                >
-                  {d.dayNumber}: {d.title}
-                </button>
-              ))}
+            {/* Interactive Journey Milestones Path */}
+            <div className="relative mb-12 py-4">
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#202124]/10 -translate-y-1/2 hidden md:block" />
+              <div
+                className="absolute top-1/2 left-0 h-0.5 bg-[#F26A2E] -translate-y-1/2 hidden md:block transition-all duration-500"
+                style={{ width: `${(activeDay / (itineraryDays.length - 1)) * 100}%` }}
+              />
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 relative z-10">
+                {itineraryDays.map((d, i) => (
+                  <button
+                    key={d.dayNumber}
+                    onClick={() => setActiveDay(i)}
+                    className={`flex items-center gap-3 p-3.5 rounded-2xl border text-left transition-all ${
+                      activeDay === i
+                        ? "bg-[#202124] text-white border-[#202124] shadow-md -translate-y-1"
+                        : "bg-[#F6F0E6] text-[#202124]/75 border-[#202124]/10 hover:border-[#202124]/30"
+                    }`}
+                  >
+                    <span
+                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                        activeDay === i ? "bg-[#F26A2E] text-white" : "bg-white text-[#202124]"
+                      }`}
+                    >
+                      {i}
+                    </span>
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-mono tracking-widest uppercase opacity-70 block">
+                        {d.dayNumber}
+                      </span>
+                      <span className="text-xs font-bold truncate block">{d.title}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Selected Day View */}
@@ -715,10 +973,10 @@ export function GoaSusegadPage() {
               return (
                 <motion.div
                   key={d.dayNumber}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={prefersReduced ? false : { opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4 }}
-                  className="rounded-3xl border border-[#202124]/15 bg-[#F6F0E6]/50 p-6 sm:p-10"
+                  className="rounded-3xl border border-[#202124]/15 bg-[#F6F0E6]/50 p-6 sm:p-10 shadow-sm"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-[#202124]/10">
                     <div>
@@ -768,8 +1026,11 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 5. FOUR STAMPS (HERO DIFFERENTIATOR SECTION) ── */}
-        <section id="stamps" className="py-24 md:py-32 bg-[#202124] text-[#FFFDF9] scroll-mt-24">
+        {/* ── 7. FOUR STAMPS (HERO 3D DIFFERENTIATOR SECTION) ── */}
+        <section
+          id="stamps"
+          className="py-24 md:py-32 bg-[#202124] text-[#FFFDF9] scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="max-w-3xl mb-16">
               <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
@@ -787,70 +1048,32 @@ export function GoaSusegadPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-              {stamps.map((stamp) => (
-                <div
+              {stamps.map((stamp, idx) => (
+                <Stamp3DCard
                   key={stamp.id}
-                  className="rounded-3xl p-8 border border-white/10 bg-white/5 backdrop-blur-xs flex flex-col justify-between hover:border-white/20 transition-all group"
-                >
-                  <div>
-                    {/* Stamp Header */}
-                    <div className="flex items-start justify-between gap-4 mb-6">
-                      <div>
-                        <span
-                          className="text-[11px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full border inline-block mb-2"
-                          style={{ borderColor: stamp.color + "90", color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
-                        >
-                          SEAL: {stamp.id}
-                        </span>
-                        <h3 className="text-2xl sm:text-3xl font-serif text-[#FFFDF9]">{stamp.title}</h3>
-                        <p className="text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/60 mt-1">
-                          {stamp.meaning}
-                        </p>
-                      </div>
-
-                      <div
-                        className="w-16 h-16 rounded-full border-2 border-dashed flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform duration-500"
-                        style={{ borderColor: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
-                      >
-                        <span
-                          className="text-[10px] font-bold tracking-widest"
-                          style={{ color: stamp.color === "#202124" ? "#FFFDF9" : stamp.color }}
-                        >
-                          {stamp.id}
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="text-sm font-sans text-[#FFFDF9]/80 leading-relaxed mb-6">{stamp.philosophy}</p>
-
-                    <div className="p-4 rounded-xl bg-black/25 border border-white/5 mb-6">
-                      <span className="text-[10px] uppercase tracking-widest font-bold text-[#F26A2E] block mb-1">
-                        The Challenge
-                      </span>
-                      <p className="text-xs font-sans text-[#FFFDF9]/85 leading-relaxed">{stamp.challenge}</p>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-sans text-[#FFFDF9]/60">
-                    <span>
-                      <strong className="text-[#FFFDF9]/90 font-medium">Passport Proof: </strong>
-                      {stamp.proof}
-                    </span>
-                  </div>
-                </div>
+                  stamp={stamp}
+                  index={idx}
+                  reducedMotion={prefersReduced}
+                />
               ))}
             </div>
 
             <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 text-center max-w-2xl mx-auto">
-              <p className="text-xs font-sans uppercase tracking-widest text-[#FFFDF9]/70">
-                Core Credo: <span className="text-[#F26A2E] font-bold">Challenge + Participation + Witness + Ceremony = Earned Stamp</span>
+              <p className="text-xs font-sans uppercase tracking-widest text-[#FFFDF9]/75">
+                Core Credo:{" "}
+                <span className="text-[#F26A2E] font-bold">
+                  Challenge + Participation + Witness + Ceremony = Earned Stamp
+                </span>
               </p>
             </div>
           </div>
         </section>
 
-        {/* ── 6. THE PEOPLE (14 ONLY) ── */}
-        <section id="people" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+        {/* ── 8. THE PEOPLE (14 ONLY) ── */}
+        <section
+          id="people"
+          className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               <div className="lg:col-span-6 space-y-6">
@@ -881,7 +1104,7 @@ export function GoaSusegadPage() {
               </div>
 
               <div className="lg:col-span-6">
-                <div className="p-8 sm:p-10 rounded-3xl bg-[#234A3C] text-[#FFFDF9] relative overflow-hidden">
+                <div className="p-8 sm:p-10 rounded-3xl bg-[#234A3C] text-[#FFFDF9] relative overflow-hidden shadow-lg">
                   <div className="relative z-10 space-y-6">
                     <div className="inline-flex items-center gap-2 bg-[#FFFDF9]/10 px-3 py-1 rounded-full text-xs font-sans tracking-widest uppercase text-[#FFFDF9]/80">
                       <Users className="w-3.5 h-3.5 text-[#F26A2E]" />
@@ -913,8 +1136,11 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 7. SAFETY + COMMUNITY CODE ── */}
-        <section id="safety-code" className="py-24 md:py-32 bg-[#F6F0E6] border-b border-[#202124]/10 scroll-mt-24">
+        {/* ── 9. SAFETY + COMMUNITY CODE ── */}
+        <section
+          id="safety-code"
+          className="py-24 md:py-32 bg-[#F6F0E6] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="max-w-3xl mb-16">
               <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
@@ -930,7 +1156,7 @@ export function GoaSusegadPage() {
 
             <div className="grid lg:grid-cols-12 gap-8 items-start">
               {/* Community Code */}
-              <div className="lg:col-span-7 bg-[#234A3C] rounded-3xl p-8 sm:p-10 text-[#FFFDF9]">
+              <div className="lg:col-span-7 bg-[#234A3C] rounded-3xl p-8 sm:p-10 text-[#FFFDF9] shadow-md">
                 <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
                   <span className="text-xs font-mono font-bold tracking-widest uppercase text-[#F26A2E]">
                     BEFORE YOU COME
@@ -989,28 +1215,28 @@ export function GoaSusegadPage() {
 
               {/* Safety Structure */}
               <div className="lg:col-span-5 space-y-4">
-                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10">
+                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10 shadow-xs">
                   <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-2">BEFORE TRIP</span>
                   <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">
                     Aadhaar / ID proof verification, verified pickup coordination, medical allergies, and emergency contacts vetted before departure.
                   </p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10">
+                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10 shadow-xs">
                   <span className="text-xs font-bold tracking-widest uppercase text-[#234A3C] block mb-2">DURING TRIP</span>
                   <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">
                     2 trained SnS hosts present 24/7. Certified local trek guides, life jackets for kayaking, and structured quiet hours at night.
                   </p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10">
+                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10 shadow-xs">
                   <span className="text-xs font-bold tracking-widest uppercase text-[#7B5E3A] block mb-2">PRIVACY &amp; PHOTOS</span>
                   <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">
                     Consent is mandatory before photographing anyone up close. Phones-down windows to protect presence and peace of mind.
                   </p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10">
+                <div className="p-6 rounded-2xl bg-white border border-[#202124]/10 shadow-xs">
                   <span className="text-xs font-bold tracking-widest uppercase text-[#202124] block mb-2">AFTER TRIP</span>
                   <p className="text-xs sm:text-sm font-sans text-[#202124]/75 leading-relaxed">
                     Confidential feedback loop and red-flag reporting. Any boundary violation permanently revokes future community passport access.
@@ -1021,8 +1247,11 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 8. WHAT'S INCLUDED / NOT INCLUDED ── */}
-        <section id="included" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+        {/* ── 10. WHAT'S INCLUDED / NOT INCLUDED ── */}
+        <section
+          id="included"
+          className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="max-w-3xl mb-16">
               <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
@@ -1066,8 +1295,11 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 9. PRICE SECTION ── */}
-        <section id="price" className="py-24 md:py-32 bg-[#202124] text-[#FFFDF9] scroll-mt-24">
+        {/* ── 11. PRICE SECTION ── */}
+        <section
+          id="price"
+          className="py-24 md:py-32 bg-[#202124] text-[#FFFDF9] scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-7xl">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-16">
@@ -1080,7 +1312,7 @@ export function GoaSusegadPage() {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-white/15 bg-white/5 backdrop-blur-md p-8 sm:p-12 relative overflow-hidden">
+              <div className="rounded-3xl border border-white/15 bg-white/5 backdrop-blur-md p-8 sm:p-12 relative overflow-hidden shadow-2xl">
                 <div className="grid md:grid-cols-2 gap-10 items-center">
                   <div>
                     <span className="text-xs font-mono font-bold tracking-widest text-[#F26A2E] block mb-2">
@@ -1106,7 +1338,7 @@ export function GoaSusegadPage() {
                   </div>
 
                   <div className="space-y-6 md:border-l md:border-white/10 md:pl-10">
-                    <div className="p-4 rounded-2xl bg-black/30 border border-white/5 space-y-2">
+                    <div className="p-4 rounded-2xl bg-black/35 border border-white/5 space-y-2">
                       <p className="text-xs font-sans text-[#FFFDF9]/90 leading-relaxed">
                         <strong>Payment Transparency:</strong> The ₹5,000 booking amount counts towards the full trip
                         cost. It is NOT an additional fee.
@@ -1152,8 +1384,11 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 10. FAQ SECTION ── */}
-        <section id="faq" className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-24">
+        {/* ── 12. FAQ SECTION ── */}
+        <section
+          id="faq"
+          className="py-24 md:py-32 bg-[#FFFDF9] border-b border-[#202124]/10 scroll-mt-28 md:scroll-mt-36"
+        >
           <div className="container mx-auto px-6 md:px-12 max-w-4xl">
             <div className="text-center mb-16">
               <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-3">
@@ -1194,10 +1429,14 @@ export function GoaSusegadPage() {
           </div>
         </section>
 
-        {/* ── 11. FINAL STORY CTA ── */}
+        {/* ── 13. FINAL STORY CTA ── */}
         <section className="py-24 md:py-32 bg-[#F6F0E6] text-center">
           <div className="container mx-auto px-6 md:px-12 max-w-3xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
               <span className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] block mb-4">
                 WAITING LIST IS OPEN
               </span>

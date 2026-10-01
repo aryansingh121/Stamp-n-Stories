@@ -53,30 +53,37 @@ export function Navbar() {
     { label: "Safety", href: "/safety" },
   ];
 
-  const isHome = location === "/";
-  const isDarkBg = isHome && !isScrolled;
-  const isDarkPage = ["/passport", "/brands", "/partner", "/rules"].includes(location) || location.startsWith("/events");
-  const useDarkHeaderText = isScrolled || (!isDarkBg && !isDarkPage);
+  const hasDarkHero = location === "/" || location === "/events/goa-susegad";
+  const isTransparentDark = hasDarkHero && !isScrolled;
+  const useDarkHeaderText = !isTransparentDark;
   const textColor = useDarkHeaderText ? "text-[#202124]/80" : "text-[#FFFDF9]/80";
   const activeColor = "text-[#F26A2E]";
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-[#FFFDF9]/95 backdrop-blur-md shadow-sm py-4" : "bg-transparent py-6"
+      className={`fixed top-0 left-0 w-full z-50 h-16 md:h-20 flex items-center transition-all duration-300 ${
+        isScrolled
+          ? "bg-[#FFFDF9]/95 backdrop-blur-md shadow-xs border-b border-[#202124]/10"
+          : hasDarkHero
+            ? "bg-transparent border-b border-transparent"
+            : "bg-[#FFFDF9] border-b border-[#202124]/10"
       }`}
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="z-50 flex items-center gap-3">
-          <div className="bg-white rounded-lg p-1">
-            <img
-              src="/logo.png"
-              alt="Stamp & Stories"
-              className="h-8 md:h-10 w-auto object-contain"
-            />
-          </div>
-          <span className={`font-serif text-xl md:text-2xl font-bold tracking-widest uppercase ${useDarkHeaderText ? "text-[#202124]" : "text-[#FFFDF9]"}`}>
+          <img
+            src="/logo.png"
+            alt="Stamp N Stories"
+            className={`h-8 md:h-9 w-auto object-contain transition-all duration-300 ${
+              isTransparentDark ? "brightness-0 invert drop-shadow-sm" : "mix-blend-multiply"
+            }`}
+          />
+          <span
+            className={`font-serif text-xl md:text-2xl font-bold tracking-widest uppercase transition-colors duration-300 ${
+              useDarkHeaderText ? "text-[#202124]" : "text-[#FFFDF9]"
+            }`}
+          >
             STAMP<span className="text-[#F26A2E]">N</span>STORIES
           </span>
         </Link>
