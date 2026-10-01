@@ -361,7 +361,7 @@ function Onboarding() {
                 <Label className="text-sm">ID proof for verification *</Label>
                 <p className="mt-1 text-xs text-ink/60">
                   Upload a government ID (Aadhaar, Passport, Driver's License, etc.). Image or PDF,
-                  max 8 MB. Only admins can view it — kept private.
+                  max 8 MB. Only admins can view it. After verification, it will be automatically deleted after 10 days.
                 </p>
                 <div className="mt-3 flex items-center gap-3">
                   <label className="cursor-pointer inline-flex items-center gap-2 rounded-full border border-ink/30 bg-background px-4 py-2 text-sm hover:bg-muted">
