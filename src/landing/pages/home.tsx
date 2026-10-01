@@ -6,6 +6,7 @@ import { WomenFirstVsOnlySection } from "@/landing/components/sections/WomenFirs
 import { PassportSection } from "@/landing/components/sections/PassportSection";
 import { TrustSystemSection } from "@/landing/components/sections/TrustSystemSection";
 import { StampsSection } from "@/landing/components/sections/StampsSection";
+import { GoaFeaturedSection } from "@/landing/components/sections/GoaFeaturedSection";
 import { UpcomingEventsSection } from "@/landing/components/sections/UpcomingEventsSection";
 import { RulesSection } from "@/landing/components/sections/RulesSection";
 import { BrandsSection } from "@/landing/components/sections/BrandsSection";
@@ -27,6 +28,7 @@ export function HomePage() {
         <PassportSection />
         <TrustSystemSection />
         <StampsSection />
+        <GoaFeaturedSection />
         <UpcomingEventsSection />
         <RulesSection />
         <BrandsSection />
