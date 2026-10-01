@@ -1093,7 +1093,7 @@ export function GoaSusegadPage() {
               transition={{ duration: 0.6 }}
             >
               <p className="text-xs font-bold tracking-widest uppercase text-[#F26A2E] mb-4">
-                4 spots remaining
+                WAITING LIST IS OPEN
               </p>
               <h2 className="text-3xl md:text-5xl font-serif text-[#FFFDF9] mb-6 leading-tight">
                 Road to Goa.
