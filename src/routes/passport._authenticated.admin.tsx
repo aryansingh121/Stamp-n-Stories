@@ -500,8 +500,10 @@ function ProfileRow({
           {!p.submitted && <span className="text-[10px] text-ink/40">(draft)</span>}
         </div>
         <div className="text-xs text-ink/60 truncate">
-          {p.traveller_code} · {p.city || "—"} · age {p.age || "—"} ·{" "}
-          {((p.stamps as Array<{ event: string; emoji: string; date: string }>) || []).length}{" "}
+          {p.traveller_code} · {p.city || "—"} · age {p.age || "—"}
+          {p.email ? ` · ${p.email}` : ""}
+          {p.phone ? ` · ${p.phone}` : ""}
+          {" "}· {((p.stamps as Array<{ event: string; emoji: string; date: string }>) || []).length}{" "}
           stamps
         </div>
         {p.interests?.length > 0 && (

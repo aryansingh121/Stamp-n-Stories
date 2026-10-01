@@ -32,12 +32,15 @@ export type Database = {
           travel_vibe: string | null;
           traveller_code: string;
           updated_at: string;
+          email: string | null;
+          phone: string | null;
         };
         Insert: {
           age?: number | null;
           cant_stop_doing?: string | null;
           city?: string | null;
           created_at?: string;
+          email?: string | null;
           full_name?: string | null;
           icebreaker?: string | null;
           id: string;
@@ -47,6 +50,7 @@ export type Database = {
           issued_at?: string;
           level?: string;
           personality?: string | null;
+          phone?: string | null;
           photo_gallery?: string[];
           photo_url?: string | null;
           points?: number;
@@ -62,6 +66,7 @@ export type Database = {
           cant_stop_doing?: string | null;
           city?: string | null;
           created_at?: string;
+          email?: string | null;
           full_name?: string | null;
           icebreaker?: string | null;
           id?: string;
@@ -71,6 +76,7 @@ export type Database = {
           issued_at?: string;
           level?: string;
           personality?: string | null;
+          phone?: string | null;
           photo_gallery?: string[];
           photo_url?: string | null;
           points?: number;

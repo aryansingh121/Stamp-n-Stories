@@ -17,6 +17,10 @@ export const Route = createFileRoute("/passport/_authenticated/onboarding")({
   component: Onboarding,
 });
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Accepts normal Indian mobile numbers (+91, 0, or 10 digits with spaces/dashes) or standard international format
+const PHONE_REGEX = /^(?:(?:\+|0{0,2})91[\s-]*)?[6-9]\d{9}$|^[+]?[0-9\s-]{10,15}$/;
+
 function Onboarding() {
   const nav = useNavigate();
   const { data: me, refetch } = useQuery({
@@ -29,11 +33,16 @@ function Onboarding() {
         .select("*")
         .eq("id", u.user.id)
         .maybeSingle();
-      return data;
+      return {
+        profile: data,
+        authUser: u.user,
+      };
     },
   });
 
   const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [age, setAge] = useState<string>("");
   const [city, setCity] = useState("");
   const [interests, setInterests] = useState<string[]>([]);
@@ -48,32 +57,140 @@ function Onboarding() {
   const [uploading, setUploading] = useState(false);
   const [uploadingId, setUploadingId] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    if (me) {
-      setFullName(me.full_name || "");
-      setAge(me.age?.toString() || "");
-      setCity(me.city || "");
-      setInterests(me.interests || []);
-      setCantStop(me.cant_stop_doing || "");
-      setIg(me.instagram || "");
-      setVibe(me.travel_vibe || "");
-      setPhotoPath(me.photo_url);
-      setIdProofPath(me.id_proof_url || null);
-      if (me.id_proof_url) setIdProofName("ID proof uploaded");
-      if (me.photo_url) signedPhotoUrl(me.photo_url).then((u) => u && setPhotoPreview(u));
+    if (me?.profile) {
+      const p = me.profile;
+      setFullName(p.full_name || "");
+      setEmail(p.email || me.authUser?.email || "");
+      setPhone(p.phone || (me.authUser?.user_metadata?.phone as string) || "");
+      setAge(p.age?.toString() || "");
+      setCity(p.city || "");
+      setInterests(p.interests || []);
+      setCantStop(p.cant_stop_doing || "");
+      setIg(p.instagram || "");
+      setVibe(p.travel_vibe || "");
+      setPhotoPath(p.photo_url);
+      setIdProofPath(p.id_proof_url || null);
+      if (p.id_proof_url) setIdProofName("ID proof uploaded");
+      if (p.photo_url) signedPhotoUrl(p.photo_url).then((u) => u && setPhotoPreview(u));
+    } else if (me?.authUser) {
+      if (me.authUser.email) setEmail(me.authUser.email);
+      if (me.authUser.user_metadata?.full_name) setFullName(me.authUser.user_metadata.full_name);
+      if (me.authUser.user_metadata?.phone) setPhone(me.authUser.user_metadata.phone);
     }
   }, [me]);
 
-  function toggleInterest(i: string) {
-    setInterests((prev) =>
-      prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i].slice(0, 8),
-    );
+  function validateField(field: string, value?: unknown): string | null {
+    switch (field) {
+      case "photo":
+        if (!photoPath) return "No profile photo uploaded.";
+        break;
+      case "fullName": {
+        const val = typeof value === "string" ? value : fullName;
+        if (!val.trim()) return "Please enter your full name.";
+        break;
+      }
+      case "age": {
+        const val = typeof value === "string" ? value : age;
+        const trimmed = val.trim();
+        if (!trimmed) return "Please enter your age.";
+        const num = parseInt(trimmed, 10);
+        if (isNaN(num) || num < 13 || num > 99) {
+          return "Age must be between 13 and 99.";
+        }
+        break;
+      }
+      case "city": {
+        const val = typeof value === "string" ? value : city;
+        if (!val.trim()) return "Please enter your city.";
+        break;
+      }
+      case "email": {
+        const val = typeof value === "string" ? value : email;
+        const trimmed = val.trim();
+        if (!trimmed) return "Please enter your email address.";
+        if (!EMAIL_REGEX.test(trimmed)) return "Please enter a valid email address.";
+        break;
+      }
+      case "phone": {
+        const val = typeof value === "string" ? value : phone;
+        const trimmed = val.trim();
+        if (!trimmed) return "Please enter your phone number.";
+        const cleanDigits = trimmed.replace(/\D/g, "");
+        if (cleanDigits.length < 10 || !PHONE_REGEX.test(trimmed)) {
+          return "Please enter a valid phone number.";
+        }
+        break;
+      }
+      case "interests": {
+        const arr = Array.isArray(value) ? value : interests;
+        if (!arr || arr.length === 0) return "Please select at least one interest.";
+        break;
+      }
+      case "cantStop": {
+        const val = typeof value === "string" ? value : cantStop;
+        if (!val.trim()) return "Please tell us one thing you can't stop doing.";
+        break;
+      }
+      case "ig": {
+        const val = typeof value === "string" ? value : ig;
+        if (!val.trim()) return "Please enter your Instagram handle.";
+        break;
+      }
+      case "vibe": {
+        const val = typeof value === "string" ? value : vibe;
+        if (!val || !val.trim()) return "Please provide your YouTube information.";
+        break;
+      }
+      case "idProof":
+        if (!idProofPath) return "Please upload your ID proof.";
+        break;
+    }
+    return null;
   }
+
+  function validateAll(): Record<string, string> {
+    const errs: Record<string, string> = {};
+    const fields = [
+      "photo",
+      "fullName",
+      "age",
+      "city",
+      "email",
+      "phone",
+      "interests",
+      "cantStop",
+      "ig",
+      "vibe",
+      "idProof",
+    ];
+    for (const f of fields) {
+      const err = validateField(f);
+      if (err) errs[f] = err;
+    }
+    return errs;
+  }
+
+  function toggleInterest(i: string) {
+    setInterests((prev) => {
+      const next = prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i].slice(0, 8);
+      const err = validateField("interests", next);
+      setErrors((e) => ({ ...e, interests: err || "" }));
+      return next;
+    });
+  }
+
   function addInterest() {
     const v = interestInput.trim();
     if (v && !interests.includes(v)) {
-      setInterests((p) => [...p, v].slice(0, 8));
+      setInterests((p) => {
+        const next = [...p, v].slice(0, 8);
+        const err = validateField("interests", next);
+        setErrors((e) => ({ ...e, interests: err || "" }));
+        return next;
+      });
       setInterestInput("");
     }
   }
@@ -91,6 +208,7 @@ function Onboarding() {
       if (!u.user) throw new Error("Sign in required");
       const path = await uploadPassportPhoto(u.user.id, file);
       setPhotoPath(path);
+      setErrors((prev) => ({ ...prev, photo: "" }));
       const url = await signedPhotoUrl(path);
       if (url) setPhotoPreview(url);
       logUserActivity({ action: "Profile Photo Upload" });
@@ -102,11 +220,6 @@ function Onboarding() {
       let errorMessage = "Upload failed. Please try again.";
       if (err instanceof Error && err.message) {
         errorMessage = typeof err.message === "string" ? err.message : JSON.stringify(err.message);
-      } else if (typeof err === "object" && err !== null && "message" in err) {
-        errorMessage =
-          typeof (err as any).message === "string"
-            ? (err as any).message
-            : JSON.stringify((err as any).message);
       } else if (typeof err === "string") {
         errorMessage = err;
       }
@@ -134,8 +247,9 @@ function Onboarding() {
       if (!u.user) throw new Error("Sign in required");
       const path = await uploadIdProof(u.user.id, file);
       setIdProofName(file.name);
-      logUserActivity({ action: idProofPath ? "ID Proof Replacement" : "ID Proof Upload" });
       setIdProofPath(path);
+      setErrors((prev) => ({ ...prev, idProof: "" }));
+      logUserActivity({ action: idProofPath ? "ID Proof Replacement" : "ID Proof Upload" });
       toast.success("ID proof uploaded");
     } catch (err: unknown) {
       if (import.meta.env.DEV) {
@@ -144,11 +258,6 @@ function Onboarding() {
       let errorMessage = "Upload failed. Please try again.";
       if (err instanceof Error && err.message) {
         errorMessage = typeof err.message === "string" ? err.message : JSON.stringify(err.message);
-      } else if (typeof err === "object" && err !== null && "message" in err) {
-        errorMessage =
-          typeof (err as any).message === "string"
-            ? (err as any).message
-            : JSON.stringify((err as any).message);
       } else if (typeof err === "string") {
         errorMessage = err;
       }
@@ -159,41 +268,65 @@ function Onboarding() {
   }
 
   async function save() {
-    if (!fullName || !age || !city) {
-      toast.error("Name, age, and city are required");
+    const newErrors = validateAll();
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      const firstErrorMessage = Object.values(newErrors)[0];
+      toast.error(firstErrorMessage);
+      const firstKey = Object.keys(newErrors)[0];
+      const el = document.getElementById(firstKey) || document.querySelector(`[data-error-field="${firstKey}"]`);
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
-    if (!photoPath) {
-      toast.error("Please upload a profile photo");
-      return;
-    }
-    if (!idProofPath) {
-      toast.error("Please upload an ID proof for verification");
-      return;
-    }
+
     setSaving(true);
     try {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) throw new Error("Sign in required");
+
+      const trimmedName = fullName.trim();
+      const trimmedEmail = email.trim().toLowerCase();
+      const trimmedPhone = phone.trim();
+      const trimmedCity = city.trim();
+      const trimmedCantStop = cantStop.trim();
+      const trimmedIg = ig.trim();
+
       const { error } = await supabase
         .from("profiles")
         .update({
-          full_name: fullName,
+          full_name: trimmedName,
+          email: trimmedEmail,
+          phone: trimmedPhone,
           age: parseInt(age, 10),
-          city,
+          city: trimmedCity,
           interests,
-          cant_stop_doing: cantStop,
-          instagram: ig || null,
-          travel_vibe: vibe || null,
+          cant_stop_doing: trimmedCantStop,
+          instagram: trimmedIg,
+          travel_vibe: vibe,
           photo_url: photoPath,
           id_proof_url: idProofPath,
           submitted: true,
         })
         .eq("id", u.user.id);
+
       if (error) throw error;
+
+      // Also sync user metadata in auth if available
+      try {
+        await supabase.auth.updateUser({
+          data: {
+            full_name: trimmedName,
+            phone: trimmedPhone,
+          },
+        });
+      } catch {
+        // Non-critical metadata sync
+      }
+
       logUserActivity({
         action: "Profile Update",
-        metadata: { city, age, interests_count: interests.length },
+        metadata: { city: trimmedCity, age: parseInt(age, 10), interests_count: interests.length },
       });
       toast.success("Submitted! Pending verification.");
       await refetch();
@@ -205,11 +338,6 @@ function Onboarding() {
       let errorMessage = "Save failed. Please try again.";
       if (err instanceof Error && err.message) {
         errorMessage = typeof err.message === "string" ? err.message : JSON.stringify(err.message);
-      } else if (typeof err === "object" && err !== null && "message" in err) {
-        errorMessage =
-          typeof (err as any).message === "string"
-            ? (err as any).message
-            : JSON.stringify((err as any).message);
       } else if (typeof err === "string") {
         errorMessage = err;
       }
@@ -230,7 +358,7 @@ function Onboarding() {
 
         <div className="mt-6 space-y-6 rounded-3xl border border-ink/10 bg-card p-6">
           {/* Photo */}
-          <div>
+          <div data-error-field="photo">
             <Label>Profile photo *</Label>
             <div className="mt-2 flex items-center gap-4">
               <div className="h-24 w-20 overflow-hidden rounded-lg border-2 border-ink/20 bg-muted">
@@ -258,32 +386,113 @@ function Onboarding() {
                 />
               </label>
             </div>
+            {errors.photo && <p className="mt-1.5 text-xs text-destructive font-medium">{errors.photo}</p>}
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="fn">Full name *</Label>
-              <Input id="fn" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="ag">Age *</Label>
+              <Label htmlFor="fullName">Full name *</Label>
               <Input
-                id="ag"
+                id="fullName"
+                value={fullName}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  if (errors.fullName) setErrors((prev) => ({ ...prev, fullName: "" }));
+                }}
+                onBlur={() => {
+                  const err = validateField("fullName");
+                  if (err) setErrors((prev) => ({ ...prev, fullName: err }));
+                }}
+                placeholder="Your full name"
+                required
+              />
+              {errors.fullName && <p className="mt-1 text-xs text-destructive font-medium">{errors.fullName}</p>}
+            </div>
+
+            <div>
+              <Label htmlFor="age">Age *</Label>
+              <Input
+                id="age"
                 type="number"
                 min={13}
                 max={99}
                 value={age}
-                onChange={(e) => setAge(e.target.value)}
+                onChange={(e) => {
+                  setAge(e.target.value);
+                  if (errors.age) setErrors((prev) => ({ ...prev, age: "" }));
+                }}
+                onBlur={() => {
+                  const err = validateField("age");
+                  if (err) setErrors((prev) => ({ ...prev, age: err }));
+                }}
+                placeholder="e.g. 25"
+                required
               />
+              {errors.age && <p className="mt-1 text-xs text-destructive font-medium">{errors.age}</p>}
             </div>
+
+            <div>
+              <Label htmlFor="email">Email *</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) setErrors((prev) => ({ ...prev, email: "" }));
+                }}
+                onBlur={() => {
+                  const err = validateField("email");
+                  if (err) setErrors((prev) => ({ ...prev, email: err }));
+                }}
+                placeholder="you@example.com"
+                required
+              />
+              {errors.email && <p className="mt-1 text-xs text-destructive font-medium">{errors.email}</p>}
+            </div>
+
+            <div>
+              <Label htmlFor="phone">Phone number *</Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  if (errors.phone) setErrors((prev) => ({ ...prev, phone: "" }));
+                }}
+                onBlur={() => {
+                  const err = validateField("phone");
+                  if (err) setErrors((prev) => ({ ...prev, phone: err }));
+                }}
+                placeholder="+91 98765 43210"
+                required
+              />
+              {errors.phone && <p className="mt-1 text-xs text-destructive font-medium">{errors.phone}</p>}
+            </div>
+
             <div className="sm:col-span-2">
-              <Label htmlFor="ct">City *</Label>
-              <Input id="ct" value={city} onChange={(e) => setCity(e.target.value)} />
+              <Label htmlFor="city">City *</Label>
+              <Input
+                id="city"
+                value={city}
+                onChange={(e) => {
+                  setCity(e.target.value);
+                  if (errors.city) setErrors((prev) => ({ ...prev, city: "" }));
+                }}
+                onBlur={() => {
+                  const err = validateField("city");
+                  if (err) setErrors((prev) => ({ ...prev, city: err }));
+                }}
+                placeholder="e.g. Mumbai, Bangalore, Goa"
+                required
+              />
+              {errors.city && <p className="mt-1 text-xs text-destructive font-medium">{errors.city}</p>}
             </div>
           </div>
 
-          <div>
-            <Label>Interests / hobbies (up to 8)</Label>
+          <div data-error-field="interests">
+            <Label>Interests / hobbies * (up to 8)</Label>
             <div className="mt-2 flex flex-wrap gap-2">
               {SUGGESTED_INTERESTS.map((i) => (
                 <button
@@ -314,35 +523,63 @@ function Onboarding() {
             {interests.length > 0 && (
               <div className="mt-2 text-xs text-ink/50">Selected: {interests.join(", ")}</div>
             )}
+            {errors.interests && <p className="mt-1.5 text-xs text-destructive font-medium">{errors.interests}</p>}
           </div>
 
           <div>
-            <Label htmlFor="cs">One thing you can't stop doing</Label>
+            <Label htmlFor="cantStop">One thing you can't stop doing *</Label>
             <Textarea
-              id="cs"
+              id="cantStop"
               rows={2}
               value={cantStop}
-              onChange={(e) => setCantStop(e.target.value)}
+              onChange={(e) => {
+                setCantStop(e.target.value);
+                if (errors.cantStop) setErrors((prev) => ({ ...prev, cantStop: "" }));
+              }}
+              onBlur={() => {
+                const err = validateField("cantStop");
+                if (err) setErrors((prev) => ({ ...prev, cantStop: err }));
+              }}
               placeholder="e.g. hosting brunches, chasing sunsets, hunting the best filter coffee…"
+              required
             />
+            {errors.cantStop && <p className="mt-1 text-xs text-destructive font-medium">{errors.cantStop}</p>}
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="ig">Instagram (optional)</Label>
+              <Label htmlFor="ig">Instagram *</Label>
               <Input
                 id="ig"
                 value={ig}
-                onChange={(e) => setIg(e.target.value)}
+                onChange={(e) => {
+                  setIg(e.target.value);
+                  if (errors.ig) setErrors((prev) => ({ ...prev, ig: "" }));
+                }}
+                onBlur={() => {
+                  const err = validateField("ig");
+                  if (err) setErrors((prev) => ({ ...prev, ig: err }));
+                }}
                 placeholder="@yourhandle"
+                required
               />
+              {errors.ig && <p className="mt-1 text-xs text-destructive font-medium">{errors.ig}</p>}
             </div>
             <div>
-              <Label>Your vibe (optional)</Label>
+              <Label htmlFor="vibe">YouTube *</Label>
               <select
+                id="vibe"
                 value={vibe}
-                onChange={(e) => setVibe(e.target.value)}
+                onChange={(e) => {
+                  setVibe(e.target.value);
+                  if (errors.vibe) setErrors((prev) => ({ ...prev, vibe: "" }));
+                }}
+                onBlur={() => {
+                  const err = validateField("vibe");
+                  if (err) setErrors((prev) => ({ ...prev, vibe: err }));
+                }}
                 className="mt-1 w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
+                required
               >
                 <option value="">Pick your vibe</option>
                 {TRAVEL_VIBES.map((v) => (
@@ -351,10 +588,11 @@ function Onboarding() {
                   </option>
                 ))}
               </select>
+              {errors.vibe && <p className="mt-1 text-xs text-destructive font-medium">{errors.vibe}</p>}
             </div>
           </div>
 
-          <div className="rounded-2xl border-2 border-dashed border-coral/40 bg-sun/10 p-4">
+          <div className="rounded-2xl border-2 border-dashed border-coral/40 bg-sun/10 p-4" data-error-field="idProof">
             <div className="flex items-start gap-3">
               <ShieldCheck className="h-5 w-5 text-coral mt-0.5 shrink-0" />
               <div className="flex-1">
@@ -385,6 +623,7 @@ function Onboarding() {
                     </span>
                   )}
                 </div>
+                {errors.idProof && <p className="mt-2 text-xs text-destructive font-medium">{errors.idProof}</p>}
               </div>
             </div>
           </div>
@@ -401,3 +640,4 @@ function Onboarding() {
     </div>
   );
 }
+
