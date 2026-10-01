@@ -53,7 +53,7 @@ export function Navbar() {
     { label: "Safety", href: "/safety" },
   ];
 
-  const hasDarkHero = location === "/" || location === "/events/goa-susegad";
+  const hasDarkHero = location === "/";
   const isTransparentDark = hasDarkHero && !isScrolled;
   const useDarkHeaderText = !isTransparentDark;
   const textColor = useDarkHeaderText ? "text-[#202124]/80" : "text-[#FFFDF9]/80";
