@@ -52,7 +52,7 @@ function Landing() {
                 variant="outline"
                 className="rounded-full border-ink/30 px-7"
               >
-                <Link to="/passport/leaderboard">See leaderboard</Link>
+                <Link to="/passport/leaderboard">Community Members</Link>
               </Button>
             </div>
             <div className="mt-12 flex justify-center gap-8 text-xs uppercase tracking-widest text-ink/50 font-display">
