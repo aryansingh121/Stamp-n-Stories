@@ -78,7 +78,7 @@ export function Navbar() {
 
   const isHome = location === "/";
   const isDarkBg = isHome && !isScrolled;
-  const isDarkPage = ["/passport", "/brands", "/partner", "/rules", "/refund-policy"].includes(location) || location.startsWith("/events");
+  const isDarkPage = ["/passport", "/brands", "/partner", "/rules"].includes(location) || location.startsWith("/events");
   const useDarkHeaderText = isScrolled || (!isDarkBg && !isDarkPage);
   const textColor = useDarkHeaderText ? "text-[#202124]/80" : "text-[#FFFDF9]/80";
   const activeColor = "text-[#F26A2E]";
