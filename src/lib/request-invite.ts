@@ -23,7 +23,7 @@ export const tripCostOptions = [
 
 export const verificationCallOptions = ["Yes", "No"] as const;
 
-export const upcomingBatchOptions = ["25 Sep", "12 Oct", "16 Oct"] as const;
+export const upcomingBatchOptions = ["15 Oct", "29 Oct", "12 Nov"] as const;
 
 // Allow @username or full URL for Instagram
 export function validateInstagram(value: string) {
