@@ -9,45 +9,39 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PassportRouteImport } from './routes/passport'
-import { Route as PartnerRouteImport } from './routes/partner'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as SiteRouteImport } from './routes/_site'
-import { Route as PassportIndexRouteImport } from './routes/passport.index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as PartnerRouteImport } from './routes/partner'
+import { Route as PassportRouteImport } from './routes/passport'
 import { Route as SiteIndexRouteImport } from './routes/_site.index'
-import { Route as PassportSquadRouteImport } from './routes/passport.squad'
-import { Route as PassportAuthenticatedRouteImport } from './routes/passport._authenticated'
-import { Route as PCodeRouteImport } from './routes/p.$code'
-import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
-import { Route as SiteVisionRouteImport } from './routes/_site.vision'
-import { Route as SiteSafetyRouteImport } from './routes/_site.safety'
-import { Route as SiteRulesRouteImport } from './routes/_site.rules'
-import { Route as SiteRefundPolicyRouteImport } from './routes/_site.refund-policy'
-import { Route as SiteHowItWorksRouteImport } from './routes/_site.how-it-works'
-import { Route as SiteExperiencesRouteImport } from './routes/_site.experiences'
-import { Route as SiteEventsRouteImport } from './routes/_site.events'
-import { Route as SiteBrandsRouteImport } from './routes/_site.brands'
-import { Route as SiteApplyRouteImport } from './routes/_site.apply'
 import { Route as SiteAboutRouteImport } from './routes/_site.about'
+import { Route as SiteApplyRouteImport } from './routes/_site.apply'
+import { Route as SiteBrandsRouteImport } from './routes/_site.brands'
+import { Route as SiteEventsRouteImport } from './routes/_site.events'
+import { Route as SiteExperiencesRouteImport } from './routes/_site.experiences'
+import { Route as SiteHowItWorksRouteImport } from './routes/_site.how-it-works'
+import { Route as SiteRefundPolicyRouteImport } from './routes/_site.refund-policy'
+import { Route as SiteRulesRouteImport } from './routes/_site.rules'
+import { Route as SiteSafetyRouteImport } from './routes/_site.safety'
+import { Route as SiteVisionRouteImport } from './routes/_site.vision'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as PCodeRouteImport } from './routes/p.$code'
+import { Route as PassportIndexRouteImport } from './routes/passport.index'
+import { Route as PassportAuthenticatedRouteImport } from './routes/passport._authenticated'
+import { Route as PassportSquadRouteImport } from './routes/passport.squad'
 import { Route as SiteEventsIndexRouteImport } from './routes/_site.events.index'
-import { Route as PassportAuthenticatedPassportRouteImport } from './routes/passport._authenticated.passport'
-import { Route as PassportAuthenticatedOnboardingRouteImport } from './routes/passport._authenticated.onboarding'
-import { Route as PassportAuthenticatedLeaderboardRouteImport } from './routes/passport._authenticated.leaderboard'
-import { Route as PassportAuthenticatedDiscoverRouteImport } from './routes/passport._authenticated.discover'
-import { Route as PassportAuthenticatedAdminRouteImport } from './routes/passport._authenticated.admin'
 import { Route as SiteEventsGoaSusegadRouteImport } from './routes/_site.events.goa-susegad'
-import { Route as PassportAuthenticatedAdminAuditRouteImport } from './routes/passport._authenticated.admin_.audit'
-import { Route as PassportAuthenticatedAdminActivityRouteImport } from './routes/passport._authenticated.admin_.activity'
+import { Route as PassportAuthenticatedAdminRouteImport } from './routes/passport._authenticated.admin'
+import { Route as PassportAuthenticatedDiscoverRouteImport } from './routes/passport._authenticated.discover'
+import { Route as PassportAuthenticatedLeaderboardRouteImport } from './routes/passport._authenticated.leaderboard'
+import { Route as PassportAuthenticatedOnboardingRouteImport } from './routes/passport._authenticated.onboarding'
+import { Route as PassportAuthenticatedPassportRouteImport } from './routes/passport._authenticated.passport'
 import { Route as SiteEventsGoaSusegadRequestInviteRouteImport } from './routes/_site.events.goa-susegad_.request-invite'
+import { Route as PassportAuthenticatedAdminActivityRouteImport } from './routes/passport._authenticated.admin_.activity'
+import { Route as PassportAuthenticatedAdminAuditRouteImport } from './routes/passport._authenticated.admin_.audit'
 
-const PassportRoute = PassportRouteImport.update({
-  id: '/passport',
-  path: '/passport',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PartnerRoute = PartnerRouteImport.update({
-  id: '/partner',
-  path: '/partner',
+const SiteRoute = SiteRouteImport.update({
+  id: '/_site',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -55,82 +49,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SiteRoute = SiteRouteImport.update({
-  id: '/_site',
+const PartnerRoute = PartnerRouteImport.update({
+  id: '/partner',
+  path: '/partner',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PassportIndexRoute = PassportIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PassportRoute,
+const PassportRoute = PassportRouteImport.update({
+  id: '/passport',
+  path: '/passport',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => SiteRoute,
-} as any)
-const PassportSquadRoute = PassportSquadRouteImport.update({
-  id: '/squad',
-  path: '/squad',
-  getParentRoute: () => PassportRoute,
-} as any)
-const PassportAuthenticatedRoute = PassportAuthenticatedRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => PassportRoute,
-} as any)
-const PCodeRoute = PCodeRouteImport.update({
-  id: '/p/$code',
-  path: '/p/$code',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/callback',
-  path: '/callback',
-  getParentRoute: () => AuthRoute,
-} as any)
-const SiteVisionRoute = SiteVisionRouteImport.update({
-  id: '/vision',
-  path: '/vision',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SiteSafetyRoute = SiteSafetyRouteImport.update({
-  id: '/safety',
-  path: '/safety',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SiteRulesRoute = SiteRulesRouteImport.update({
-  id: '/rules',
-  path: '/rules',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SiteRefundPolicyRoute = SiteRefundPolicyRouteImport.update({
-  id: '/refund-policy',
-  path: '/refund-policy',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SiteHowItWorksRoute = SiteHowItWorksRouteImport.update({
-  id: '/how-it-works',
-  path: '/how-it-works',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SiteExperiencesRoute = SiteExperiencesRouteImport.update({
-  id: '/experiences',
-  path: '/experiences',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SiteEventsRoute = SiteEventsRouteImport.update({
-  id: '/events',
-  path: '/events',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SiteBrandsRoute = SiteBrandsRouteImport.update({
-  id: '/brands',
-  path: '/brands',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SiteApplyRoute = SiteApplyRouteImport.update({
-  id: '/apply',
-  path: '/apply',
   getParentRoute: () => SiteRoute,
 } as any)
 const SiteAboutRoute = SiteAboutRouteImport.update({
@@ -138,27 +69,89 @@ const SiteAboutRoute = SiteAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => SiteRoute,
 } as any)
+const SiteApplyRoute = SiteApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteBrandsRoute = SiteBrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteEventsRoute = SiteEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteExperiencesRoute = SiteExperiencesRouteImport.update({
+  id: '/experiences',
+  path: '/experiences',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteHowItWorksRoute = SiteHowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteRefundPolicyRoute = SiteRefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteRulesRoute = SiteRulesRouteImport.update({
+  id: '/rules',
+  path: '/rules',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteSafetyRoute = SiteSafetyRouteImport.update({
+  id: '/safety',
+  path: '/safety',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteVisionRoute = SiteVisionRouteImport.update({
+  id: '/vision',
+  path: '/vision',
+  getParentRoute: () => SiteRoute,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/callback',
+  path: '/callback',
+  getParentRoute: () => AuthRoute,
+} as any)
+const PCodeRoute = PCodeRouteImport.update({
+  id: '/p/$code',
+  path: '/p/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PassportIndexRoute = PassportIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PassportRoute,
+} as any)
+const PassportAuthenticatedRoute = PassportAuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => PassportRoute,
+} as any)
+const PassportSquadRoute = PassportSquadRouteImport.update({
+  id: '/squad',
+  path: '/squad',
+  getParentRoute: () => PassportRoute,
+} as any)
 const SiteEventsIndexRoute = SiteEventsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SiteEventsRoute,
 } as any)
-const PassportAuthenticatedPassportRoute =
-  PassportAuthenticatedPassportRouteImport.update({
-    id: '/passport',
-    path: '/passport',
-    getParentRoute: () => PassportAuthenticatedRoute,
-  } as any)
-const PassportAuthenticatedOnboardingRoute =
-  PassportAuthenticatedOnboardingRouteImport.update({
-    id: '/onboarding',
-    path: '/onboarding',
-    getParentRoute: () => PassportAuthenticatedRoute,
-  } as any)
-const PassportAuthenticatedLeaderboardRoute =
-  PassportAuthenticatedLeaderboardRouteImport.update({
-    id: '/leaderboard',
-    path: '/leaderboard',
+const SiteEventsGoaSusegadRoute = SiteEventsGoaSusegadRouteImport.update({
+  id: '/goa-susegad',
+  path: '/goa-susegad',
+  getParentRoute: () => SiteEventsRoute,
+} as any)
+const PassportAuthenticatedAdminRoute =
+  PassportAuthenticatedAdminRouteImport.update({
+    id: '/admin',
+    path: '/admin',
     getParentRoute: () => PassportAuthenticatedRoute,
   } as any)
 const PassportAuthenticatedDiscoverRoute =
@@ -167,27 +160,22 @@ const PassportAuthenticatedDiscoverRoute =
     path: '/discover',
     getParentRoute: () => PassportAuthenticatedRoute,
   } as any)
-const PassportAuthenticatedAdminRoute =
-  PassportAuthenticatedAdminRouteImport.update({
-    id: '/admin',
-    path: '/admin',
+const PassportAuthenticatedLeaderboardRoute =
+  PassportAuthenticatedLeaderboardRouteImport.update({
+    id: '/leaderboard',
+    path: '/leaderboard',
     getParentRoute: () => PassportAuthenticatedRoute,
   } as any)
-const SiteEventsGoaSusegadRoute = SiteEventsGoaSusegadRouteImport.update({
-  id: '/goa-susegad',
-  path: '/goa-susegad',
-  getParentRoute: () => SiteEventsRoute,
-} as any)
-const PassportAuthenticatedAdminAuditRoute =
-  PassportAuthenticatedAdminAuditRouteImport.update({
-    id: '/admin_/audit',
-    path: '/admin/audit',
+const PassportAuthenticatedOnboardingRoute =
+  PassportAuthenticatedOnboardingRouteImport.update({
+    id: '/onboarding',
+    path: '/onboarding',
     getParentRoute: () => PassportAuthenticatedRoute,
   } as any)
-const PassportAuthenticatedAdminActivityRoute =
-  PassportAuthenticatedAdminActivityRouteImport.update({
-    id: '/admin_/activity',
-    path: '/admin/activity',
+const PassportAuthenticatedPassportRoute =
+  PassportAuthenticatedPassportRouteImport.update({
+    id: '/passport',
+    path: '/passport',
     getParentRoute: () => PassportAuthenticatedRoute,
   } as any)
 const SiteEventsGoaSusegadRequestInviteRoute =
@@ -195,6 +183,18 @@ const SiteEventsGoaSusegadRequestInviteRoute =
     id: '/goa-susegad_/request-invite',
     path: '/goa-susegad/request-invite',
     getParentRoute: () => SiteEventsRoute,
+  } as any)
+const PassportAuthenticatedAdminActivityRoute =
+  PassportAuthenticatedAdminActivityRouteImport.update({
+    id: '/admin_/activity',
+    path: '/admin/activity',
+    getParentRoute: () => PassportAuthenticatedRoute,
+  } as any)
+const PassportAuthenticatedAdminAuditRoute =
+  PassportAuthenticatedAdminAuditRouteImport.update({
+    id: '/admin_/audit',
+    path: '/admin/audit',
+    getParentRoute: () => PassportAuthenticatedRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -391,18 +391,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/passport': {
-      id: '/passport'
-      path: '/passport'
-      fullPath: '/passport'
-      preLoaderRoute: typeof PassportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/partner': {
-      id: '/partner'
-      path: '/partner'
-      fullPath: '/partner'
-      preLoaderRoute: typeof PartnerRouteImport
+    '/_site': {
+      id: '/_site'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof SiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -412,116 +405,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_site': {
-      id: '/_site'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof SiteRouteImport
+    '/partner': {
+      id: '/partner'
+      path: '/partner'
+      fullPath: '/partner'
+      preLoaderRoute: typeof PartnerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/passport/': {
-      id: '/passport/'
-      path: '/'
-      fullPath: '/passport/'
-      preLoaderRoute: typeof PassportIndexRouteImport
-      parentRoute: typeof PassportRoute
+    '/passport': {
+      id: '/passport'
+      path: '/passport'
+      fullPath: '/passport'
+      preLoaderRoute: typeof PassportRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_site/': {
       id: '/_site/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof SiteIndexRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/passport/squad': {
-      id: '/passport/squad'
-      path: '/squad'
-      fullPath: '/passport/squad'
-      preLoaderRoute: typeof PassportSquadRouteImport
-      parentRoute: typeof PassportRoute
-    }
-    '/passport/_authenticated': {
-      id: '/passport/_authenticated'
-      path: ''
-      fullPath: '/passport'
-      preLoaderRoute: typeof PassportAuthenticatedRouteImport
-      parentRoute: typeof PassportRoute
-    }
-    '/p/$code': {
-      id: '/p/$code'
-      path: '/p/$code'
-      fullPath: '/p/$code'
-      preLoaderRoute: typeof PCodeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/callback': {
-      id: '/auth/callback'
-      path: '/callback'
-      fullPath: '/auth/callback'
-      preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/_site/vision': {
-      id: '/_site/vision'
-      path: '/vision'
-      fullPath: '/vision'
-      preLoaderRoute: typeof SiteVisionRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/safety': {
-      id: '/_site/safety'
-      path: '/safety'
-      fullPath: '/safety'
-      preLoaderRoute: typeof SiteSafetyRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/rules': {
-      id: '/_site/rules'
-      path: '/rules'
-      fullPath: '/rules'
-      preLoaderRoute: typeof SiteRulesRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/refund-policy': {
-      id: '/_site/refund-policy'
-      path: '/refund-policy'
-      fullPath: '/refund-policy'
-      preLoaderRoute: typeof SiteRefundPolicyRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/how-it-works': {
-      id: '/_site/how-it-works'
-      path: '/how-it-works'
-      fullPath: '/how-it-works'
-      preLoaderRoute: typeof SiteHowItWorksRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/experiences': {
-      id: '/_site/experiences'
-      path: '/experiences'
-      fullPath: '/experiences'
-      preLoaderRoute: typeof SiteExperiencesRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/events': {
-      id: '/_site/events'
-      path: '/events'
-      fullPath: '/events'
-      preLoaderRoute: typeof SiteEventsRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/brands': {
-      id: '/_site/brands'
-      path: '/brands'
-      fullPath: '/brands'
-      preLoaderRoute: typeof SiteBrandsRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/apply': {
-      id: '/_site/apply'
-      path: '/apply'
-      fullPath: '/apply'
-      preLoaderRoute: typeof SiteApplyRouteImport
       parentRoute: typeof SiteRoute
     }
     '/_site/about': {
@@ -531,6 +433,104 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteAboutRouteImport
       parentRoute: typeof SiteRoute
     }
+    '/_site/apply': {
+      id: '/_site/apply'
+      path: '/apply'
+      fullPath: '/apply'
+      preLoaderRoute: typeof SiteApplyRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/brands': {
+      id: '/_site/brands'
+      path: '/brands'
+      fullPath: '/brands'
+      preLoaderRoute: typeof SiteBrandsRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/events': {
+      id: '/_site/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof SiteEventsRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/experiences': {
+      id: '/_site/experiences'
+      path: '/experiences'
+      fullPath: '/experiences'
+      preLoaderRoute: typeof SiteExperiencesRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/how-it-works': {
+      id: '/_site/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof SiteHowItWorksRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/refund-policy': {
+      id: '/_site/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof SiteRefundPolicyRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/rules': {
+      id: '/_site/rules'
+      path: '/rules'
+      fullPath: '/rules'
+      preLoaderRoute: typeof SiteRulesRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/safety': {
+      id: '/_site/safety'
+      path: '/safety'
+      fullPath: '/safety'
+      preLoaderRoute: typeof SiteSafetyRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/vision': {
+      id: '/_site/vision'
+      path: '/vision'
+      fullPath: '/vision'
+      preLoaderRoute: typeof SiteVisionRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/p/$code': {
+      id: '/p/$code'
+      path: '/p/$code'
+      fullPath: '/p/$code'
+      preLoaderRoute: typeof PCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passport/': {
+      id: '/passport/'
+      path: '/'
+      fullPath: '/passport/'
+      preLoaderRoute: typeof PassportIndexRouteImport
+      parentRoute: typeof PassportRoute
+    }
+    '/passport/_authenticated': {
+      id: '/passport/_authenticated'
+      path: ''
+      fullPath: '/passport'
+      preLoaderRoute: typeof PassportAuthenticatedRouteImport
+      parentRoute: typeof PassportRoute
+    }
+    '/passport/squad': {
+      id: '/passport/squad'
+      path: '/squad'
+      fullPath: '/passport/squad'
+      preLoaderRoute: typeof PassportSquadRouteImport
+      parentRoute: typeof PassportRoute
+    }
     '/_site/events/': {
       id: '/_site/events/'
       path: '/'
@@ -538,25 +538,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteEventsIndexRouteImport
       parentRoute: typeof SiteEventsRoute
     }
-    '/passport/_authenticated/passport': {
-      id: '/passport/_authenticated/passport'
-      path: '/passport'
-      fullPath: '/passport/passport'
-      preLoaderRoute: typeof PassportAuthenticatedPassportRouteImport
-      parentRoute: typeof PassportAuthenticatedRoute
+    '/_site/events/goa-susegad': {
+      id: '/_site/events/goa-susegad'
+      path: '/goa-susegad'
+      fullPath: '/events/goa-susegad'
+      preLoaderRoute: typeof SiteEventsGoaSusegadRouteImport
+      parentRoute: typeof SiteEventsRoute
     }
-    '/passport/_authenticated/onboarding': {
-      id: '/passport/_authenticated/onboarding'
-      path: '/onboarding'
-      fullPath: '/passport/onboarding'
-      preLoaderRoute: typeof PassportAuthenticatedOnboardingRouteImport
-      parentRoute: typeof PassportAuthenticatedRoute
-    }
-    '/passport/_authenticated/leaderboard': {
-      id: '/passport/_authenticated/leaderboard'
-      path: '/leaderboard'
-      fullPath: '/passport/leaderboard'
-      preLoaderRoute: typeof PassportAuthenticatedLeaderboardRouteImport
+    '/passport/_authenticated/admin': {
+      id: '/passport/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/passport/admin'
+      preLoaderRoute: typeof PassportAuthenticatedAdminRouteImport
       parentRoute: typeof PassportAuthenticatedRoute
     }
     '/passport/_authenticated/discover': {
@@ -566,32 +559,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PassportAuthenticatedDiscoverRouteImport
       parentRoute: typeof PassportAuthenticatedRoute
     }
-    '/passport/_authenticated/admin': {
-      id: '/passport/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/passport/admin'
-      preLoaderRoute: typeof PassportAuthenticatedAdminRouteImport
+    '/passport/_authenticated/leaderboard': {
+      id: '/passport/_authenticated/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/passport/leaderboard'
+      preLoaderRoute: typeof PassportAuthenticatedLeaderboardRouteImport
       parentRoute: typeof PassportAuthenticatedRoute
     }
-    '/_site/events/goa-susegad': {
-      id: '/_site/events/goa-susegad'
-      path: '/goa-susegad'
-      fullPath: '/events/goa-susegad'
-      preLoaderRoute: typeof SiteEventsGoaSusegadRouteImport
-      parentRoute: typeof SiteEventsRoute
-    }
-    '/passport/_authenticated/admin_/audit': {
-      id: '/passport/_authenticated/admin_/audit'
-      path: '/admin/audit'
-      fullPath: '/passport/admin/audit'
-      preLoaderRoute: typeof PassportAuthenticatedAdminAuditRouteImport
+    '/passport/_authenticated/onboarding': {
+      id: '/passport/_authenticated/onboarding'
+      path: '/onboarding'
+      fullPath: '/passport/onboarding'
+      preLoaderRoute: typeof PassportAuthenticatedOnboardingRouteImport
       parentRoute: typeof PassportAuthenticatedRoute
     }
-    '/passport/_authenticated/admin_/activity': {
-      id: '/passport/_authenticated/admin_/activity'
-      path: '/admin/activity'
-      fullPath: '/passport/admin/activity'
-      preLoaderRoute: typeof PassportAuthenticatedAdminActivityRouteImport
+    '/passport/_authenticated/passport': {
+      id: '/passport/_authenticated/passport'
+      path: '/passport'
+      fullPath: '/passport/passport'
+      preLoaderRoute: typeof PassportAuthenticatedPassportRouteImport
       parentRoute: typeof PassportAuthenticatedRoute
     }
     '/_site/events/goa-susegad_/request-invite': {
@@ -600,6 +586,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/events/goa-susegad/request-invite'
       preLoaderRoute: typeof SiteEventsGoaSusegadRequestInviteRouteImport
       parentRoute: typeof SiteEventsRoute
+    }
+    '/passport/_authenticated/admin_/activity': {
+      id: '/passport/_authenticated/admin_/activity'
+      path: '/admin/activity'
+      fullPath: '/passport/admin/activity'
+      preLoaderRoute: typeof PassportAuthenticatedAdminActivityRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
+    }
+    '/passport/_authenticated/admin_/audit': {
+      id: '/passport/_authenticated/admin_/audit'
+      path: '/admin/audit'
+      fullPath: '/passport/admin/audit'
+      preLoaderRoute: typeof PassportAuthenticatedAdminAuditRouteImport
+      parentRoute: typeof PassportAuthenticatedRoute
     }
   }
 }
